@@ -1,0 +1,31 @@
+{
+  "config_name": "gold_b_hybrid_best_reconstructed",
+  "text_mode": "natural",
+  "query_mode": "natural",
+  "passage_mode": "natural",
+  "feature_preset": "ja_preferred_top2",
+  "feature_columns": [
+    "from_sids_JA",
+    "from_sids_JMdict",
+    "source_count",
+    "has_bilingual_support",
+    "lemma_exact_in_lemmas_JA",
+    "lemma_substring_in_lemmas_JA",
+    "max_ja_char_jaccard",
+    "jmdict_exact_in_lemmas_EN",
+    "jmdict_substring_in_lemmas_EN",
+    "max_en_token_jaccard",
+    "ja_category_overlap_count",
+    "main_gloss_ja_char_jaccard",
+    "main_gloss_en_token_jaccard",
+    "num_lemmas_JA",
+    "num_lemmas_EN",
+    "num_categories_JA",
+    "score_ja_preferred",
+    "rank_ja_preferred",
+    "inv_rank_ja_preferred",
+    "in_top1_ja_preferred",
+    "in_top2_ja_preferred"
+  ],
+  "threshold": 0.7940922737874913
+}

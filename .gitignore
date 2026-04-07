@@ -1,0 +1,80 @@
+# Python cache / build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+.venv38/
+venv/
+env/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and local credentials
+*.key
+.env
+.env.*
+*.secret
+*.secrets
+openai-key.json
+
+# Logs and local temp files
+*.log
+tmp/
+temp/
+
+# Local model / cache directories
+.cache/
+huggingface/
+hf_cache/
+models/
+checkpoints/
+
+# Scratch work
+trash/
+scripts/tmp/
+
+# Large generated binaries
+*.parquet
+*.pkl
+*.pickle
+
+# Data: licensed or generated payloads should not be published
+data/raw/
+data/interim/
+data/processed/
+data/gold/
+!data/README.md
+!data/**/.gitkeep
+
+# Outputs: ignore everything by default, then whitelist lightweight summaries
+outputs/**
+!outputs/.gitkeep
+!outputs/README.md
+!outputs/baselines/
+!outputs/baselines/gold_B_hybrid_best/
+!outputs/baselines/gold_B_hybrid_best/config.json
+!outputs/baselines/gold_B_hybrid_best/metrics.pkl
+!outputs/baselines/gold_B_hybrid_search/
+!outputs/baselines/gold_B_hybrid_search/summary.pkl
+
+# Keep docs readable in the repo
+!docs/
+!docs/**

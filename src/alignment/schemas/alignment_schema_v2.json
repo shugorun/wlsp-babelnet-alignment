@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "record_id": {
+      "type": "string"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "synset_id": {
+            "type": "string"
+          },
+          "reasoning": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string",
+            "enum": [
+              "EQUAL",
+              "HYPERNYM",
+              "HYPONYM",
+              "NONE"
+            ]
+          }
+        },
+        "required": [
+          "synset_id",
+          "reasoning",
+          "label"
+        ]
+      }
+    }
+  },
+  "required": [
+    "record_id",
+    "labels"
+  ]
+}
