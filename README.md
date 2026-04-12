@@ -1,5 +1,8 @@
 # LLM による分類語彙表と BabelNet の語義アラインメント
 
+このリポジトリは、日本語辞書である分類語彙表と、多言語辞書である BabelNet の対応付けを行う研究の公開版です。
+公開版では、実験コード・設定・結果要約を通して、研究の構造と実装上の工夫を追えるように整理しています。
+
 <p align="left">
   <img alt="Project: WLSP-BabelNet Alignment" src="https://img.shields.io/badge/project-WLSP--BabelNet%20Alignment-2f6f9f">
   <img alt="Python" src="https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white">
@@ -8,17 +11,17 @@
   <img alt="License: see data policy" src="https://img.shields.io/badge/license-see%20data%20policy-lightgrey">
 </p>
 
-> **English summary** — This repository accompanies the paper [*Sense Alignment between WLSP and BabelNet using LLMs*](https://www.anlp.jp/proceedings/annual_meeting/2026/pdf_dir/Q2-10.pdf "NLP2026 Q2-10") (NLP 2026). The project builds a two-stage pipeline that aligns entries in the Word List by Semantic Principles (WLSP), a Japanese thesaurus, with synsets in BabelNet, a multilingual lexical network. Stage 1 retrieves candidate synsets via LLM-based term expansion and BabelNet search; Stage 2 filters them with an LLM that assigns 4-way labels (EQUAL / HYPERNYM / HYPONYM / NONE). The best LLM configuration achieves pairwise F1 = **0.83**, outperforming the best non-LLM baseline (F1 = 0.68) by **15 points**. Gold annotation datasets were constructed in collaboration with the National Institute for Japanese Language and Linguistics (NINJAL).
+> **English summary** — This repository accompanies the paper [_Sense Alignment between WLSP and BabelNet using LLMs_](https://www.anlp.jp/proceedings/annual_meeting/2026/pdf_dir/Q2-10.pdf "NLP2026 Q2-10") (NLP 2026). The project builds a two-stage pipeline that aligns entries in the Word List by Semantic Principles (WLSP), a Japanese thesaurus, with synsets in BabelNet, a multilingual lexical network. Stage 1 retrieves candidate synsets via LLM-based term expansion and BabelNet search; Stage 2 filters them with an LLM that assigns 4-way labels (EQUAL / HYPERNYM / HYPONYM / NONE). The best LLM configuration achieves pairwise F1 = **0.83**, outperforming the best non-LLM baseline (F1 = 0.68) by **15 points**. Gold annotation datasets were constructed in collaboration with the National Institute for Japanese Language and Linguistics (NINJAL).
 
 ---
 
 ## 研究概要
 
-**分類語彙表**（WLSP）は、日本語 NLP で広く利用されている意味分類辞書です。一方、**BabelNet** は 500 以上の言語をカバーする多言語語彙ネットワークであり、語彙間の上下位関係や関連語義を豊富に持っています。
+本研究の目的は、日本語辞書である**分類語彙表**と、多言語語彙ネットワークである**BabelNet**の対応付けを行うことです。
 
-本研究の目的は、この 2 つの辞書を語義レベルで対応付けること（アラインメント）です。対応付けが実現すると、分類語彙表に BabelNet の語彙間関係を移植でき、日本語 NLP の意味処理基盤の強化につながります。
+対応付けが実現すると、分類語彙表に BabelNet の語彙間関係を移植でき、日本語 NLP の意味処理基盤の強化につながります。
 
-両辞書とも大規模であるため、全候補ペアを直接判定することは現実的ではありません。そこで、**①候補絞り込み → ②対応判定** の 2 段階パイプラインを設計しました。
+提案手法は**①候補絞り込み → ②対応判定**の2段階の[パイプライン](#パイプライン)になっています。これは、両辞書とも巨大であるため、先に対応し得る候補を取り出す必要があるためです。
 
 **国立国語研究所**と連携し、正解アノテーションデータの整備も進めています。
 
@@ -68,12 +71,12 @@ flowchart LR
 
 ### LLM アラインメント
 
-| 評価データ | モデル | n_records | n_pairs | Precision | Recall | F1 |
-|---|---|---:|---:|---:|---:|---:|
-| Gold B | `gpt-5.2-2025-12-11` | 177 | 2,654 | 0.8706 | 0.8000 | **0.8338** |
-| Gold B | `gpt-5.4-2026-03-05` | 177 | 2,654 | 0.8896 | 0.7838 | 0.8333 |
-| Gold A | `gpt-5.2-2025-12-11` | 86 | 1,003 | 0.8571 | 0.7714 | **0.8120** |
-| Gold A | `gpt-5.4-2026-03-05` | 86 | 1,003 | 0.7971 | 0.7857 | 0.7914 |
+| 評価データ | モデル               | n_records | n_pairs | Precision | Recall |         F1 |
+| ---------- | -------------------- | --------: | ------: | --------: | -----: | ---------: |
+| Gold B     | `gpt-5.2-2025-12-11` |       177 |   2,654 |    0.8706 | 0.8000 | **0.8338** |
+| Gold B     | `gpt-5.4-2026-03-05` |       177 |   2,654 |    0.8896 | 0.7838 |     0.8333 |
+| Gold A     | `gpt-5.2-2025-12-11` |        86 |   1,003 |    0.8571 | 0.7714 | **0.8120** |
+| Gold A     | `gpt-5.4-2026-03-05` |        86 |   1,003 |    0.7971 | 0.7857 |     0.7914 |
 
 <small>推論量は両モデルとも high。詳細は <a href="docs/alignment/README.md">docs/alignment/README.md</a> を参照。</small>
 
@@ -81,53 +84,47 @@ flowchart LR
 
 ベースラインでは Gold B を開発用データとして手法・設定を選択し、Gold A への転移評価で汎化性能を確認しました。
 
-| 評価データ | 手法 | 設定 | Precision | Recall | F1 |
-|---|---|---|---:|---:|---:|
-| Gold B | Pairwise lexical | LogisticRegression | 0.5169 | 0.5784 | 0.5459 |
-| Gold B | E5 ranking | `intfloat/multilingual-e5-large`, top-1 | 0.6723 | 0.6432 | 0.6575 |
-| Gold B | BGE reranker | `BAAI/bge-reranker-v2-m3`, top-1 | 0.5989 | 0.5730 | 0.5856 |
-| Gold B | Hybrid best | lexical + E5 ranking | 0.6211 | 0.7622 | **0.6845** |
-| Gold A | Gold B hybrid 転移 | Gold B で学習したモデルをそのまま適用 | 0.4237 | 0.7143 | 0.5319 |
-| Gold A | BGE reranker | `BAAI/bge-reranker-v2-m3`, top-1 | 0.5000 | 0.6143 | 0.5513 |
+| 評価データ | 手法               | 設定                                    | Precision | Recall |         F1 |
+| ---------- | ------------------ | --------------------------------------- | --------: | -----: | ---------: |
+| Gold B     | Pairwise lexical   | LogisticRegression                      |    0.5169 | 0.5784 |     0.5459 |
+| Gold B     | E5 ranking         | `intfloat/multilingual-e5-large`, top-1 |    0.6723 | 0.6432 |     0.6575 |
+| Gold B     | BGE reranker       | `BAAI/bge-reranker-v2-m3`, top-1        |    0.5989 | 0.5730 |     0.5856 |
+| Gold B     | Hybrid best        | lexical + E5 ranking                    |    0.6211 | 0.7622 | **0.6845** |
+| Gold A     | Gold B hybrid 転移 | Gold B で学習したモデルをそのまま適用   |    0.4237 | 0.7143 |     0.5319 |
+| Gold A     | BGE reranker       | `BAAI/bge-reranker-v2-m3`, top-1        |    0.5000 | 0.6143 |     0.5513 |
 
 <small>詳細は <a href="docs/baselines/README.md">docs/baselines/README.md</a> を参照。</small>
 
-**LLM アラインメント（F1 = 0.83）はベースライン最高値（F1 = 0.68）を 15 ポイント上回りました。**  
+LLM アラインメント（F1 = 0.83）はベースライン最高値（F1 = 0.68）を 15 ポイント上回りました。
+
 Gold B で選んだ Hybrid best を Gold A に転移させると F1 = 0.53 に低下することから、Gold A と Gold B は特性が異なり、レコード単位で質が異なるアラインメントタスクであることが確認できました。
 
 ---
 
 ## 研究で行ったこと
 
-- **2 段階パイプラインの設計・実装**  
-  大規模辞書間の全候補ペアを現実的な規模に絞るため、候補取得（term expansion → BabelNet 検索）と候補判定（LLM アラインメント）を分離した 2 段階構成を設計・実装した。
-
-- **4 種のベースラインの実装と系統的な比較分析**  
-  文字列・語彙特徴量 + LogisticRegression（Pairwise lexical）、多言語埋め込みランキング（multilingual E5）、事前学習済み cross-encoder（BGE reranker）、埋め込みと語彙特徴を組み合わせたハイブリッド手法の 4 種を実装した。Gold B での GroupKFold による設定選択から Gold A への転移評価まで一貫して実施し、データセット間の特性差を定量的に明らかにした。
-
-- **LLM プロンプト設計と出力スキーマの定義**  
-  4 値分類（`EQUAL / HYPERNYM / HYPONYM / NONE`）の判定基準を few-shot 例付き詳細プロンプト（v1）として設計した。JSON Schema を用いた構造化出力の強制と、入出力の整合性検証（`synset_id` の集合一致など）を実装した。
-
-- **多角的な評価設計**  
-  pairwise F1 と record 単位の exact match を組み合わせた多角的な評価を設計し、ペア単位とレコード単位の両面から誤り傾向を分析した（詳細は[卒業論文](https://drive.google.com/file/d/1ReCxskEOtIV67eivSDymeZBjhWBMT48v/view?usp=sharing/)参照）。
-
-- **正解データの整備**  
-  国立国語研究所と連携し、Gold A・Gold B の正解アノテーション整備に参加した。
+| 取り組み | 概要 |
+|---|---|
+| 2 段階パイプラインの設計・実装 | 候補取得（term expansion → BabelNet 検索）と候補判定（LLM）を分離した構成を設計・実装 |
+| 4 種のベースライン実装と比較分析 | Pairwise lexical・E5 ranking・BGE reranker・Hybrid を実装。Gold B で設定選択し Gold A への転移評価まで一貫して実施 |
+| LLM プロンプト設計と出力スキーマの定義 | 4 値分類（`EQUAL / HYPERNYM / HYPONYM / NONE`）の few-shot プロンプトを設計。JSON Schema で構造化出力を強制し入出力の整合性を検証 |
+| 多角的な評価設計 | pairwise F1 と record exact match を組み合わせ、ペア単位・レコード単位の両面から誤り傾向を分析（詳細は[卒業論文](https://drive.google.com/file/d/1ReCxskEOtIV67eivSDymeZBjhWBMT48v/view?usp=sharing/)参照） |
+| 正解データの整備 | 国立国語研究所と連携し、Gold A・Gold B のアノテーション整備に参加 |
 
 ---
 
 ## 技術スタック
 
-| カテゴリ | 内容 |
-|---|---|
-| 言語 | Python 3.8+ |
-| データ処理 | pandas, NumPy |
-| データ形式 | pickle, parquet, JSON, CSV |
-| ベースライン | scikit-learn, PyTorch |
-| 埋め込み・reranker | multilingual E5, MPNet, BGE reranker |
-| LLM API | OpenAI Responses API |
-| BabelNet 連携 | babelnet, zerorpc, Docker |
-| 実験環境管理 | [requirements.txt](requirements.txt) / [requirements-babelnet-py38.txt](requirements-babelnet-py38.txt) |
+| カテゴリ           | 内容                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| 言語               | Python 3.8+                                                                                             |
+| データ処理         | pandas, NumPy                                                                                           |
+| データ形式         | pickle, parquet, JSON, CSV                                                                              |
+| ベースライン       | scikit-learn, PyTorch                                                                                   |
+| 埋め込み・reranker | multilingual E5, MPNet, BGE reranker                                                                    |
+| LLM API            | OpenAI Responses API                                                                                    |
+| BabelNet 連携      | babelnet, zerorpc, Docker                                                                               |
+| 実験環境管理       | [requirements.txt](requirements.txt) / [requirements-babelnet-py38.txt](requirements-babelnet-py38.txt) |
 
 BabelNet 関連の処理は Python 3.8 / `.venv38` 環境に分離しています（後述）。
 
@@ -190,7 +187,7 @@ py -3.8 -m venv .venv38
 ```
 
 OpenAI API を使う処理では `.vscode/openai-key.json` に API キー設定が必要です。  
-BabelNet を使う処理では、`babelnet_conf.yml` の `BABELNET_DIR` をご自身の BabelNet 本体のパスに書き換えてください。このファイルは BabelNet RPC サーバーへの接続設定（URL・ディレクトリパス）を管理しています。
+BabelNet を使う処理では、BabelNet 本体のディレクトリを `BABELNET_DIR` に指定してください。
 
 ### ステージ 1：候補取得
 
@@ -324,13 +321,13 @@ python src/alignment/evaluate_alignment.py `
 
 ## 詳細ドキュメント
 
-| ドキュメント | 内容 |
-|---|---|
-| [docs/alignment/README.md](docs/alignment/README.md) | LLM アラインメントの全体像・評価結果・プロンプト設計 |
-| [docs/baselines/README.md](docs/baselines/README.md) | ベースラインの手法・結果・実験ログ |
-| [docs/term_expansion/README.md](docs/term_expansion/README.md) | 候補語拡張の位置づけと実装 |
-| [data/README.md](data/README.md) | データ構造とライセンス方針 |
-| [outputs/README.md](outputs/README.md) | 公開版 outputs の構成と方針 |
+| ドキュメント                                                   | 内容                                                 |
+| -------------------------------------------------------------- | ---------------------------------------------------- |
+| [docs/alignment/README.md](docs/alignment/README.md)           | LLM アラインメントの全体像・評価結果・プロンプト設計 |
+| [docs/baselines/README.md](docs/baselines/README.md)           | ベースラインの手法・結果・実験ログ                   |
+| [docs/term_expansion/README.md](docs/term_expansion/README.md) | 候補語拡張の位置づけと実装                           |
+| [data/README.md](data/README.md)                               | データ構造とライセンス方針                           |
+| [outputs/README.md](outputs/README.md)                         | 公開版 outputs の構成と方針                          |
 
 ---
 
