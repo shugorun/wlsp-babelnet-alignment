@@ -1,0 +1,386 @@
+{
+  "results": [
+    {
+      "record_id": "59730",
+      "aliases_ja": [
+        "祥雲",
+        "慶雲",
+        "紫雲"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ずいうん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "雲"
+      ],
+      "hypernyms_en": [
+        "cloud"
+      ]
+    },
+    {
+      "record_id": "59789",
+      "aliases_ja": [
+        "煙霧",
+        "煙靄",
+        "霞"
+      ],
+      "aliases_en": [
+        "haze"
+      ],
+      "variants_ja": [
+        "えんか"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "霧"
+      ],
+      "hypernyms_en": [
+        "fog"
+      ]
+    },
+    {
+      "record_id": "59794",
+      "aliases_ja": [
+        "通り雨",
+        "にわか雨",
+        "夕立"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ひとあめ",
+        "ひと雨"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "雨"
+      ],
+      "hypernyms_en": [
+        "rain"
+      ]
+    },
+    {
+      "record_id": "59833",
+      "aliases_ja": [
+        "驟雨"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "すこおる",
+        "スコオル"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "突風",
+        "風"
+      ],
+      "hypernyms_en": [
+        "gust"
+      ]
+    },
+    {
+      "record_id": "59855",
+      "aliases_ja": [
+        "梅雨期"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "つゆ",
+        "ばいう",
+        "黴雨"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "雨季"
+      ],
+      "hypernyms_en": [
+        "season"
+      ]
+    },
+    {
+      "record_id": "59913",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "はつかんせつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "冠雪"
+      ],
+      "hypernyms_en": [
+        "snowcap"
+      ]
+    },
+    {
+      "record_id": "59985",
+      "aliases_ja": [
+        "曇天",
+        "陰天",
+        "曇り空"
+      ],
+      "aliases_en": [
+        "overcast",
+        "cloud cover"
+      ],
+      "variants_ja": [
+        "くもり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "天気"
+      ],
+      "hypernyms_en": [
+        "weather"
+      ]
+    },
+    {
+      "record_id": "60063",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "土用浪",
+        "どようなみ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "高波",
+        "波"
+      ],
+      "hypernyms_en": [
+        "wave"
+      ]
+    },
+    {
+      "record_id": "60189",
+      "aliases_ja": [
+        "環境汚濁",
+        "汚染"
+      ],
+      "aliases_en": [
+        "pollution",
+        "contamination"
+      ],
+      "variants_ja": [
+        "かんきょうおせん",
+        "環境污染"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "汚染"
+      ],
+      "hypernyms_en": [
+        "pollution"
+      ]
+    },
+    {
+      "record_id": "60369",
+      "aliases_ja": [
+        "天空",
+        "大空"
+      ],
+      "aliases_en": [
+        "heavens",
+        "firmament"
+      ],
+      "variants_ja": [
+        "御空",
+        "みそら"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "空"
+      ],
+      "hypernyms_en": [
+        "sky"
+      ]
+    },
+    {
+      "record_id": "60493",
+      "aliases_ja": [
+        "多重星",
+        "連星"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "じゅうせい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "恒星"
+      ],
+      "hypernyms_en": [
+        "star"
+      ]
+    },
+    {
+      "record_id": "60627",
+      "aliases_ja": [
+        "六大陸"
+      ],
+      "aliases_en": [
+        "six continents"
+      ],
+      "variants_ja": [
+        "ろくだいしゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "大陸"
+      ],
+      "hypernyms_en": [
+        "continent"
+      ]
+    },
+    {
+      "record_id": "60642",
+      "aliases_ja": [
+        "地下",
+        "地底"
+      ],
+      "aliases_en": [
+        "subsurface"
+      ],
+      "variants_ja": [
+        "ちちゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "地面"
+      ],
+      "hypernyms_en": [
+        "ground"
+      ]
+    },
+    {
+      "record_id": "60654",
+      "aliases_ja": [
+        "地力",
+        "肥沃度"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちみ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "土壌"
+      ],
+      "hypernyms_en": [
+        "fertility"
+      ]
+    },
+    {
+      "record_id": "60752",
+      "aliases_ja": [
+        "ズリ山",
+        "捨石山"
+      ],
+      "aliases_en": [
+        "spoil heap",
+        "spoil tip"
+      ],
+      "variants_ja": [
+        "ボタ山",
+        "ぼたやま"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "堆積物"
+      ],
+      "hypernyms_en": [
+        "heap"
+      ]
+    },
+    {
+      "record_id": "60796",
+      "aliases_ja": [
+        "シールド火山"
+      ],
+      "aliases_en": [
+        "shield volcano"
+      ],
+      "variants_ja": [
+        "楯状火山",
+        "たてじょうかざん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "火山"
+      ],
+      "hypernyms_en": [
+        "volcano"
+      ]
+    },
+    {
+      "record_id": "60828",
+      "aliases_ja": [
+        "坂道",
+        "傾斜"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "さか",
+        "阪"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "斜面",
+        "地形"
+      ],
+      "hypernyms_en": [
+        "terrain"
+      ]
+    },
+    {
+      "record_id": "60915",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちむにい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "61116",
+      "aliases_ja": [
+        "海峡",
+        "瀬戸"
+      ],
+      "aliases_en": [
+        "sound"
+      ],
+      "variants_ja": [
+        "すいどう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "水路"
+      ],
+      "hypernyms_en": [
+        "passage"
+      ]
+    },
+    {
+      "record_id": "61129",
+      "aliases_ja": [
+        "離島",
+        "絶島"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ことう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "島"
+      ],
+      "hypernyms_en": [
+        "island"
+      ]
+    }
+  ]
+}

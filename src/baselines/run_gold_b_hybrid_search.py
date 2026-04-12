@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_hybrid_search.py --pair-features outputs/baselines/gold_B/pair_features.pkl --rankings outputs/baselines/gold_B_ranking/rankings.pkl --output-dir outputs/baselines/gold_B_hybrid_search --best-output-dir outputs/baselines/gold_B_hybrid_best
 """Search reproducible gold_B hybrid settings.
 
 This script combines the pairwise baseline features with ranking outputs,
@@ -7,6 +9,7 @@ configuration under outputs/baselines/gold_B_hybrid_best.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import json
 import pickle
@@ -27,17 +30,11 @@ from baselines.experiment_log import append_run_log
 
 ROOT = Path(__file__).resolve().parents[2]
 
-PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
-RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
+DEFAULT_PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
+DEFAULT_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_search"
-SUMMARY_PATH = OUTPUT_DIR / "summary.pkl"
-BEST_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_best"
-BEST_FEATURES_PATH = BEST_OUTPUT_DIR / "pair_features_hybrid.pkl"
-BEST_OOF_PATH = BEST_OUTPUT_DIR / "oof_predictions.pkl"
-BEST_METRICS_PATH = BEST_OUTPUT_DIR / "metrics.pkl"
-BEST_MODEL_PATH = BEST_OUTPUT_DIR / "logreg_model.pkl"
-BEST_CONFIG_PATH = BEST_OUTPUT_DIR / "config.json"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_search"
+DEFAULT_BEST_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_best"
 
 RANDOM_STATE = 0
 N_SPLITS = 5
@@ -101,6 +98,13 @@ FEATURE_PRESETS = {
 
 # Each preset adds a different subset of ranking features on top of the
 # lexical pairwise baseline. The search keeps this comparison explicit.
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 def binary_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
     """Return binary classification metrics."""
@@ -399,9 +403,14 @@ def search_best_config(pair_df: pd.DataFrame, rankings: pd.DataFrame) -> tuple[p
     return summary_df, best
 
 
-def export_best(best: dict[str, object]) -> None:
+def export_best(best: dict[str, object], best_output_dir: Path) -> dict[str, Path]:
     """Persist the best reproducible hybrid configuration."""
-    BEST_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    best_output_dir.mkdir(parents=True, exist_ok=True)
+    best_features_path = best_output_dir / "pair_features_hybrid.pkl"
+    best_oof_path = best_output_dir / "oof_predictions.pkl"
+    best_metrics_path = best_output_dir / "metrics.pkl"
+    best_model_path = best_output_dir / "logreg_model.pkl"
+    best_config_path = best_output_dir / "config.json"
 
     hybrid_df = best["hybrid_df"]
     oof_df = best["oof_df"]
@@ -409,8 +418,8 @@ def export_best(best: dict[str, object]) -> None:
     feature_columns = best["feature_columns"]
     final_model = train_final_model(hybrid_df, feature_columns)
 
-    hybrid_df.to_pickle(BEST_FEATURES_PATH)
-    oof_df.to_pickle(BEST_OOF_PATH)
+    hybrid_df.to_pickle(best_features_path)
+    oof_df.to_pickle(best_oof_path)
 
     metrics_df = pd.DataFrame(
         [
@@ -429,10 +438,10 @@ def export_best(best: dict[str, object]) -> None:
             }
         ]
     )
-    with BEST_METRICS_PATH.open("wb") as f:
+    with best_metrics_path.open("wb") as f:
         pickle.dump({"summary": metrics_df, "folds": fold_df}, f)
 
-    with BEST_MODEL_PATH.open("wb") as f:
+    with best_model_path.open("wb") as f:
         pickle.dump(final_model, f)
 
     # Save a lightweight config alongside the full model bundle so the same
@@ -446,23 +455,43 @@ def export_best(best: dict[str, object]) -> None:
         "feature_columns": feature_columns,
         "threshold": final_model["threshold"],
     }
-    BEST_CONFIG_PATH.write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
+    best_config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {
+        "features": best_features_path,
+        "oof": best_oof_path,
+        "metrics": best_metrics_path,
+        "model": best_model_path,
+        "config": best_config_path,
+    }
+
+
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pair-features", type=Path, default=DEFAULT_PAIR_FEATURES_PATH)
+    ap.add_argument("--rankings", type=Path, default=DEFAULT_RANKINGS_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    ap.add_argument("--best-output-dir", type=Path, default=DEFAULT_BEST_OUTPUT_DIR)
+    return ap.parse_args()
 
 
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    output_dir = args.output_dir
+    summary_path = output_dir / "summary.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # The hybrid stage reuses exported artifacts from the lexical and ranking
     # baselines instead of rebuilding them here.
-    pair_df = pd.read_pickle(PAIR_FEATURES_PATH)
-    rankings = pd.read_pickle(RANKINGS_PATH)
+    pair_df = pd.read_pickle(args.pair_features)
+    rankings = pd.read_pickle(args.rankings)
 
     summary_df, best = search_best_config(pair_df, rankings)
-    with SUMMARY_PATH.open("wb") as f:
+    with summary_path.open("wb") as f:
         pickle.dump({"summary": summary_df}, f)
     print(summary_df.head(20).to_string(index=False))
 
-    export_best(best)
+    best_paths = export_best(best, args.best_output_dir)
 
     append_run_log(
         run_name="gold_B_hybrid_search",
@@ -483,12 +512,12 @@ def main() -> None:
             "best_record_exact_match_rate": best["record_exact_match_rate"],
         },
         outputs=[
-            str(SUMMARY_PATH.relative_to(ROOT)),
-            str(BEST_FEATURES_PATH.relative_to(ROOT)),
-            str(BEST_OOF_PATH.relative_to(ROOT)),
-            str(BEST_METRICS_PATH.relative_to(ROOT)),
-            str(BEST_MODEL_PATH.relative_to(ROOT)),
-            str(BEST_CONFIG_PATH.relative_to(ROOT)),
+            path_for_log(summary_path),
+            path_for_log(best_paths["features"]),
+            path_for_log(best_paths["oof"]),
+            path_for_log(best_paths["metrics"]),
+            path_for_log(best_paths["model"]),
+            path_for_log(best_paths["config"]),
         ],
     )
 

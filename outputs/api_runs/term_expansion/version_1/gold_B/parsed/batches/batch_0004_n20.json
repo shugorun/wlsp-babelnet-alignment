@@ -1,0 +1,356 @@
+{
+  "results": [
+    {
+      "record_id": "61659",
+      "aliases_ja": [
+        "高木"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "きょうぼく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61667",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "らくようじゅ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61669",
+      "aliases_ja": [
+        "雑樹"
+      ],
+      "aliases_en": [
+        "coppice"
+      ],
+      "variants_ja": [
+        "ぞうき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61671",
+      "aliases_ja": [
+        "花樹",
+        "観賞樹"
+      ],
+      "aliases_en": [
+        "ornamental tree",
+        "flowering tree"
+      ],
+      "variants_ja": [
+        "かぼく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61709",
+      "aliases_ja": [
+        "海藻",
+        "藻"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "かいそう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "藻類"
+      ],
+      "hypernyms_en": [
+        "algae"
+      ]
+    },
+    {
+      "record_id": "61715",
+      "aliases_ja": [
+        "紅藻類"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "こうそう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "藻類"
+      ],
+      "hypernyms_en": [
+        "algae"
+      ]
+    },
+    {
+      "record_id": "61741",
+      "aliases_ja": [
+        "緑黄野菜"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "りょくおうしょくやさい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "野菜"
+      ],
+      "hypernyms_en": [
+        "vegetable"
+      ]
+    },
+    {
+      "record_id": "61752",
+      "aliases_ja": [
+        "柴"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "粗朶"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "枝"
+      ],
+      "hypernyms_en": [
+        "branch",
+        "wood"
+      ]
+    },
+    {
+      "record_id": "61831",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "はざくら"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "桜"
+      ],
+      "hypernyms_en": [
+        "cherry"
+      ]
+    },
+    {
+      "record_id": "61836",
+      "aliases_ja": [],
+      "aliases_en": [
+        "prunus yedoensis"
+      ],
+      "variants_ja": [
+        "ソメイヨシノ",
+        "染井吉野"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "桜"
+      ],
+      "hypernyms_en": [
+        "cherry tree"
+      ]
+    },
+    {
+      "record_id": "61846",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ビワ",
+        "枇杷"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "果樹"
+      ],
+      "hypernyms_en": [
+        "fruit tree"
+      ]
+    },
+    {
+      "record_id": "61884",
+      "aliases_ja": [
+        "夏みかん",
+        "夏蜜柑"
+      ],
+      "aliases_en": [
+        "summer orange",
+        "citrus natsudaidai"
+      ],
+      "variants_ja": [
+        "夏柑",
+        "ナツカン"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "柑橘類"
+      ],
+      "hypernyms_en": [
+        "citrus"
+      ]
+    },
+    {
+      "record_id": "62030",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ミスズ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "笹"
+      ],
+      "hypernyms_en": [
+        "bamboo grass"
+      ]
+    },
+    {
+      "record_id": "62129",
+      "aliases_ja": [
+        "オランダナデシコ"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "カーネイション"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ナデシコ"
+      ],
+      "hypernyms_en": [
+        "dianthus"
+      ]
+    },
+    {
+      "record_id": "62234",
+      "aliases_ja": [],
+      "aliases_en": [
+        "pueraria montana"
+      ],
+      "variants_ja": [
+        "葛",
+        "クズ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "マメ科",
+        "つる植物"
+      ],
+      "hypernyms_en": [
+        "vine",
+        "legume"
+      ]
+    },
+    {
+      "record_id": "62340",
+      "aliases_ja": [],
+      "aliases_en": [
+        "patrinia scabiosifolia"
+      ],
+      "variants_ja": [
+        "オミナエシ",
+        "女郎花"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "草"
+      ],
+      "hypernyms_en": [
+        "herb"
+      ]
+    },
+    {
+      "record_id": "62418",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "菅",
+        "スゲ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "カヤツリグサ科"
+      ],
+      "hypernyms_en": [
+        "cyperaceae"
+      ]
+    },
+    {
+      "record_id": "62508",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "蘆薈"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "多肉植物"
+      ],
+      "hypernyms_en": [
+        "succulent"
+      ]
+    },
+    {
+      "record_id": "62532",
+      "aliases_ja": [],
+      "aliases_en": [
+        "dioscorea tokoro"
+      ],
+      "variants_ja": [
+        "トコロ",
+        "野老"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ヤマノイモ属"
+      ],
+      "hypernyms_en": [
+        "yam",
+        "dioscorea"
+      ]
+    },
+    {
+      "record_id": "62541",
+      "aliases_ja": [
+        "番紅花"
+      ],
+      "aliases_en": [
+        "crocus sativus"
+      ],
+      "variants_ja": [
+        "さふらん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "クロッカス"
+      ],
+      "hypernyms_en": [
+        "crocus"
+      ]
+    }
+  ]
+}

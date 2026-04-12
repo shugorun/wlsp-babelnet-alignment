@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/term_expansion/run_term_expansion.py --model gpt-5.2 --input-dir data/interim/api_inputs/term_expansion/version_1/gold_A --out-dir outputs/api_runs/term_expansion/version_1/gold_A --key_path .vscode/openai-key.json
 from __future__ import annotations
 
 import argparse
@@ -349,8 +351,15 @@ def call_with_retry(
 # -----------------------------
 
 DEFAULT_MODEL = "gpt-5.2"
+DEFAULT_INPUT_DIR = Path("data/interim/api_inputs/term_expansion/version_1/gold_A")
+DEFAULT_OUT_DIR = Path("outputs/api_runs/term_expansion/version_1/gold_A")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--model", type=str, default=DEFAULT_MODEL)
+    ap.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     ap.add_argument("--batch_size", type=int, default=20)
     ap.add_argument("--max_files", type=int, default=0)
     ap.add_argument("--force", action="store_true")
@@ -363,8 +372,8 @@ def main() -> None:
     cfg = load_openai_config(args.key_path)
     client = OpenAI(api_key=cfg["openai_api_key"])
 
-    input_dir = Path("data/interim/api_inputs/term_expansion/version_1/gold_A")
-    out_dir = Path("outputs/api_runs/term_expansion/version_1/gold_A")
+    input_dir = args.input_dir
+    out_dir = args.out_dir
 
     resp_dir = out_dir / "responses"
     parsed_batch_dir = out_dir / "parsed" / "batches"
@@ -377,7 +386,7 @@ def main() -> None:
 
     batches = chunk_list(files, args.batch_size)
 
-    print(f"[INFO] model={DEFAULT_MODEL}")
+    print(f"[INFO] model={args.model}")
     print(f"[INFO] cache_key={args.cache_key}")
     print(f"[INFO] files={len(files)} input_dir={input_dir}")
     print(f"[INFO] batches={len(batches)} batch_size={args.batch_size}")
@@ -410,7 +419,7 @@ def main() -> None:
         try:
             resp = call_with_retry(
                 client=client,
-                model=DEFAULT_MODEL,
+                model=args.model,
                 system_prompt=SYSTEM_PROMPT,
                 user_payload=user_payload,
                 schema=OUTPUT_SCHEMA,

@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# Usage: python src/alignment/alignment_inputs.py --records data/gold/gold_A_records.pkl --babelnet data/processed/babelnet_.pkl --out-dir data/interim/api_inputs/alignment/version_1/gold_A
 # src/prepare_inputs.py
 from __future__ import annotations
+import argparse
 import json
 from typing import Any, Dict, List, Iterable
 from pathlib import Path
@@ -9,6 +12,9 @@ from itertools import chain
 
 CHUNK_SIZE = 50
 NA = "N/A"
+DEFAULT_RECORDS_PATH = Path("data/gold/gold_A_records.pkl")
+DEFAULT_BABELNET_PATH = Path("data/processed/babelnet_.pkl")
+DEFAULT_OUT_DIR = Path("data/interim/api_inputs/alignment/version_1/gold_A-ex")
 
 
 def _as_list(x) -> List[Any]:
@@ -86,18 +92,27 @@ def build_record(records: pd.DataFrame, babelnet: pd.DataFrame, rid: int) -> Dic
     }
 
 
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--babelnet", type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    return ap.parse_args()
+
+
 def main():
+    args = parse_args()
+
     # setting directory for outputs
-    OUT_DIR = "data/interim/api_inputs/alignment/version_1/gold_A-ex"
-    out_dir = Path(OUT_DIR)
+    out_dir = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # load rids
-    gold = pd.read_pickle("data/gold/gold_A_records.pkl")
+    gold = pd.read_pickle(args.records)
     rids = gold.index.tolist()
 
     # load babelnet
-    babelnet = pd.read_pickle("data/processed/babelnet_.pkl")
+    babelnet = pd.read_pickle(args.babelnet)
 
     # build inputs
     manifest = []
@@ -120,9 +135,9 @@ def main():
 
         manifest.append({"record_id": rec["record_id"], "total_candidates": len(cands), "num_chunks": (k if cands else 0)})
 
-    pd.DataFrame(manifest).to_csv(f"{OUT_DIR}/manifest.csv", index=False, encoding="utf-8-sig")
-    print(f"[OK] wrote {len(manifest)} records to: {OUT_DIR}")
-    print(f"[OK] manifest: {OUT_DIR}/manifest.csv")
+    pd.DataFrame(manifest).to_csv(out_dir / "manifest.csv", index=False, encoding="utf-8-sig")
+    print(f"[OK] wrote {len(manifest)} records to: {out_dir}")
+    print(f"[OK] manifest: {out_dir / 'manifest.csv'}")
 
 
 if __name__ == "__main__":

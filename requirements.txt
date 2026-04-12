@@ -1,0 +1,32 @@
+# Main experiment environment (Python 3.11+).
+# BabelNet RPC/data collection uses Python 3.8 and a separate requirements file:
+#   requirements-babelnet-py38.txt
+#
+# To install:
+#   py -m venv .venv
+#   .\.venv\Scripts\Activate.ps1
+#   python -m pip install -r requirements.txt
+#
+# To pin exact versions after install:
+#   pip freeze > requirements.lock.txt
+
+# Data processing
+numpy>=1.26.0
+pandas>=2.0.0
+pyarrow>=14.0.0
+
+# Machine learning
+scikit-learn>=1.3.0
+
+# Deep learning / embeddings
+torch>=2.1.0
+transformers>=4.40.0
+sentence-transformers>=3.0.0
+sentencepiece>=0.1.99
+
+# LLM API
+# Responses API support requires openai >= 1.66.0
+openai>=1.66.0
+
+# Utilities
+tqdm>=4.66.0

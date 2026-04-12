@@ -1,0 +1,402 @@
+{
+  "results": [
+    {
+      "record_id": "57576",
+      "aliases_ja": [
+        "生き物",
+        "有機体",
+        "生命体"
+      ],
+      "aliases_en": [
+        "lifeform"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "57753",
+      "aliases_ja": [
+        "火明かり",
+        "火光",
+        "灯火"
+      ],
+      "aliases_en": [
+        "fireglow"
+      ],
+      "variants_ja": [
+        "火かげ",
+        "ほかげ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "光",
+        "明かり"
+      ],
+      "hypernyms_en": [
+        "light",
+        "illumination"
+      ]
+    },
+    {
+      "record_id": "57924",
+      "aliases_ja": [
+        "玉虫光沢",
+        "イリデッセンス"
+      ],
+      "aliases_en": [
+        "iridescence",
+        "iridescent color"
+      ],
+      "variants_ja": [
+        "たまむしいろ",
+        "玉虫いろ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "色"
+      ],
+      "hypernyms_en": [
+        "color"
+      ]
+    },
+    {
+      "record_id": "58248",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "チョン"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "擬音語"
+      ],
+      "hypernyms_en": [
+        "onomatopoeia"
+      ]
+    },
+    {
+      "record_id": "58349",
+      "aliases_ja": [
+        "ハーモニー",
+        "協和"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "和聲"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "音楽",
+        "音"
+      ],
+      "hypernyms_en": [
+        "music",
+        "sound"
+      ]
+    },
+    {
+      "record_id": "58350",
+      "aliases_ja": [
+        "ハーモニー",
+        "協和"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "和聲"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "音楽",
+        "音"
+      ],
+      "hypernyms_en": [
+        "music",
+        "sound"
+      ]
+    },
+    {
+      "record_id": "58479",
+      "aliases_ja": [
+        "混濁",
+        "濁り"
+      ],
+      "aliases_en": [
+        "opalescence"
+      ],
+      "variants_ja": [
+        "はくだく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "濁り"
+      ],
+      "hypernyms_en": [
+        "opacity"
+      ]
+    },
+    {
+      "record_id": "58532",
+      "aliases_ja": [
+        "弾性物体",
+        "弾性物質"
+      ],
+      "aliases_en": [
+        "elastic material",
+        "elastic solid"
+      ],
+      "variants_ja": [
+        "彈性體"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "物体",
+        "固体"
+      ],
+      "hypernyms_en": [
+        "body",
+        "solid"
+      ]
+    },
+    {
+      "record_id": "58545",
+      "aliases_ja": [
+        "コロイド溶液"
+      ],
+      "aliases_en": [
+        "colloidal solution"
+      ],
+      "variants_ja": [
+        "ソル"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "コロイド",
+        "分散系"
+      ],
+      "hypernyms_en": [
+        "colloid",
+        "dispersion"
+      ]
+    },
+    {
+      "record_id": "58573",
+      "aliases_ja": [
+        "鉄粉末"
+      ],
+      "aliases_en": [
+        "iron filings"
+      ],
+      "variants_ja": [
+        "てっぷん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "粉末",
+        "金属粉"
+      ],
+      "hypernyms_en": [
+        "powder",
+        "metal powder"
+      ]
+    },
+    {
+      "record_id": "58619",
+      "aliases_ja": [
+        "放射性同位体",
+        "放射性アイソトープ"
+      ],
+      "aliases_en": [
+        "radionuclide"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "同位体",
+        "核種"
+      ],
+      "hypernyms_en": [
+        "isotope",
+        "nuclide"
+      ]
+    },
+    {
+      "record_id": "58809",
+      "aliases_ja": [
+        "ショ糖",
+        "スクロース"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "しょとう",
+        "しょ糖"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "二糖",
+        "糖類",
+        "糖"
+      ],
+      "hypernyms_en": [
+        "disaccharide",
+        "sugar"
+      ]
+    },
+    {
+      "record_id": "58991",
+      "aliases_ja": [
+        "ガーネット",
+        "柘榴石"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ざくろいし",
+        "ザクロ石"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "鉱物",
+        "宝石"
+      ],
+      "hypernyms_en": [
+        "mineral",
+        "gemstone"
+      ]
+    },
+    {
+      "record_id": "59261",
+      "aliases_ja": [
+        "止水",
+        "滞水"
+      ],
+      "aliases_en": [
+        "still water",
+        "standing water"
+      ],
+      "variants_ja": [
+        "せいすい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "水"
+      ],
+      "hypernyms_en": [
+        "water"
+      ]
+    },
+    {
+      "record_id": "59308",
+      "aliases_ja": [
+        "つらら"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ひょうちゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "氷"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "59459",
+      "aliases_ja": [
+        "主震"
+      ],
+      "aliases_en": [
+        "mainshock"
+      ],
+      "variants_ja": [
+        "ほんしん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "地震"
+      ],
+      "hypernyms_en": [
+        "earthquake"
+      ]
+    },
+    {
+      "record_id": "59701",
+      "aliases_ja": [],
+      "aliases_en": [
+        "zephyr"
+      ],
+      "variants_ja": [
+        "くんぷう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "風",
+        "そよ風"
+      ],
+      "hypernyms_en": [
+        "wind",
+        "breeze"
+      ]
+    },
+    {
+      "record_id": "60507",
+      "aliases_ja": [
+        "遊星",
+        "プラネット"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "わくせい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "天体"
+      ],
+      "hypernyms_en": [
+        "celestial body"
+      ]
+    },
+    {
+      "record_id": "60765",
+      "aliases_ja": [
+        "山頂",
+        "頂上",
+        "峰"
+      ],
+      "aliases_en": [
+        "peak",
+        "mountaintop"
+      ],
+      "variants_ja": [
+        "山顛",
+        "さんてん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "山",
+        "頂"
+      ],
+      "hypernyms_en": [
+        "mountain",
+        "top"
+      ]
+    },
+    {
+      "record_id": "60785",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "かざん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "地形",
+        "山"
+      ],
+      "hypernyms_en": [
+        "landform",
+        "mountain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "record_id": "66536",
+  "aliases_ja": [
+    "病変部",
+    "罹患部"
+  ],
+  "aliases_en": [
+    "lesion"
+  ],
+  "variants_ja": [
+    "かんぶ"
+  ],
+  "variants_en": [],
+  "hypernyms_ja": [
+    "部位",
+    "部分"
+  ],
+  "hypernyms_en": [
+    "body part",
+    "site"
+  ]
+}

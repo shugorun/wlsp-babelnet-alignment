@@ -1,0 +1,355 @@
+{
+  "results": [
+    {
+      "record_id": "57562",
+      "aliases_ja": [
+        "固液気"
+      ],
+      "aliases_en": [
+        "three states of matter"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "状態",
+        "相"
+      ],
+      "hypernyms_en": [
+        "state",
+        "phase"
+      ]
+    },
+    {
+      "record_id": "57565",
+      "aliases_ja": [
+        "陰陽二元論",
+        "陰陽説"
+      ],
+      "aliases_en": [
+        "yin yang"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "二元論",
+        "思想"
+      ],
+      "hypernyms_en": [
+        "dualism",
+        "philosophy"
+      ]
+    },
+    {
+      "record_id": "57650",
+      "aliases_ja": [
+        "超電導"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちょうでんどう"
+      ],
+      "variants_en": [
+        "super conductivity"
+      ],
+      "hypernyms_ja": [
+        "電気伝導",
+        "伝導"
+      ],
+      "hypernyms_en": [
+        "conductivity"
+      ]
+    },
+    {
+      "record_id": "57672",
+      "aliases_ja": [
+        "明るさ",
+        "ブリリアンス"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "かがやき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "光"
+      ],
+      "hypernyms_en": [
+        "light"
+      ]
+    },
+    {
+      "record_id": "57743",
+      "aliases_ja": [
+        "月明かり",
+        "月明"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "げっこう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "光"
+      ],
+      "hypernyms_en": [
+        "light"
+      ]
+    },
+    {
+      "record_id": "57779",
+      "aliases_ja": [
+        "反射像",
+        "鏡像"
+      ],
+      "aliases_en": [
+        "mirror image"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "像"
+      ],
+      "hypernyms_en": [
+        "image"
+      ]
+    },
+    {
+      "record_id": "57800",
+      "aliases_ja": [
+        "月光",
+        "月明"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "つきあかり",
+        "月あかり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "光"
+      ],
+      "hypernyms_en": [
+        "light"
+      ]
+    },
+    {
+      "record_id": "57880",
+      "aliases_ja": [
+        "五彩"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "色"
+      ],
+      "hypernyms_en": [
+        "color"
+      ]
+    },
+    {
+      "record_id": "58007",
+      "aliases_ja": [
+        "褐色",
+        "ブラウン"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちゃいろ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "色"
+      ],
+      "hypernyms_en": [
+        "color"
+      ]
+    },
+    {
+      "record_id": "58029",
+      "aliases_ja": [
+        "琥珀色"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "飴色"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "茶色"
+      ],
+      "hypernyms_en": [
+        "brown",
+        "color"
+      ]
+    },
+    {
+      "record_id": "58154",
+      "aliases_ja": [
+        "絵画"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "美術"
+      ],
+      "hypernyms_en": [
+        "art"
+      ]
+    },
+    {
+      "record_id": "58279",
+      "aliases_ja": [
+        "純正調",
+        "ジャストイントネーション"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "音律"
+      ],
+      "hypernyms_en": [
+        "tuning"
+      ]
+    },
+    {
+      "record_id": "58460",
+      "aliases_ja": [
+        "放射能"
+      ],
+      "aliases_en": [
+        "radioactivity"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "性質"
+      ],
+      "hypernyms_en": [
+        "property"
+      ]
+    },
+    {
+      "record_id": "58475",
+      "aliases_ja": [
+        "濁度",
+        "混濁"
+      ],
+      "aliases_en": [
+        "turbidity"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "状態"
+      ],
+      "hypernyms_en": [
+        "quality"
+      ]
+    },
+    {
+      "record_id": "58495",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "水割"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "酒",
+        "カクテル"
+      ],
+      "hypernyms_en": [
+        "drink",
+        "cocktail"
+      ]
+    },
+    {
+      "record_id": "58509",
+      "aliases_ja": [
+        "液体"
+      ],
+      "aliases_en": [
+        "liquid"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "状態",
+        "相"
+      ],
+      "hypernyms_en": [
+        "phase",
+        "state"
+      ]
+    },
+    {
+      "record_id": "58536",
+      "aliases_ja": [
+        "結晶性"
+      ],
+      "aliases_en": [
+        "crystalline solid"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "固体"
+      ],
+      "hypernyms_en": [
+        "solid"
+      ]
+    },
+    {
+      "record_id": "58569",
+      "aliases_ja": [
+        "粉末",
+        "粉体"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "固体"
+      ],
+      "hypernyms_en": [
+        "solid"
+      ]
+    },
+    {
+      "record_id": "58570",
+      "aliases_ja": [
+        "粉末",
+        "粉体"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "固体"
+      ],
+      "hypernyms_en": [
+        "solid"
+      ]
+    },
+    {
+      "record_id": "58583",
+      "aliases_ja": [
+        "原子"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "あとむ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "粒子"
+      ],
+      "hypernyms_en": [
+        "particle"
+      ]
+    }
+  ]
+}

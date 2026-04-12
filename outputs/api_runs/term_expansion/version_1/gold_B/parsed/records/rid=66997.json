@@ -1,0 +1,23 @@
+{
+  "record_id": "66997",
+  "aliases_ja": [
+    "卒中"
+  ],
+  "aliases_en": [
+    "cerebrovascular accident"
+  ],
+  "variants_ja": [
+    "のうそっちゅう"
+  ],
+  "variants_en": [
+    "cva"
+  ],
+  "hypernyms_ja": [
+    "脳血管障害",
+    "脳疾患"
+  ],
+  "hypernyms_en": [
+    "cerebrovascular disease",
+    "brain disease"
+  ]
+}

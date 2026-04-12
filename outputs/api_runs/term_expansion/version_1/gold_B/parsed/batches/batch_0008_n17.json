@@ -1,0 +1,332 @@
+{
+  "results": [
+    {
+      "record_id": "66292",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "重傷軽傷"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "傷害",
+        "外傷",
+        "けが"
+      ],
+      "hypernyms_en": [
+        "injury"
+      ]
+    },
+    {
+      "record_id": "66397",
+      "aliases_ja": [
+        "ヘルス",
+        "健康状態"
+      ],
+      "aliases_en": [
+        "wellness"
+      ],
+      "variants_ja": [
+        "けんこう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体調"
+      ],
+      "hypernyms_en": [
+        "condition"
+      ]
+    },
+    {
+      "record_id": "66472",
+      "aliases_ja": [
+        "届け出伝染病",
+        "届出感染症",
+        "法定伝染病"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "とどけいででんせんびょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "感染症",
+        "伝染病"
+      ],
+      "hypernyms_en": [
+        "infectious disease",
+        "communicable disease"
+      ]
+    },
+    {
+      "record_id": "66495",
+      "aliases_ja": [
+        "発病"
+      ],
+      "aliases_en": [
+        "onset",
+        "disease onset"
+      ],
+      "variants_ja": [
+        "はっしょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "開始"
+      ],
+      "hypernyms_en": [
+        "event"
+      ]
+    },
+    {
+      "record_id": "66496",
+      "aliases_ja": [
+        "罹患",
+        "有病"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "りびょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "疾病",
+        "病気"
+      ],
+      "hypernyms_en": [
+        "disease",
+        "illness"
+      ]
+    },
+    {
+      "record_id": "66511",
+      "aliases_ja": [
+        "発汗過多",
+        "多汗"
+      ],
+      "aliases_en": [
+        "excessive sweating"
+      ],
+      "variants_ja": [
+        "たかんしょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "発汗障害"
+      ],
+      "hypernyms_en": [
+        "sweating disorder"
+      ]
+    },
+    {
+      "record_id": "66536",
+      "aliases_ja": [
+        "病変部",
+        "罹患部"
+      ],
+      "aliases_en": [
+        "lesion"
+      ],
+      "variants_ja": [
+        "かんぶ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "部位",
+        "部分"
+      ],
+      "hypernyms_en": [
+        "body part",
+        "site"
+      ]
+    },
+    {
+      "record_id": "66577",
+      "aliases_ja": [
+        "限定責任能力"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "しんしんこうじゃく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "責任能力"
+      ],
+      "hypernyms_en": [
+        "legal defense"
+      ]
+    },
+    {
+      "record_id": "66589",
+      "aliases_ja": [
+        "双極性障害"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "躁うつ病",
+        "そううつびょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "気分障害",
+        "精神疾患"
+      ],
+      "hypernyms_en": [
+        "mood disorder",
+        "mental disorder"
+      ]
+    },
+    {
+      "record_id": "66629",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "のうえん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "炎症",
+        "脳疾患"
+      ],
+      "hypernyms_en": [
+        "inflammation",
+        "brain disease"
+      ]
+    },
+    {
+      "record_id": "66636",
+      "aliases_ja": [
+        "記憶喪失",
+        "健忘"
+      ],
+      "aliases_en": [
+        "memory loss"
+      ],
+      "variants_ja": [
+        "けんぼうしょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "記憶障害"
+      ],
+      "hypernyms_en": [
+        "memory disorder",
+        "cognitive disorder"
+      ]
+    },
+    {
+      "record_id": "66647",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "どうみゃくりゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "血管疾患",
+        "循環器疾患"
+      ],
+      "hypernyms_en": [
+        "vascular disease",
+        "cardiovascular disease"
+      ]
+    },
+    {
+      "record_id": "66657",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "しゅっけつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "症状"
+      ],
+      "hypernyms_en": [
+        "symptom"
+      ]
+    },
+    {
+      "record_id": "66709",
+      "aliases_ja": [
+        "脱毛症"
+      ],
+      "aliases_en": [
+        "alopecia"
+      ],
+      "variants_ja": [
+        "だつもう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "症状"
+      ],
+      "hypernyms_en": [
+        "symptom"
+      ]
+    },
+    {
+      "record_id": "66799",
+      "aliases_ja": [
+        "下痢",
+        "腹下し"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "くだりばら"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "消化器症状",
+        "症状"
+      ],
+      "hypernyms_en": [
+        "gastrointestinal symptom",
+        "symptom"
+      ]
+    },
+    {
+      "record_id": "66827",
+      "aliases_ja": [
+        "疥癬"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ひぜん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "皮膚病",
+        "寄生虫症"
+      ],
+      "hypernyms_en": [
+        "skin disease",
+        "parasitic disease"
+      ]
+    },
+    {
+      "record_id": "66997",
+      "aliases_ja": [
+        "卒中"
+      ],
+      "aliases_en": [
+        "cerebrovascular accident"
+      ],
+      "variants_ja": [
+        "のうそっちゅう"
+      ],
+      "variants_en": [
+        "cva"
+      ],
+      "hypernyms_ja": [
+        "脳血管障害",
+        "脳疾患"
+      ],
+      "hypernyms_en": [
+        "cerebrovascular disease",
+        "brain disease"
+      ]
+    }
+  ]
+}

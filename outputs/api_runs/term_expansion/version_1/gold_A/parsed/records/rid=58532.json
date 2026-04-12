@@ -1,0 +1,23 @@
+{
+  "record_id": "58532",
+  "aliases_ja": [
+    "弾性物体",
+    "弾性物質"
+  ],
+  "aliases_en": [
+    "elastic material",
+    "elastic solid"
+  ],
+  "variants_ja": [
+    "彈性體"
+  ],
+  "variants_en": [],
+  "hypernyms_ja": [
+    "物体",
+    "固体"
+  ],
+  "hypernyms_en": [
+    "body",
+    "solid"
+  ]
+}

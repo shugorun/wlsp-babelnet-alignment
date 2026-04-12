@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_ranking.py --model intfloat/multilingual-e5-large --records data/gold/gold_B_records.pkl --gold data/gold/gold_B.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_B_ranking
 """Rank gold_B candidates with multilingual E5 embeddings.
 
 This script rebuilds the ranking baseline with multiple query/passage text
@@ -7,6 +9,7 @@ templates inspired by the ranking implementation in ../final.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import re
@@ -27,15 +30,13 @@ from baselines.experiment_log import append_run_log
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
-GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
-BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
+DEFAULT_RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
+DEFAULT_GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
+DEFAULT_BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_ranking"
-RANKINGS_PATH = OUTPUT_DIR / "rankings.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_ranking"
 
-MODEL_NAME = "intfloat/multilingual-e5-large"
+DEFAULT_MODEL_NAME = "intfloat/multilingual-e5-large"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DTYPE = torch.float16 if DEVICE == "cuda" else torch.float32
 MAX_LENGTH = 384
@@ -62,6 +63,13 @@ SYMMETRIC_MODES = ["concise", "natural"]
 
 # The ranking script compares several text templates, including compact
 # symmetric prompts and asymmetric query/passage templates.
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 def normalize_ja_text(text: object) -> str:
     """Normalize a Japanese-like text cell."""
@@ -335,10 +343,11 @@ def build_rankings(
     records: pd.DataFrame,
     gold: pd.DataFrame,
     babelnet: pd.DataFrame,
+    model_name: str = DEFAULT_MODEL_NAME,
 ) -> pd.DataFrame:
     """Build candidate rankings for each template mode and candidate mode."""
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_fast=True)
-    model = AutoModel.from_pretrained(MODEL_NAME, dtype=DTYPE).to(DEVICE).eval()
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    model = AutoModel.from_pretrained(model_name, dtype=DTYPE).to(DEVICE).eval()
 
     record_ids = records.index.astype(int).tolist()
     candidate_sids = sorted({str(sid) for sid in gold["synset_id"].astype(str).tolist()})
@@ -455,24 +464,39 @@ def evaluate_topk(rankings: pd.DataFrame, gold: pd.DataFrame) -> pd.DataFrame:
     )
 
 
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", type=str, default=DEFAULT_MODEL_NAME)
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--gold", type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument("--babelnet", type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
+
+
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    output_dir = args.output_dir
+    rankings_path = output_dir / "rankings.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Read the same three tables as the lexical baseline, then rank the
     # gold-defined candidate set with E5 similarities.
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
-    rankings = build_rankings(records, gold, babelnet)
-    rankings.to_pickle(RANKINGS_PATH)
-    print(f"Saved rankings: {RANKINGS_PATH}")
+    rankings = build_rankings(records, gold, babelnet, model_name=args.model)
+    rankings.to_pickle(rankings_path)
+    print(f"Saved rankings: {rankings_path}")
 
     metrics = evaluate_topk(rankings, gold)
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump({"summary": metrics}, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     print(metrics.head(20).to_string(index=False))
 
@@ -482,7 +506,7 @@ def main() -> None:
         rationale="Rebuild the E5 ranking baseline on gold_B and compare multiple query / passage templates, including templates inspired by ../final.",
         script_path="src/baselines/run_gold_b_ranking.py",
         params={
-            "model_name": MODEL_NAME,
+            "model_name": args.model,
             "n_query_modes": len(sorted(set(SYMMETRIC_MODES + QUERY_MODES))),
             "n_passage_modes": len(sorted(set(SYMMETRIC_MODES + PASSAGE_MODES))),
             "n_text_modes": len(get_mode_specs()),
@@ -500,8 +524,8 @@ def main() -> None:
             "best_pair_recall": best_row["recall_equal"],
         },
         outputs=[
-            str(RANKINGS_PATH.relative_to(ROOT)),
-            str(METRICS_PATH.relative_to(ROOT)),
+            path_for_log(rankings_path),
+            path_for_log(metrics_path),
         ],
     )
 

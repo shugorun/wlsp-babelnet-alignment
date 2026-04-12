@@ -1,0 +1,430 @@
+{
+  "results": [
+    {
+      "record_id": "63989",
+      "aliases_ja": [
+        "オマールエビ",
+        "オマール海老"
+      ],
+      "aliases_en": [
+        "homarus",
+        "clawed lobster"
+      ],
+      "variants_ja": [
+        "ロブスタ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "甲殻類",
+        "十脚目",
+        "エビ"
+      ],
+      "hypernyms_en": [
+        "crustacean",
+        "decapod"
+      ]
+    },
+    {
+      "record_id": "64084",
+      "aliases_ja": [
+        "エンテロビウス"
+      ],
+      "aliases_en": [
+        "enterobius",
+        "enterobius vermicularis"
+      ],
+      "variants_ja": [
+        "ぎょうちゅう",
+        "ギョウチュウ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "寄生虫",
+        "線虫"
+      ],
+      "hypernyms_en": [
+        "nematode",
+        "parasite",
+        "helminth"
+      ]
+    },
+    {
+      "record_id": "64138",
+      "aliases_ja": [
+        "生体",
+        "生き身"
+      ],
+      "aliases_en": [
+        "living body"
+      ],
+      "variants_ja": [
+        "なまみ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "身体",
+        "肉体"
+      ],
+      "hypernyms_en": [
+        "body"
+      ]
+    },
+    {
+      "record_id": "64152",
+      "aliases_ja": [
+        "肉親",
+        "血縁"
+      ],
+      "aliases_en": [
+        "kin",
+        "relative"
+      ],
+      "variants_ja": [
+        "こつにく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "親族",
+        "親類"
+      ],
+      "hypernyms_en": [
+        "family",
+        "family member"
+      ]
+    },
+    {
+      "record_id": "64179",
+      "aliases_ja": [
+        "感覚器",
+        "知覚器官"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "かんかくきかん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "器官"
+      ],
+      "hypernyms_en": [
+        "organ"
+      ]
+    },
+    {
+      "record_id": "64187",
+      "aliases_ja": [
+        "老躯",
+        "老身",
+        "老骨"
+      ],
+      "aliases_en": [
+        "elder",
+        "senior"
+      ],
+      "variants_ja": [
+        "ろうたい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "老人"
+      ],
+      "hypernyms_en": [
+        "person"
+      ]
+    },
+    {
+      "record_id": "64191",
+      "aliases_ja": [
+        "虚弱",
+        "虚弱体質"
+      ],
+      "aliases_en": [
+        "debility",
+        "frailty"
+      ],
+      "variants_ja": [
+        "じゃくたい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体質"
+      ],
+      "hypernyms_en": [
+        "condition",
+        "constitution"
+      ]
+    },
+    {
+      "record_id": "64200",
+      "aliases_ja": [
+        "遺体",
+        "死体",
+        "屍体"
+      ],
+      "aliases_en": [
+        "cadaver"
+      ],
+      "variants_ja": [
+        "いがい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "死骸"
+      ],
+      "hypernyms_en": [
+        "carcass"
+      ]
+    },
+    {
+      "record_id": "64202",
+      "aliases_ja": [
+        "瓦礫",
+        "がれき"
+      ],
+      "aliases_en": [
+        "rubble",
+        "detritus"
+      ],
+      "variants_ja": [
+        "ざんがい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "破片",
+        "廃棄物"
+      ],
+      "hypernyms_en": [
+        "waste",
+        "rubbish"
+      ]
+    },
+    {
+      "record_id": "64241",
+      "aliases_ja": [
+        "マッチョマン",
+        "筋肉男"
+      ],
+      "aliases_en": [
+        "bodybuilder",
+        "muscleman"
+      ],
+      "variants_ja": [
+        "まっちょ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "男性"
+      ],
+      "hypernyms_en": [
+        "man"
+      ]
+    },
+    {
+      "record_id": "64262",
+      "aliases_ja": [
+        "長身",
+        "のっぽ",
+        "長躯"
+      ],
+      "aliases_en": [
+        "stature",
+        "height"
+      ],
+      "variants_ja": [
+        "せいたか"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "身長",
+        "体格"
+      ],
+      "hypernyms_en": [
+        "size"
+      ]
+    },
+    {
+      "record_id": "64279",
+      "aliases_ja": [
+        "全裸",
+        "丸裸",
+        "素っ裸"
+      ],
+      "aliases_en": [
+        "nakedness"
+      ],
+      "variants_ja": [
+        "まっぱだか"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "裸"
+      ],
+      "hypernyms_en": [
+        "bareness"
+      ]
+    },
+    {
+      "record_id": "64290",
+      "aliases_ja": [
+        "すっぴん",
+        "素顔",
+        "ノーメイク"
+      ],
+      "aliases_en": [
+        "no makeup"
+      ],
+      "variants_ja": [
+        "すめん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "顔"
+      ],
+      "hypernyms_en": [
+        "face"
+      ]
+    },
+    {
+      "record_id": "64348",
+      "aliases_ja": [
+        "はげ頭",
+        "禿げ頭"
+      ],
+      "aliases_en": [
+        "alopecia"
+      ],
+      "variants_ja": [
+        "とくとう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "脱毛"
+      ],
+      "hypernyms_en": [
+        "hair loss"
+      ]
+    },
+    {
+      "record_id": "64554",
+      "aliases_ja": [
+        "容貌",
+        "容色",
+        "容顔"
+      ],
+      "aliases_en": [
+        "appearance",
+        "physiognomy"
+      ],
+      "variants_ja": [
+        "びもく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "外見"
+      ],
+      "hypernyms_en": [
+        "aspect"
+      ]
+    },
+    {
+      "record_id": "64556",
+      "aliases_ja": [
+        "容貌",
+        "眉目"
+      ],
+      "aliases_en": [
+        "countenance",
+        "physiognomy"
+      ],
+      "variants_ja": [
+        "ようがん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "外見"
+      ],
+      "hypernyms_en": [
+        "appearance"
+      ]
+    },
+    {
+      "record_id": "64683",
+      "aliases_ja": [
+        "陰部",
+        "局部",
+        "恥部"
+      ],
+      "aliases_en": [
+        "genitalia",
+        "private parts"
+      ],
+      "variants_ja": [
+        "ひぶ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生殖器"
+      ],
+      "hypernyms_en": [
+        "reproductive organ"
+      ]
+    },
+    {
+      "record_id": "64814",
+      "aliases_ja": [
+        "踝",
+        "外果"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "クルブシ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "骨"
+      ],
+      "hypernyms_en": [
+        "bone"
+      ]
+    },
+    {
+      "record_id": "65001",
+      "aliases_ja": [],
+      "aliases_en": [
+        "food pipe"
+      ],
+      "variants_ja": [
+        "しょくどう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "消化管",
+        "器官"
+      ],
+      "hypernyms_en": [
+        "digestive tract",
+        "organ"
+      ]
+    },
+    {
+      "record_id": "65024",
+      "aliases_ja": [
+        "泌尿路"
+      ],
+      "aliases_en": [
+        "urinary system",
+        "uriniferous tract"
+      ],
+      "variants_ja": [
+        "にょうろ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "泌尿器"
+      ],
+      "hypernyms_en": [
+        "organ system"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "record_id": "59985",
+  "aliases_ja": [
+    "曇天",
+    "陰天",
+    "曇り空"
+  ],
+  "aliases_en": [
+    "overcast",
+    "cloud cover"
+  ],
+  "variants_ja": [
+    "くもり"
+  ],
+  "variants_en": [],
+  "hypernyms_ja": [
+    "天気"
+  ],
+  "hypernyms_en": [
+    "weather"
+  ]
+}

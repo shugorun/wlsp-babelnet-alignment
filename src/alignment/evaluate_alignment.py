@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# Usage: python src/alignment/evaluate_alignment.py --gold data/gold/gold_A.pkl --pred-dir outputs/api_runs/alignment/gpt-5.4-2026-03-05_high_v1_v1/gold_A/parsed --out-dir outputs/api_runs/alignment/gpt-5.4-2026-03-05_high_v1_v1/gold_A/evaluation
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Dict, List
@@ -9,9 +12,9 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 
-GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
-PRED_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "version_1" / "gold_B" / "parsed"
-OUT_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "version_1" / "gold_B" / "evaluation"
+DEFAULT_GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
+DEFAULT_PRED_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "gpt-5.2-2025-12-11_high_v1_v1" / "gold_B" / "parsed"
+DEFAULT_OUT_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "gpt-5.2-2025-12-11_high_v1_v1" / "gold_B" / "evaluation"
 
 LABELS = ["EQUAL", "HYPERNYM", "HYPONYM", "NONE"]
 
@@ -105,16 +108,25 @@ def record_exact_match_rate(df: pd.DataFrame) -> float:
     return sum(exact) / len(exact) if exact else 0.0
 
 
-def main() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--gold", type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument("--pred-dir", type=Path, default=DEFAULT_PRED_DIR)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    return ap.parse_args()
 
-    gold = pd.read_pickle(GOLD_PATH).copy()
+
+def main() -> None:
+    args = parse_args()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+
+    gold = pd.read_pickle(args.gold).copy()
     gold["record_id"] = gold["record_id"].astype(int)
     gold["synset_id"] = gold["synset_id"].astype(str)
     gold["gold_label"] = gold["label"].astype(str)
     gold = gold[["record_id", "synset_id", "gold_label"]]
 
-    pred = load_predictions(PRED_DIR)
+    pred = load_predictions(args.pred_dir)
 
     merged = gold.merge(pred, on=["record_id", "synset_id"], how="left")
     merged["pred_label"] = merged["pred_label"].fillna("MISSING")
@@ -144,10 +156,10 @@ def main() -> None:
         **equal_rest,
     }
 
-    merged.to_csv(OUT_DIR / "pair_predictions.csv", index=False, encoding="utf-8-sig")
-    confusion.to_csv(OUT_DIR / "confusion_matrix.csv", encoding="utf-8-sig")
-    per_class.to_csv(OUT_DIR / "per_class_metrics.csv", index=False, encoding="utf-8-sig")
-    (OUT_DIR / "summary.json").write_text(
+    merged.to_csv(args.out_dir / "pair_predictions.csv", index=False, encoding="utf-8-sig")
+    confusion.to_csv(args.out_dir / "confusion_matrix.csv", encoding="utf-8-sig")
+    per_class.to_csv(args.out_dir / "per_class_metrics.csv", index=False, encoding="utf-8-sig")
+    (args.out_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )

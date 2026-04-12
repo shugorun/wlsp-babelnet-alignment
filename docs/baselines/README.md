@@ -1,75 +1,96 @@
-# Baselines
+# ベースライン実験
 
-このディレクトリは、WLSP-BabelNet alignment に対する非 API ベースラインの説明と結果をまとめる場所です。
+<p align="left">
+  <img alt="Scope: Baselines" src="https://img.shields.io/badge/scope-baselines-555555">
+  <img alt="No API" src="https://img.shields.io/badge/API-not%20used-2f6f9f">
+  <img alt="Evaluation: EQUAL F1" src="https://img.shields.io/badge/evaluation-EQUAL%20F1-2f6f9f">
+  <img alt="Models: E5 and BGE" src="https://img.shields.io/badge/models-E5%20%7C%20BGE-555555">
+</p>
 
-## 対象設定
+このディレクトリは、WLSP-BabelNet アラインメントに対する **API を使わないベースライン実験** の説明・結果・実験ログをまとめる場所です。
 
-- 候補 synset は `sids_JA` と `sids_JMdict` を中心に扱う
-- 主評価は `EQUAL` の二値判定
-- `gold_B` で比較し、必要に応じて `gold_A` へ適用する
+ベースラインの目的は、LLM アラインメントの比較基準を作ることです。  
+`EQUAL` は、**分類語彙表レコードと候補 synset が同じ語義に対応している**ことを表します。
 
-## 実験の流れ
+---
 
-1. pairwise lexical baseline
-2. E5 ranking baseline
-3. hybrid search
-4. record-level decoder
+## 評価設定
 
-補助的に cross-encoder や外部モデル比較も行っていますが、主軸は上の 4 段です。
+主指標は pairwise F1 です。分類語彙表レコードと候補 synset の 1 ペアを 1 件として扱い、`EQUAL` を正しく判定できるかを評価します。
 
-## 主なスクリプト
+- **Gold B**: 手法の比較と設定選択に使用（n_records = 177、n_pairs = 2,654）
+- **Gold A**: Gold B で選んだ設定の転移評価に使用（n_records = 86、n_pairs = 1,003）
 
-- `src/baselines/run_gold_b_baseline.py`
-  - lexical 特徴量ベースの pairwise baseline
-- `src/baselines/run_gold_b_ranking.py`
-  - E5 を用いた ranking baseline
-- `src/baselines/run_gold_b_hybrid_search.py`
-  - lexical 特徴量と ranking 特徴量の組み合わせ探索
-- `src/baselines/run_gold_b_record_decoder.py`
-  - pairwise score を record 単位の出力へ変換
-- `src/baselines/run_gold_a_hybrid_best.py`
-  - `gold_B` best hybrid を `gold_A` に適用
-- `src/baselines/run_gold_a_no_training_methods.py`
-  - `gold_B` 学習なしの手法比較
+「学習なし」は、本実験の正解データで追加学習しないことを意味します。
 
-## 現在採用している `gold_B` best
+---
 
-- Hybrid best
-  - `outputs/baselines/gold_B_hybrid_best/config.json`
-  - pairwise `EQUAL` F1 = `0.684466`
-- Record decoder best
-  - record exact match rate = `0.491525`
+## 手法
 
-## `gold_A` での位置づけ
+| 手法 | 内容 |
+|---|---|
+| Pairwise lexical | 文字列一致や候補由来などの特徴量から `EQUAL` を判定 |
+| E5 ranking | 多言語埋め込み類似度で候補を順位付け |
+| BGE reranker | 事前学習済み cross-encoder で候補を順位付け |
+| Hybrid | lexical 特徴量と E5 ranking スコアを組み合わせて `EQUAL` を判定 |
+| Record decoder | pairwise スコアから record 単位の synset 集合を復元 |
 
-`gold_A` では、`gold_B` で選んだ best hybrid をそのまま適用した結果と、  
-`gold_B` を学習に使わない手法群を比較しています。
+---
 
-- `gold_B` best hybrid をそのまま適用
-  - pairwise `EQUAL` F1 = `0.531915`
-- `gold_B` 学習なしの best
-  - pretrained cross-encoder
-  - pairwise `EQUAL` F1 = `0.551282`
+## 学習あり手法
 
-この差分は、`gold_B` で最適だった設定がそのまま `gold_A` で最適になるとは限らないことを示しています。
+Pairwise lexical と Hybrid は、Gold B 上で GroupKFold により評価しました。  
+同じレコードの候補ペアが train / test にまたがらないように分割し、train 側で LogisticRegression を学習します。閾値も train 側で決め、test 側に適用しています。
 
-## 再現性メモ
+---
 
-- 旧 summary にあった `0.682171` は legacy 値です。
-- 現在の clean rerun で再現可能な hybrid best は `0.684466` です。
-- 公開版では、再現可能な best を基準に説明しています。
+## 評価結果
 
-## 文書
+| 評価データ | 手法 | Precision | Recall | F1 |
+|---|---|---:|---:|---:|
+| Gold B | Pairwise lexical | 0.5169 | 0.5784 | 0.5459 |
+| Gold B | E5 ranking | 0.6723 | 0.6432 | 0.6575 |
+| Gold B | BGE reranker | 0.5989 | 0.5730 | 0.5856 |
+| Gold B | Hybrid best | 0.6211 | 0.7622 | **0.6845** |
+| Gold A | Gold B hybrid 転移 | 0.4237 | 0.7143 | 0.5319 |
+| Gold A | BGE reranker | 0.5000 | 0.6143 | 0.5513 |
 
-- 実験ログ: [EXPERIMENT_LOG.md](EXPERIMENT_LOG.md)
-- `gold_B` 要約: [gold_B_baseline_summary.md](gold_B_baseline_summary.md)
-- 旧要約: [gold_B_baseline_summary_legacy.md](gold_B_baseline_summary_legacy.md)
+- Gold B では Hybrid best が最も高い F1 を示しました。
+- Gold A では、Gold B で決めた Hybrid best の設定とモデルをそのまま適用しました。
 
-## 公開版で残しているもの
+---
 
-公開版では、BabelNet 由来の重い特徴量 dump や中間生成物は含めず、主に次を残しています。
+## Record 単位の評価
 
-- 実験コード
-- 実験ログ
-- 再現可能な best 設定
-- 軽量な metrics / summary
+`record exact match` は、1 つの分類語彙表レコードについて、正解の `EQUAL` synset 集合と予測した `EQUAL` synset 集合が完全に一致した割合です。1 つでも余分な synset を選ぶ、または必要な synset を落とすと、そのレコードは不一致になります。  
+`record macro F1` は、この synset 集合の precision / recall / F1 をレコードごとに計算し、平均した値です。
+
+| 評価データ | 手法 | pairwise F1 | record macro F1 | record exact match |
+|---|---|---:|---:|---:|
+| Gold B | Hybrid best | 0.6845 | — | 0.4746 |
+| Gold B | Record decoder | 0.6613 | 0.6162 | 0.4915 |
+| Gold A | Gold B hybrid 転移 | 0.5319 | 0.4570 | 0.3023 |
+
+Record decoder は pairwise F1 を少し下げる一方で、record exact match を改善しています。
+
+---
+
+## 実験ログ
+
+- 英語版（canonical）: [EXPERIMENT_LOG.md](EXPERIMENT_LOG.md)
+- 日本語版: [EXPERIMENT_LOG_ja.md](EXPERIMENT_LOG_ja.md)
+- Hybrid best の設定: [outputs/baselines/gold_B_hybrid_best/config.json](../../outputs/baselines/gold_B_hybrid_best/config.json)
+
+---
+
+## 主要ファイル
+
+| スクリプト | 役割 |
+|---|---|
+| [src/baselines/run_gold_b_baseline.py](../../src/baselines/run_gold_b_baseline.py) | Gold B 上で lexical ベースラインを評価 |
+| [src/baselines/run_gold_b_ranking.py](../../src/baselines/run_gold_b_ranking.py) | E5 ranking ベースラインを評価 |
+| [src/baselines/run_gold_b_cross_encoder.py](../../src/baselines/run_gold_b_cross_encoder.py) | BGE reranker を評価 |
+| [src/baselines/run_gold_b_hybrid_search.py](../../src/baselines/run_gold_b_hybrid_search.py) | hybrid の特徴量構成を探索 |
+| [src/baselines/run_gold_b_record_decoder.py](../../src/baselines/run_gold_b_record_decoder.py) | record 単位の出力を復元 |
+| [src/baselines/run_gold_a_hybrid_best.py](../../src/baselines/run_gold_a_hybrid_best.py) | Gold B で選んだ Hybrid best を Gold A に転移・評価 |
+| [src/baselines/run_gold_a_no_training_methods.py](../../src/baselines/run_gold_a_no_training_methods.py) | 学習なし手法を Gold A で比較 |

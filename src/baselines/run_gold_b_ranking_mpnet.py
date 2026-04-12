@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_ranking_mpnet.py --model-dir ~/.cache/huggingface/hub/models--sentence-transformers--paraphrase-multilingual-mpnet-base-v2/snapshots/4328cf26390c98c5e3c738b4460a05b95f4911f5 --records data/gold/gold_B_records.pkl --gold data/gold/gold_B.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_B_ranking_mpnet
 """Rank gold_B candidates with a local Sentence-Transformers model.
 
 This script uses the cached paraphrase-multilingual-mpnet-base-v2 model
@@ -7,6 +9,7 @@ gold_B without any API calls.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import sys
@@ -23,17 +26,15 @@ from baselines.run_gold_b_ranking import build_passage_text, build_query_text
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
-GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
-BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
+DEFAULT_RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
+DEFAULT_GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
+DEFAULT_BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_ranking_mpnet"
-RANKINGS_PATH = OUTPUT_DIR / "rankings.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_ranking_mpnet"
 
 TEXT_MODE = "concise"
 TOPKS = [1, 2, 3, 5]
-MODEL_DIR = (
+DEFAULT_MODEL_DIR = (
     Path.home()
     / ".cache"
     / "huggingface"
@@ -49,9 +50,14 @@ def dedupe_keep_order(items: list[str]) -> list[str]:
     return list(dict.fromkeys(items))
 
 
-def build_rankings(records: pd.DataFrame, gold: pd.DataFrame, babelnet: pd.DataFrame) -> pd.DataFrame:
+def build_rankings(
+    records: pd.DataFrame,
+    gold: pd.DataFrame,
+    babelnet: pd.DataFrame,
+    model_dir: Path = DEFAULT_MODEL_DIR,
+) -> pd.DataFrame:
     """Build candidate rankings for union and JA-preferred settings."""
-    model = SentenceTransformer(str(MODEL_DIR))
+    model = SentenceTransformer(str(model_dir.expanduser()))
 
     record_ids = records.index.astype(int).tolist()
     query_texts = [build_query_text(records.loc[rid], TEXT_MODE) for rid in record_ids]
@@ -156,22 +162,37 @@ def evaluate_topk(rankings: pd.DataFrame, gold: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["f1_equal", "precision_equal"], ascending=False)
 
 
-def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model-dir", type=Path, default=DEFAULT_MODEL_DIR)
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--gold", type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument("--babelnet", type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
 
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+
+def main() -> None:
+    args = parse_args()
+    output_dir = args.output_dir
+    rankings_path = output_dir / "rankings.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
-    rankings = build_rankings(records, gold, babelnet)
-    rankings.to_pickle(RANKINGS_PATH)
-    print(f"Saved rankings: {RANKINGS_PATH}")
+    rankings = build_rankings(records, gold, babelnet, model_dir=args.model_dir)
+    rankings.to_pickle(rankings_path)
+    print(f"Saved rankings: {rankings_path}")
 
     metrics = evaluate_topk(rankings, gold)
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump({"summary": metrics}, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     print(metrics.to_string(index=False))
 

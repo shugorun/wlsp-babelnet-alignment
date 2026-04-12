@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_record_decoder.py --hybrid-features outputs/baselines/gold_B_hybrid_best/pair_features_hybrid.pkl --output-dir outputs/baselines/gold_B_record_decoder
 """Decode hybrid pairwise scores at the record level on gold_B.
 
 This script trains the hybrid scorer under grouped cross-validation and
@@ -8,6 +10,7 @@ record-level set metrics.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import sys
@@ -27,12 +30,9 @@ from baselines.experiment_log import append_run_log
 
 ROOT = Path(__file__).resolve().parents[2]
 
-HYBRID_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B_hybrid_best" / "pair_features_hybrid.pkl"
+DEFAULT_HYBRID_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B_hybrid_best" / "pair_features_hybrid.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_record_decoder"
-OOF_PATH = OUTPUT_DIR / "oof_predictions.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
-MODEL_PATH = OUTPUT_DIR / "logreg_model.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_record_decoder"
 
 RANDOM_STATE = 0
 N_SPLITS = 5
@@ -74,6 +74,13 @@ PARAM_GRID = {
 
 # The decoder controls how many synsets to return per record after the
 # hybrid scorer has produced pairwise probabilities.
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 def build_model():
     """Build the hybrid logistic-regression scorer."""
@@ -305,28 +312,41 @@ def train_final_model(df: pd.DataFrame) -> dict[str, object]:
     }
 
 
-def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--hybrid-features", type=Path, default=DEFAULT_HYBRID_FEATURES_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
 
-    df = pd.read_pickle(HYBRID_FEATURES_PATH)
+
+def main() -> None:
+    args = parse_args()
+    output_dir = args.output_dir
+    oof_path = output_dir / "oof_predictions.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+    model_path = output_dir / "logreg_model.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    df = pd.read_pickle(args.hybrid_features)
 
     oof_df, fold_metrics = run_grouped_cv(df)
-    oof_df.to_pickle(OOF_PATH)
-    print(f"Saved OOF predictions: {OOF_PATH}")
+    oof_df.to_pickle(oof_path)
+    print(f"Saved OOF predictions: {oof_path}")
 
     metrics_df = summarize_results(oof_df, fold_metrics)
     metrics_obj = {
         "summary": metrics_df,
         "folds": fold_metrics,
     }
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump(metrics_obj, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     final_model = train_final_model(df)
-    with MODEL_PATH.open("wb") as f:
+    with model_path.open("wb") as f:
         pickle.dump(final_model, f)
-    print(f"Saved final model: {MODEL_PATH}")
+    print(f"Saved final model: {model_path}")
 
     print(metrics_df.to_string(index=False))
 
@@ -348,9 +368,9 @@ def main() -> None:
             "record_exact_match_rate": summary_row["record_exact_match_rate"],
         },
         outputs=[
-            str(OOF_PATH.relative_to(ROOT)),
-            str(METRICS_PATH.relative_to(ROOT)),
-            str(MODEL_PATH.relative_to(ROOT)),
+            path_for_log(oof_path),
+            path_for_log(metrics_path),
+            path_for_log(model_path),
         ],
     )
 

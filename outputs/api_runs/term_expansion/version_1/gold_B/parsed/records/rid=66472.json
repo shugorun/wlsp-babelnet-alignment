@@ -1,0 +1,21 @@
+{
+  "record_id": "66472",
+  "aliases_ja": [
+    "届け出伝染病",
+    "届出感染症",
+    "法定伝染病"
+  ],
+  "aliases_en": [],
+  "variants_ja": [
+    "とどけいででんせんびょう"
+  ],
+  "variants_en": [],
+  "hypernyms_ja": [
+    "感染症",
+    "伝染病"
+  ],
+  "hypernyms_en": [
+    "infectious disease",
+    "communicable disease"
+  ]
+}

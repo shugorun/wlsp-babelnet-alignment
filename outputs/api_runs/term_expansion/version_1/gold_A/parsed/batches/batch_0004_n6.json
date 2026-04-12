@@ -1,0 +1,130 @@
+{
+  "results": [
+    {
+      "record_id": "65885",
+      "aliases_ja": [
+        "若死に",
+        "夭折",
+        "早世"
+      ],
+      "aliases_en": [
+        "early death"
+      ],
+      "variants_ja": [
+        "早死",
+        "はやじに"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "死",
+        "死亡"
+      ],
+      "hypernyms_en": [
+        "death"
+      ]
+    },
+    {
+      "record_id": "66257",
+      "aliases_ja": [
+        "腐敗",
+        "腐朽",
+        "腐乱"
+      ],
+      "aliases_en": [
+        "rot",
+        "putrefaction"
+      ],
+      "variants_ja": [
+        "くさり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "分解"
+      ],
+      "hypernyms_en": [
+        "decomposition"
+      ]
+    },
+    {
+      "record_id": "66314",
+      "aliases_ja": [
+        "刺創",
+        "穿刺傷"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "刺し傷",
+        "ししょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "創傷",
+        "外傷"
+      ],
+      "hypernyms_en": [
+        "wound",
+        "injury"
+      ]
+    },
+    {
+      "record_id": "66387",
+      "aliases_ja": [
+        "遠視症",
+        "遠眼"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "えんし"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "屈折異常",
+        "視力障害"
+      ],
+      "hypernyms_en": [
+        "refractive error",
+        "vision disorder"
+      ]
+    },
+    {
+      "record_id": "66700",
+      "aliases_ja": [
+        "副鼻腔炎",
+        "慢性副鼻腔炎",
+        "蓄膿"
+      ],
+      "aliases_en": [
+        "sinusitis",
+        "chronic sinusitis"
+      ],
+      "variants_ja": [
+        "ちくのうしょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "炎症"
+      ],
+      "hypernyms_en": [
+        "inflammation"
+      ]
+    },
+    {
+      "record_id": "66892",
+      "aliases_ja": [
+        "カーバンクル",
+        "カルブンケル"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "よう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "膿瘍"
+      ],
+      "hypernyms_en": [
+        "abscess"
+      ]
+    }
+  ]
+}

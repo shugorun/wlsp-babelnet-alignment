@@ -1,0 +1,370 @@
+{
+  "results": [
+    {
+      "record_id": "57550",
+      "aliases_ja": [
+        "ネイチャー",
+        "天然"
+      ],
+      "aliases_en": [
+        "naturalness",
+        "spontaneity"
+      ],
+      "variants_ja": [
+        "しぜん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "宇宙"
+      ],
+      "hypernyms_en": [
+        "universe"
+      ]
+    },
+    {
+      "record_id": "57551",
+      "aliases_ja": [
+        "自然世界"
+      ],
+      "aliases_en": [
+        "natural world"
+      ],
+      "variants_ja": [
+        "しぜんかい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "世界"
+      ],
+      "hypernyms_en": [
+        "world"
+      ]
+    },
+    {
+      "record_id": "57552",
+      "aliases_ja": [
+        "母なる自然",
+        "ネイチャー"
+      ],
+      "aliases_en": [
+        "wilderness"
+      ],
+      "variants_ja": [
+        "だいしぜん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "自然"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "57553",
+      "aliases_ja": [
+        "造物",
+        "天地"
+      ],
+      "aliases_en": [
+        "cosmos"
+      ],
+      "variants_ja": [
+        "ぞうか"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "自然"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "57554",
+      "aliases_ja": [
+        "超常",
+        "スーパーナチュラル"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちょうしぜん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "現象"
+      ],
+      "hypernyms_en": [
+        "phenomenon"
+      ]
+    },
+    {
+      "record_id": "57555",
+      "aliases_ja": [
+        "ナチュラル",
+        "天性"
+      ],
+      "aliases_en": [
+        "naturalness"
+      ],
+      "variants_ja": [
+        "てんねん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "性質"
+      ],
+      "hypernyms_en": [
+        "quality"
+      ]
+    },
+    {
+      "record_id": "57557",
+      "aliases_ja": [
+        "天地万物",
+        "万象"
+      ],
+      "aliases_en": [
+        "cosmos",
+        "creation"
+      ],
+      "variants_ja": [
+        "しんらばんしょう",
+        "森羅萬象"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "宇宙"
+      ],
+      "hypernyms_en": [
+        "universe"
+      ]
+    },
+    {
+      "record_id": "57558",
+      "aliases_ja": [
+        "天地万物",
+        "森羅万象",
+        "万象"
+      ],
+      "aliases_en": [
+        "everything",
+        "creation"
+      ],
+      "variants_ja": [
+        "ばんぶつ",
+        "萬物"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "物"
+      ],
+      "hypernyms_en": [
+        "thing"
+      ]
+    },
+    {
+      "record_id": "57559",
+      "aliases_ja": [
+        "天地万物",
+        "森羅万象"
+      ],
+      "aliases_en": [
+        "everything",
+        "existence"
+      ],
+      "variants_ja": [
+        "ばんゆう",
+        "萬有"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "存在"
+      ],
+      "hypernyms_en": [
+        "existence"
+      ]
+    },
+    {
+      "record_id": "57560",
+      "aliases_ja": [
+        "コスモス",
+        "天地"
+      ],
+      "aliases_en": [
+        "outer space"
+      ],
+      "variants_ja": [
+        "うちゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "空間"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "57561",
+      "aliases_ja": [
+        "天地人"
+      ],
+      "aliases_en": [
+        "three powers"
+      ],
+      "variants_ja": [
+        "さんさい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "57563",
+      "aliases_ja": [
+        "五大",
+        "五大種"
+      ],
+      "aliases_en": [
+        "five elements"
+      ],
+      "variants_ja": [
+        "ごりん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "元素"
+      ],
+      "hypernyms_en": [
+        "element"
+      ]
+    },
+    {
+      "record_id": "57564",
+      "aliases_ja": [
+        "四元素",
+        "四大種"
+      ],
+      "aliases_en": [
+        "four elements"
+      ],
+      "variants_ja": [
+        "しだい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "元素"
+      ],
+      "hypernyms_en": [
+        "element"
+      ]
+    },
+    {
+      "record_id": "57566",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "いん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "原理"
+      ],
+      "hypernyms_en": [
+        "principle"
+      ]
+    },
+    {
+      "record_id": "57567",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "よう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "原理"
+      ],
+      "hypernyms_en": [
+        "principle"
+      ]
+    },
+    {
+      "record_id": "57570",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "せつげっか"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "自然美"
+      ],
+      "hypernyms_en": [
+        "natural beauty"
+      ]
+    },
+    {
+      "record_id": "57572",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ふうげつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "自然美"
+      ],
+      "hypernyms_en": [
+        "natural beauty"
+      ]
+    },
+    {
+      "record_id": "57573",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "かちょうふうげつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "自然美"
+      ],
+      "hypernyms_en": [
+        "natural beauty"
+      ]
+    },
+    {
+      "record_id": "57574",
+      "aliases_ja": [
+        "自然記念物"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "てんねんきねんぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "文化財"
+      ],
+      "hypernyms_en": [
+        "cultural property"
+      ]
+    },
+    {
+      "record_id": "57575",
+      "aliases_ja": [
+        "非生物",
+        "無機物"
+      ],
+      "aliases_en": [
+        "nonliving thing"
+      ],
+      "variants_ja": [
+        "むせいぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "物体"
+      ],
+      "hypernyms_en": [
+        "object"
+      ]
+    }
+  ]
+}

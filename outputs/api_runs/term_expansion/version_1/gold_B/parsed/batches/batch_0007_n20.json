@@ -1,0 +1,397 @@
+{
+  "results": [
+    {
+      "record_id": "65036",
+      "aliases_ja": [
+        "ワギナ",
+        "陰道",
+        "ヴァギナ"
+      ],
+      "aliases_en": [
+        "vaginal canal"
+      ],
+      "variants_ja": [
+        "ちつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "女性生殖器",
+        "生殖器",
+        "器官"
+      ],
+      "hypernyms_en": [
+        "reproductive organ",
+        "genitalia",
+        "organ"
+      ]
+    },
+    {
+      "record_id": "65369",
+      "aliases_ja": [
+        "歯茎",
+        "歯齦"
+      ],
+      "aliases_en": [
+        "gum"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "口腔粘膜",
+        "粘膜",
+        "歯周組織"
+      ],
+      "hypernyms_en": [
+        "oral mucosa",
+        "mucosa",
+        "tissue"
+      ]
+    },
+    {
+      "record_id": "65520",
+      "aliases_ja": [
+        "メコニウム",
+        "初便"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "便",
+        "糞便"
+      ],
+      "hypernyms_en": [
+        "feces",
+        "stool"
+      ]
+    },
+    {
+      "record_id": "65527",
+      "aliases_ja": [
+        "尿",
+        "小便",
+        "小水"
+      ],
+      "aliases_en": [
+        "urine",
+        "pee"
+      ],
+      "variants_ja": [
+        "オシッコ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体液",
+        "排泄物"
+      ],
+      "hypernyms_en": [
+        "bodily fluid",
+        "excretion",
+        "waste"
+      ]
+    },
+    {
+      "record_id": "65548",
+      "aliases_ja": [
+        "頭垢"
+      ],
+      "aliases_en": [
+        "scurf"
+      ],
+      "variants_ja": [
+        "フケ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "鱗屑",
+        "角質"
+      ],
+      "hypernyms_en": [
+        "scale",
+        "skin"
+      ]
+    },
+    {
+      "record_id": "65586",
+      "aliases_ja": [
+        "魚子",
+        "ロエ"
+      ],
+      "aliases_en": [
+        "fish roe"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "卵",
+        "食品"
+      ],
+      "hypernyms_en": [
+        "egg",
+        "food"
+      ]
+    },
+    {
+      "record_id": "65633",
+      "aliases_ja": [
+        "生死"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生命"
+      ],
+      "hypernyms_en": [
+        "existence"
+      ]
+    },
+    {
+      "record_id": "65638",
+      "aliases_ja": [
+        "生殺",
+        "死活"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生死",
+        "生命"
+      ],
+      "hypernyms_en": [
+        "mortality"
+      ]
+    },
+    {
+      "record_id": "65705",
+      "aliases_ja": [
+        "誕生",
+        "生誕"
+      ],
+      "aliases_en": [
+        "childbirth",
+        "parturition"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "出産",
+        "生殖"
+      ],
+      "hypernyms_en": [
+        "reproduction"
+      ]
+    },
+    {
+      "record_id": "65813",
+      "aliases_ja": [
+        "花盛り",
+        "盛開"
+      ],
+      "aliases_en": [
+        "anthesis"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "開花",
+        "花期"
+      ],
+      "hypernyms_en": [
+        "flowering",
+        "bloom"
+      ]
+    },
+    {
+      "record_id": "65815",
+      "aliases_ja": [
+        "晩咲き",
+        "遅咲"
+      ],
+      "aliases_en": [
+        "late bloomer"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "開花"
+      ],
+      "hypernyms_en": [
+        "flowering",
+        "bloom"
+      ]
+    },
+    {
+      "record_id": "65904",
+      "aliases_ja": [
+        "横死",
+        "非命",
+        "不慮の死"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "死"
+      ],
+      "hypernyms_en": [
+        "death"
+      ]
+    },
+    {
+      "record_id": "65938",
+      "aliases_ja": [
+        "戦没",
+        "討ち死に"
+      ],
+      "aliases_en": [
+        "combat fatality",
+        "war fatality"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "死"
+      ],
+      "hypernyms_en": [
+        "death"
+      ]
+    },
+    {
+      "record_id": "66013",
+      "aliases_ja": [
+        "銃殺",
+        "射ち殺し"
+      ],
+      "aliases_en": [
+        "shooting",
+        "gunshot"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "殺害",
+        "殺人"
+      ],
+      "hypernyms_en": [
+        "homicide",
+        "killing"
+      ]
+    },
+    {
+      "record_id": "66136",
+      "aliases_ja": [
+        "吐瀉"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "反射",
+        "生理現象"
+      ],
+      "hypernyms_en": [
+        "reflex",
+        "symptom"
+      ]
+    },
+    {
+      "record_id": "66143",
+      "aliases_ja": [
+        "排便",
+        "大便"
+      ],
+      "aliases_en": [
+        "defecation",
+        "stool"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "排泄",
+        "生理現象"
+      ],
+      "hypernyms_en": [
+        "excretion",
+        "elimination"
+      ]
+    },
+    {
+      "record_id": "66162",
+      "aliases_ja": [
+        "放屁",
+        "屁"
+      ],
+      "aliases_en": [
+        "flatulence",
+        "flatus"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生理現象"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "66202",
+      "aliases_ja": [
+        "月経",
+        "生理",
+        "メンス"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生理現象",
+        "出血"
+      ],
+      "hypernyms_en": [
+        "bleeding",
+        "cycle"
+      ]
+    },
+    {
+      "record_id": "66237",
+      "aliases_ja": [
+        "産痛",
+        "分娩痛"
+      ],
+      "aliases_en": [
+        "labor pain",
+        "contraction"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "痛み",
+        "分娩"
+      ],
+      "hypernyms_en": [
+        "pain",
+        "labor"
+      ]
+    },
+    {
+      "record_id": "66255",
+      "aliases_ja": [
+        "変敗"
+      ],
+      "aliases_en": [
+        "rancidity"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "腐敗",
+        "変質"
+      ],
+      "hypernyms_en": [
+        "spoilage",
+        "deterioration"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "results": [
+    {
+      "record_id": "62554",
+      "aliases_ja": [
+        "シンビジウム属"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "シンビジューム"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ラン"
+      ],
+      "hypernyms_en": [
+        "orchid"
+      ]
+    },
+    {
+      "record_id": "62602",
+      "aliases_ja": [
+        "珪藻"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ケイソウ"
+      ],
+      "variants_en": [
+        "diatoms"
+      ],
+      "hypernyms_ja": [
+        "藻類"
+      ],
+      "hypernyms_en": [
+        "algae"
+      ]
+    },
+    {
+      "record_id": "62609",
+      "aliases_ja": [
+        "クロレラ属"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "くろれら"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "緑藻",
+        "藻類"
+      ],
+      "hypernyms_en": [
+        "green algae",
+        "algae"
+      ]
+    },
+    {
+      "record_id": "62649",
+      "aliases_ja": [
+        "筍"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "たけのこ",
+        "竹ノ子"
+      ],
+      "variants_en": [
+        "bamboo shoots"
+      ],
+      "hypernyms_ja": [
+        "芽"
+      ],
+      "hypernyms_en": [
+        "shoot",
+        "sprout"
+      ]
+    },
+    {
+      "record_id": "62733",
+      "aliases_ja": [
+        "若葉"
+      ],
+      "aliases_en": [
+        "green leaf"
+      ],
+      "variants_ja": [
+        "あおば"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "葉"
+      ],
+      "hypernyms_en": [
+        "leaf"
+      ]
+    },
+    {
+      "record_id": "62762",
+      "aliases_ja": [
+        "コロラ"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "かかん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "花被"
+      ],
+      "hypernyms_en": [
+        "perianth"
+      ]
+    },
+    {
+      "record_id": "62896",
+      "aliases_ja": [
+        "アニマル"
+      ],
+      "aliases_en": [
+        "metazoan"
+      ],
+      "variants_ja": [
+        "どうぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生物"
+      ],
+      "hypernyms_en": [
+        "organism"
+      ]
+    },
+    {
+      "record_id": "62899",
+      "aliases_ja": [
+        "鳥獣"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "きんじゅう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "動物"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "62912",
+      "aliases_ja": [
+        "節足類"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "せっそくどうぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "無脊椎動物"
+      ],
+      "hypernyms_en": [
+        "invertebrate"
+      ]
+    },
+    {
+      "record_id": "62920",
+      "aliases_ja": [
+        "多孔動物",
+        "海綿"
+      ],
+      "aliases_en": [
+        "porifera",
+        "sponge"
+      ],
+      "variants_ja": [
+        "かいめんどうぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "無脊椎動物",
+        "動物"
+      ],
+      "hypernyms_en": [
+        "invertebrate",
+        "animal"
+      ]
+    },
+    {
+      "record_id": "63268",
+      "aliases_ja": [
+        "鳥類",
+        "バード"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "とり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "動物"
+      ],
+      "hypernyms_en": [
+        "animal"
+      ]
+    },
+    {
+      "record_id": "63320",
+      "aliases_ja": [
+        "アルバトロス",
+        "信天翁"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "アホウドリ",
+        "あほうどり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "海鳥"
+      ],
+      "hypernyms_en": [
+        "seabird"
+      ]
+    },
+    {
+      "record_id": "63417",
+      "aliases_ja": [
+        "ウミスズメ",
+        "海雀"
+      ],
+      "aliases_en": [
+        "ancient murrelet"
+      ],
+      "variants_ja": [
+        "うみすずめ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "海鳥"
+      ],
+      "hypernyms_en": [
+        "seabird"
+      ]
+    },
+    {
+      "record_id": "63459",
+      "aliases_ja": [
+        "つばめ",
+        "燕"
+      ],
+      "aliases_en": [
+        "swallow"
+      ],
+      "variants_ja": [
+        "ひえん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "鳥"
+      ],
+      "hypernyms_en": [
+        "bird"
+      ]
+    },
+    {
+      "record_id": "63482",
+      "aliases_ja": [
+        "ルリビタキ",
+        "瑠璃鶲"
+      ],
+      "aliases_en": [
+        "red flanked bluetail"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ヒタキ科"
+      ],
+      "hypernyms_en": [
+        "flycatcher"
+      ]
+    },
+    {
+      "record_id": "63687",
+      "aliases_ja": [
+        "鱈",
+        "タラ"
+      ],
+      "aliases_en": [
+        "cod"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "タラ科",
+        "魚"
+      ],
+      "hypernyms_en": [
+        "fish"
+      ]
+    },
+    {
+      "record_id": "63723",
+      "aliases_ja": [
+        "鯛",
+        "タイ"
+      ],
+      "aliases_en": [
+        "sea bream",
+        "seabream"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "魚"
+      ],
+      "hypernyms_en": [
+        "fish"
+      ]
+    },
+    {
+      "record_id": "63741",
+      "aliases_ja": [
+        "仁座鯛"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ニザダイ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "魚"
+      ],
+      "hypernyms_en": [
+        "fish"
+      ]
+    },
+    {
+      "record_id": "63773",
+      "aliases_ja": [
+        "ヒラメ",
+        "平目"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "カレイ",
+        "魚"
+      ],
+      "hypernyms_en": [
+        "flatfish",
+        "fish"
+      ]
+    },
+    {
+      "record_id": "63780",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ハコフグ",
+        "箱フグ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "魚"
+      ],
+      "hypernyms_en": [
+        "fish"
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_cross_encoder.py --model BAAI/bge-reranker-v2-m3 --records data/gold/gold_B_records.pkl --gold data/gold/gold_B.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_B_cross_encoder
 """Evaluate a pretrained cross-encoder on gold_B pair candidates.
 
 This script uses a pretrained reranker as-is and does not fine-tune it.
@@ -7,6 +9,7 @@ and evaluates with grouped cross-validation on gold_B.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import random
@@ -23,26 +26,31 @@ SRC_DIR = Path(__file__).resolve().parents[1]
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
+from baselines.experiment_log import append_run_log
 from baselines.run_gold_b_ranking import build_passage_text, build_query_text
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
-GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
-BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
+DEFAULT_RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
+DEFAULT_GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
+DEFAULT_BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_cross_encoder"
-PAIR_TEXTS_PATH = OUTPUT_DIR / "pair_texts.pkl"
-OOF_PATH = OUTPUT_DIR / "oof_predictions.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_cross_encoder"
 
-MODEL_NAME = "BAAI/bge-reranker-v2-m3"
+DEFAULT_MODEL_NAME = "BAAI/bge-reranker-v2-m3"
 TEXT_MODE = "concise"
 MAX_LENGTH = 512
 N_SPLITS = 5
 RANDOM_STATE = 0
 BATCH_SIZE = 8
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def set_seed(seed: int) -> None:
@@ -147,10 +155,10 @@ def build_pair_table(records: pd.DataFrame, gold: pd.DataFrame, babelnet: pd.Dat
     return pd.DataFrame(rows)
 
 
-def load_model():
+def load_model(model_name: str):
     """Load the pretrained cross-encoder."""
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME).to(DEVICE)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name).to(DEVICE)
     model.eval()
     return tokenizer, model
 
@@ -184,12 +192,12 @@ def score_pairs(tokenizer, model, pair_df: pd.DataFrame, desc: str) -> np.ndarra
     return np.concatenate(scores, axis=0)
 
 
-def run_grouped_cv(pair_df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def run_grouped_cv(pair_df: pd.DataFrame, model_name: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Run grouped cross-validation with one pretrained model."""
     groups = pair_df["record_id"].to_numpy()
     y = pair_df["label"].to_numpy(dtype=int)
 
-    tokenizer, model = load_model()
+    tokenizer, model = load_model(model_name)
 
     gkf = GroupKFold(n_splits=N_SPLITS)
     out = pair_df[["record_id", "synset_id", "label", "raw_label"]].copy()
@@ -245,7 +253,7 @@ def run_grouped_cv(pair_df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return out, pd.DataFrame(fold_rows)
 
 
-def summarize_results(oof: pd.DataFrame, fold_metrics: pd.DataFrame) -> pd.DataFrame:
+def summarize_results(oof: pd.DataFrame, fold_metrics: pd.DataFrame, model_name: str) -> pd.DataFrame:
     """Build a compact metrics table."""
     pair_metrics = binary_metrics(
         oof["label"].to_numpy(dtype=int),
@@ -255,7 +263,7 @@ def summarize_results(oof: pd.DataFrame, fold_metrics: pd.DataFrame) -> pd.DataF
 
     row = {
         "method": "cross_encoder_pretrained",
-        "model_name": MODEL_NAME,
+        "model_name": model_name,
         "pair_precision": pair_metrics["precision"],
         "pair_recall": pair_metrics["recall"],
         "pair_f1": pair_metrics["f1"],
@@ -270,29 +278,122 @@ def summarize_results(oof: pd.DataFrame, fold_metrics: pd.DataFrame) -> pd.DataF
     return pd.DataFrame([row])
 
 
-def main() -> None:
-    set_seed(RANDOM_STATE)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def summarize_topk_no_training(oof: pd.DataFrame, model_name: str) -> pd.DataFrame:
+    """Evaluate pretrained reranker scores with top-k decoding only."""
+    rows = []
 
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+    for topk in [1, 2, 3, 5]:
+        pred = pd.Series(0, index=oof.index, dtype=int)
+        for _, group in oof.groupby("record_id", sort=False):
+            keep_index = group.sort_values("cross_score", ascending=False).head(topk).index
+            pred.loc[keep_index] = 1
+
+        y_true = oof["label"].to_numpy(dtype=int)
+        y_pred = pred.to_numpy(dtype=int)
+        pair_metrics = binary_metrics(y_true, y_pred)
+
+        decoded = oof[["record_id", "synset_id", "label", "raw_label"]].copy()
+        decoded["topk_pred"] = y_pred
+        record_metrics = record_level_metrics(decoded, "topk_pred")
+
+        rows.append(
+            {
+                "method": "cross_encoder_pretrained_topk",
+                "model_name": model_name,
+                "topk": topk,
+                "pair_precision": pair_metrics["precision"],
+                "pair_recall": pair_metrics["recall"],
+                "pair_f1": pair_metrics["f1"],
+                "pair_accuracy": pair_metrics["accuracy"],
+                "record_macro_precision": record_metrics["record_macro_precision"],
+                "record_macro_recall": record_metrics["record_macro_recall"],
+                "record_macro_f1": record_metrics["record_macro_f1"],
+                "record_exact_match_rate": record_metrics["record_exact_match_rate"],
+            }
+        )
+
+    return pd.DataFrame(rows).sort_values(
+        ["pair_f1", "pair_precision", "pair_recall"],
+        ascending=False,
+    )
+
+
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", type=str, default=DEFAULT_MODEL_NAME)
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--gold", type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument("--babelnet", type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    output_dir = args.output_dir
+    pair_texts_path = output_dir / "pair_texts.pkl"
+    oof_path = output_dir / "oof_predictions.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+    topk_summary_pkl_path = output_dir / "topk_summary.pkl"
+    topk_summary_csv_path = output_dir / "topk_summary.csv"
+
+    set_seed(RANDOM_STATE)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
     pair_df = build_pair_table(records, gold, babelnet)
-    pair_df.to_pickle(PAIR_TEXTS_PATH)
-    print(f"Saved pair texts: {PAIR_TEXTS_PATH}")
+    pair_df.to_pickle(pair_texts_path)
+    print(f"Saved pair texts: {pair_texts_path}")
 
-    oof_df, fold_metrics = run_grouped_cv(pair_df)
-    oof_df.to_pickle(OOF_PATH)
-    print(f"Saved OOF predictions: {OOF_PATH}")
+    oof_df, fold_metrics = run_grouped_cv(pair_df, args.model)
+    oof_df.to_pickle(oof_path)
+    print(f"Saved OOF predictions: {oof_path}")
 
-    metrics_df = summarize_results(oof_df, fold_metrics)
-    with METRICS_PATH.open("wb") as f:
+    metrics_df = summarize_results(oof_df, fold_metrics, args.model)
+    with metrics_path.open("wb") as f:
         pickle.dump({"summary": metrics_df, "folds": fold_metrics}, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
+
+    topk_summary = summarize_topk_no_training(oof_df, args.model)
+    topk_summary.to_pickle(topk_summary_pkl_path)
+    topk_summary.to_csv(topk_summary_csv_path, index=False, encoding="utf-8-sig")
+    print(f"Saved top-k no-training summary: {topk_summary_pkl_path}")
+    print(f"Saved top-k no-training summary: {topk_summary_csv_path}")
+
+    best_topk = topk_summary.iloc[0].to_dict()
+    append_run_log(
+        run_name="gold_B_cross_encoder_no_training_topk",
+        rationale="Evaluate the pretrained BGE reranker on gold_B with top-k decoding only, without fine-tuning or gold_B-trained thresholds.",
+        script_path="src/baselines/run_gold_b_cross_encoder.py",
+        params={
+            "model_name": args.model,
+            "text_mode": TEXT_MODE,
+            "topks": "1,2,3,5",
+            "n_splits": N_SPLITS,
+            "random_state": RANDOM_STATE,
+        },
+        metrics={
+            "best_topk": int(best_topk["topk"]),
+            "best_pair_f1": float(best_topk["pair_f1"]),
+            "best_pair_precision": float(best_topk["pair_precision"]),
+            "best_pair_recall": float(best_topk["pair_recall"]),
+            "best_record_exact_match_rate": float(best_topk["record_exact_match_rate"]),
+        },
+        outputs=[
+            path_for_log(pair_texts_path),
+            path_for_log(oof_path),
+            path_for_log(metrics_path),
+            path_for_log(topk_summary_pkl_path),
+            path_for_log(topk_summary_csv_path),
+        ],
+    )
 
     print(metrics_df.to_string(index=False))
+    print(topk_summary.to_string(index=False))
 
 
 if __name__ == "__main__":

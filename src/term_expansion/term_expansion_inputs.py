@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Usage: python src/term_expansion/term_expansion_inputs.py --wlsp data/processed/wlsp.pkl --records data/gold/gold_A_records.pkl --out-dir data/interim/api_inputs/term_expansion/version_1/gold_A
+import argparse
 from pathlib import Path
 import json
 
@@ -5,21 +8,11 @@ import numpy as np
 import pandas as pd
 
 
-# --- load data ---
-# Read WLSP table from pickle.
-wlsp = pd.read_pickle("data/processed/wlsp.pkl")
-
-# Read candidate records from pickle and get their record IDs from the index.
-rids = pd.read_pickle("data/gold/gold_A_records.pkl").index.to_list()
+DEFAULT_WLSP_PATH = Path("data/processed/wlsp.pkl")
+DEFAULT_RECORDS_PATH = Path("data/gold/gold_A_records.pkl")
+DEFAULT_OUT_DIR = Path("data/interim/api_inputs/term_expansion/version_1/gold_A")
 
 
-# --- output dir ---
-# Create the output directory if it does not exist.
-out_dir = Path("data/interim/api_inputs/term_expansion/version_1/gold_A")
-out_dir.mkdir(parents=True, exist_ok=True)
-
-
-# --- helpers ---
 def _as_list(x):
     """Convert a value into a list."""
     if x is None:
@@ -59,58 +52,67 @@ def _make_category_path(row):
     return ">".join(parts)
 
 
-# --- build & save ---
-# Limit the number of hint terms to avoid oversized inputs.
-MAX_JMDICT_EN = 12
-MAX_SUBPARA_TERMS = 12
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--wlsp", type=Path, default=DEFAULT_WLSP_PATH)
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    return ap.parse_args()
 
-written = 0
 
-for rid in rids:
-    row = wlsp.loc[rid]
+def main() -> None:
+    args = parse_args()
 
-    # Get the Japanese headword.
-    lemma = (
-        str(row["lemma"]).strip()
-        if "lemma" in row
-        else str(row.get("見出し本体", "")).strip()
-    )
+    wlsp = pd.read_pickle(args.wlsp)
+    rids = pd.read_pickle(args.records).index.to_list()
 
-    # Get kana if available.
-    kana = None
-    if "kana" in row and pd.notna(row["kana"]):
-        kana = str(row["kana"]).strip() or None
+    out_dir = args.out_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Build the Japanese category path.
-    category_path_ja = _make_category_path(row)
+    max_jmdict_en = 12
+    max_subpara_terms = 12
+    written = 0
 
-    # Collect hint terms.
-    sub_terms = _clean_terms(row.get("synonyms", []))
-    jmdict_en = _clean_terms(row.get("EN_JMdict", []))
+    for rid in rids:
+        row = wlsp.loc[rid]
 
-    # Remove the lemma itself from subparagraph_terms_ja,
-    # because lemma_ja is already given separately.
-    sub_terms = [t for t in sub_terms if t != lemma]
+        # Get the Japanese headword.
+        lemma = (
+            str(row["lemma"]).strip()
+            if "lemma" in row
+            else str(row.get("見出し本体", "")).strip()
+        )
 
-    # Truncate long lists while keeping original order.
-    sub_terms = sub_terms[:MAX_SUBPARA_TERMS]
-    jmdict_en = jmdict_en[:MAX_JMDICT_EN]
+        kana = None
+        if "kana" in row and pd.notna(row["kana"]):
+            kana = str(row["kana"]).strip() or None
 
-    # Build the JSON payload.
-    payload = {
-        "record_id": rid,
-        "category_path_ja": category_path_ja,
-        "lemma_ja": lemma,
-        "kana": kana,
-        "jmdict_en": jmdict_en,
-        "subparagraph_terms_ja": sub_terms,
-    }
+        category_path_ja = _make_category_path(row)
+        sub_terms = _clean_terms(row.get("synonyms", []))
+        jmdict_en = _clean_terms(row.get("EN_JMdict", []))
 
-    # Save one JSON file per record.
-    out_path = out_dir / f"rid={rid}.json"
-    with out_path.open("w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+        # lemma_ja is already provided separately.
+        sub_terms = [t for t in sub_terms if t != lemma]
+        sub_terms = sub_terms[:max_subpara_terms]
+        jmdict_en = jmdict_en[:max_jmdict_en]
 
-    written += 1
+        payload = {
+            "record_id": rid,
+            "category_path_ja": category_path_ja,
+            "lemma_ja": lemma,
+            "kana": kana,
+            "jmdict_en": jmdict_en,
+            "subparagraph_terms_ja": sub_terms,
+        }
 
-print(f"[OK] wrote {written} files to: {out_dir}")
+        out_path = out_dir / f"rid={rid}.json"
+        with out_path.open("w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+
+        written += 1
+
+    print(f"[OK] wrote {written} files to: {out_dir}")
+
+
+if __name__ == "__main__":
+    main()

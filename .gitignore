@@ -74,6 +74,19 @@ outputs/**
 !outputs/baselines/gold_B_hybrid_best/metrics.pkl
 !outputs/baselines/gold_B_hybrid_search/
 !outputs/baselines/gold_B_hybrid_search/summary.pkl
+!outputs/baselines/gold_B_cross_encoder/
+!outputs/baselines/gold_B_cross_encoder/topk_summary.pkl
+!outputs/baselines/gold_B_cross_encoder/topk_summary.csv
+!outputs/api_runs/
+!outputs/api_runs/term_expansion/
+!outputs/api_runs/term_expansion/version_1/
+!outputs/api_runs/term_expansion/version_1/gold_A/
+!outputs/api_runs/term_expansion/version_1/gold_A/parsed/
+!outputs/api_runs/term_expansion/version_1/gold_A/parsed/**
+!outputs/api_runs/term_expansion/version_1/gold_B/
+!outputs/api_runs/term_expansion/version_1/gold_B/parsed/
+!outputs/api_runs/term_expansion/version_1/gold_B/parsed/**
+outputs/api_runs/term_expansion/**/responses/
 
 # Keep docs readable in the repo
 !docs/

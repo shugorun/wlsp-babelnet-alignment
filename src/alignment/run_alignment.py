@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# Usage: python src/alignment/run_alignment.py --model gpt-5.4-2026-03-05 --input-dir data/interim/api_inputs/alignment/version_1/gold_A --out-dir outputs/api_runs/alignment/gpt-5.4-2026-03-05_high_v1_v1/gold_A --key-path .vscode/openai-key.json
 from __future__ import annotations
 
+import argparse
 import json
 import random
 import sys
@@ -128,19 +131,21 @@ def call_with_retry(
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MODEL = "gpt-5.4-2026-03-05"
-MAX_FILES = 0
-FORCE = False
+DEFAULT_MODEL = "gpt-5.4-2026-03-05"
+DEFAULT_MAX_FILES = 0
+DEFAULT_FORCE = False
 MAX_RETRIES = 5
 BASE_SLEEP = 1.0
-KEY_PATH = ".vscode/openai-key.json"
+DEFAULT_KEY_PATH = ".vscode/openai-key.json"
 CACHE_KEY = "wlsp_babelnet_alignment_v1"
-INPUT_DIR = ROOT / "data" / "interim" / "api_inputs" / "alignment" / "version_1" / "gold_A"
-OUT_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "gpt-5.4-2026-03-05" / "gold_A"
+DEFAULT_INPUT_DIR = ROOT / "data" / "interim" / "api_inputs" / "alignment" / "version_1" / "gold_A"
+DEFAULT_OUT_DIR = ROOT / "outputs" / "api_runs" / "alignment" / "gpt-5.4-2026-03-05_high_v1_v1" / "gold_A"
 PROMPT_VERSION = "v1"
 SCHEMA_VERSION = "v1"
 PROMPT_DIR = ROOT / "src" / "alignment" / "prompts"
 SCHEMA_DIR = ROOT / "src" / "alignment" / "schemas"
+DEFAULT_PROMPT_PATH = PROMPT_DIR / f"alignment_prompt_{PROMPT_VERSION}.txt"
+DEFAULT_SCHEMA_PATH = SCHEMA_DIR / f"alignment_schema_{SCHEMA_VERSION}.json"
 
 
 def load_prompt(version: str) -> str:
@@ -151,23 +156,36 @@ def load_schema(version: str) -> Dict[str, Any]:
     return json.loads((SCHEMA_DIR / f"alignment_schema_{version}.json").read_text(encoding="utf-8"))
 
 
-def main() -> None:
-    cfg = load_openai_config(KEY_PATH)
-    client = OpenAI(api_key=cfg["openai_api_key"])
-    system_prompt = load_prompt(PROMPT_VERSION)
-    output_schema = load_schema(SCHEMA_VERSION)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", type=str, default=DEFAULT_MODEL)
+    ap.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
+    ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    ap.add_argument("--key-path", type=Path, default=Path(DEFAULT_KEY_PATH))
+    ap.add_argument("--prompt-path", type=Path, default=DEFAULT_PROMPT_PATH)
+    ap.add_argument("--schema-path", type=Path, default=DEFAULT_SCHEMA_PATH)
+    return ap.parse_args()
 
-    input_dir = INPUT_DIR
-    out_dir = OUT_DIR
+
+def main() -> None:
+    args = parse_args()
+
+    cfg = load_openai_config(args.key_path)
+    client = OpenAI(api_key=cfg["openai_api_key"])
+    system_prompt = args.prompt_path.read_text(encoding="utf-8")
+    output_schema = json.loads(args.schema_path.read_text(encoding="utf-8"))
+
+    input_dir = args.input_dir
+    out_dir = args.out_dir
     resp_dir = out_dir / "responses"
     parsed_dir = out_dir / "parsed"
     err_dir = out_dir / "errors"
 
     files = list_input_files(input_dir)
-    if MAX_FILES and MAX_FILES > 0:
-        files = files[:MAX_FILES]
+    if DEFAULT_MAX_FILES and DEFAULT_MAX_FILES > 0:
+        files = files[:DEFAULT_MAX_FILES]
 
-    print(f"[INFO] model={MODEL}")
+    print(f"[INFO] model={args.model}")
     print(f"[INFO] cache_key={CACHE_KEY}")
     print(f"[INFO] prompt_version={PROMPT_VERSION}")
     print(f"[INFO] schema_version={SCHEMA_VERSION}")
@@ -182,7 +200,7 @@ def main() -> None:
         out_resp_path = resp_dir / f"{base}.json"
         out_parsed_path = parsed_dir / f"{base}.json"
 
-        if out_parsed_path.exists() and not FORCE:
+        if out_parsed_path.exists() and not DEFAULT_FORCE:
             print(f"[SKIP] {out_parsed_path.name}")
             ok += 1
             continue
@@ -192,7 +210,7 @@ def main() -> None:
         try:
             resp = call_with_retry(
                 client=client,
-                model=MODEL,
+                model=args.model,
                 system_prompt=system_prompt,
                 user_payload=inp,
                 schema=output_schema,

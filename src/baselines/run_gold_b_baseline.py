@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_baseline.py --records data/gold/gold_B_records.pkl --gold data/gold/gold_B.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_B
 """Build a simple gold_B baseline from sids_JA and sids_JMdict only.
 
 This script reads only pickle files, builds pairwise features for
@@ -8,6 +10,7 @@ trained logistic-regression model.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import re
@@ -26,15 +29,11 @@ from baselines.experiment_log import append_run_log
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
-GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
-BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
+DEFAULT_RECORDS_PATH = ROOT / "data" / "gold" / "gold_B_records.pkl"
+DEFAULT_GOLD_PATH = ROOT / "data" / "gold" / "gold_B.pkl"
+DEFAULT_BABELNET_PATH = ROOT / "data" / "processed" / "babelnet_.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B"
-FEATURES_PATH = OUTPUT_DIR / "pair_features.pkl"
-OOF_PATH = OUTPUT_DIR / "oof_predictions.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
-MODEL_PATH = OUTPUT_DIR / "logreg_model.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B"
 
 RANDOM_STATE = 0
 N_SPLITS = 5
@@ -78,6 +77,13 @@ WEIGHTED_SCORE_WEIGHTS = {
     "num_lemmas_EN": -0.03,
     "num_categories_JA": -0.05,
 }
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def normalize_ja_text(text: object) -> str:
@@ -450,38 +456,54 @@ def train_final_model(df: pd.DataFrame) -> dict[str, object]:
     }
 
 
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--records", type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument("--gold", type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument("--babelnet", type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
+
+
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    output_dir = args.output_dir
+    features_path = output_dir / "pair_features.pkl"
+    oof_path = output_dir / "oof_predictions.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+    model_path = output_dir / "logreg_model.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Read the three core tables: WLSP records, gold labels, and BabelNet rows.
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
     # Export both intermediate features and evaluation outputs so later runs
     # can reuse them as the lexical baseline reference point.
     feature_df = build_feature_rows(records, gold, babelnet)
-    feature_df.to_pickle(FEATURES_PATH)
-    print(f"Saved features: {FEATURES_PATH}")
+    feature_df.to_pickle(features_path)
+    print(f"Saved features: {features_path}")
 
     oof_df, fold_metrics = run_grouped_cv(feature_df)
-    oof_df.to_pickle(OOF_PATH)
-    print(f"Saved OOF predictions: {OOF_PATH}")
+    oof_df.to_pickle(oof_path)
+    print(f"Saved OOF predictions: {oof_path}")
 
     metrics_df = summarize_results(oof_df, fold_metrics)
     metrics_obj = {
         "summary": metrics_df,
         "folds": fold_metrics,
     }
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump(metrics_obj, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     final_model = train_final_model(feature_df)
-    with MODEL_PATH.open("wb") as f:
+    with model_path.open("wb") as f:
         pickle.dump(final_model, f)
-    print(f"Saved final model: {MODEL_PATH}")
+    print(f"Saved final model: {model_path}")
 
     print(metrics_df.to_string(index=False))
 
@@ -502,10 +524,10 @@ def main() -> None:
             "logreg_record_exact_match_rate": metrics_df.loc[metrics_df["method"] == "logreg", "record_exact_match_rate"].iloc[0],
         },
         outputs=[
-            str(FEATURES_PATH.relative_to(ROOT)),
-            str(OOF_PATH.relative_to(ROOT)),
-            str(METRICS_PATH.relative_to(ROOT)),
-            str(MODEL_PATH.relative_to(ROOT)),
+            path_for_log(features_path),
+            path_for_log(oof_path),
+            path_for_log(metrics_path),
+            path_for_log(model_path),
         ],
     )
 

@@ -1,0 +1,402 @@
+{
+  "results": [
+    {
+      "record_id": "60905",
+      "aliases_ja": [
+        "湿地",
+        "沼地"
+      ],
+      "aliases_en": [
+        "marsh"
+      ],
+      "variants_ja": [
+        "やち"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "地形",
+        "低地"
+      ],
+      "hypernyms_en": [
+        "wetland",
+        "landform"
+      ]
+    },
+    {
+      "record_id": "61400",
+      "aliases_ja": [
+        "冬景"
+      ],
+      "aliases_en": [
+        "winterscape"
+      ],
+      "variants_ja": [
+        "ふゆげしき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "景色",
+        "風景"
+      ],
+      "hypernyms_en": [
+        "landscape",
+        "scenery"
+      ]
+    },
+    {
+      "record_id": "61423",
+      "aliases_ja": [],
+      "aliases_en": [
+        "seasonal tradition",
+        "seasonal custom"
+      ],
+      "variants_ja": [
+        "ふうぶつし"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "風物"
+      ],
+      "hypernyms_en": [
+        "tradition",
+        "custom"
+      ]
+    },
+    {
+      "record_id": "61433",
+      "aliases_ja": [
+        "牡牝",
+        "雄雌"
+      ],
+      "aliases_en": [
+        "sexes"
+      ],
+      "variants_ja": [
+        "しゆう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "性別"
+      ],
+      "hypernyms_en": [
+        "sex"
+      ]
+    },
+    {
+      "record_id": "61438",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "だんじょ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "人",
+        "性別"
+      ],
+      "hypernyms_en": [
+        "people",
+        "sex"
+      ]
+    },
+    {
+      "record_id": "61451",
+      "aliases_ja": [
+        "生物",
+        "生き物"
+      ],
+      "aliases_en": [
+        "organisms",
+        "creatures"
+      ],
+      "variants_ja": [
+        "せいるい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生命",
+        "生命体"
+      ],
+      "hypernyms_en": [
+        "life",
+        "life form"
+      ]
+    },
+    {
+      "record_id": "61463",
+      "aliases_ja": [
+        "マイクロオーガニズム",
+        "ミクローブ"
+      ],
+      "aliases_en": [
+        "microorganism"
+      ],
+      "variants_ja": [
+        "びせいぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生物"
+      ],
+      "hypernyms_en": [
+        "organism"
+      ]
+    },
+    {
+      "record_id": "61469",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "どうしょくぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生物"
+      ],
+      "hypernyms_en": [
+        "organisms"
+      ]
+    },
+    {
+      "record_id": "61472",
+      "aliases_ja": [
+        "草木",
+        "植生"
+      ],
+      "aliases_en": [
+        "flora"
+      ],
+      "variants_ja": [
+        "しょくぶつ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生物"
+      ],
+      "hypernyms_en": [
+        "organism",
+        "life form"
+      ]
+    },
+    {
+      "record_id": "61478",
+      "aliases_ja": [
+        "ゲヌス"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ぞく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "分類階級"
+      ],
+      "hypernyms_en": [
+        "taxon",
+        "rank"
+      ]
+    },
+    {
+      "record_id": "61518",
+      "aliases_ja": [
+        "生体組織"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "そしき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "構造"
+      ],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "61519",
+      "aliases_ja": [
+        "ファイバー"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "線維",
+        "せんい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "構造"
+      ],
+      "hypernyms_en": [
+        "structure"
+      ]
+    },
+    {
+      "record_id": "61575",
+      "aliases_ja": [
+        "プトマイン"
+      ],
+      "aliases_en": [
+        "ptomaine"
+      ],
+      "variants_ja": [
+        "屍毒",
+        "しどく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "食中毒",
+        "中毒"
+      ],
+      "hypernyms_en": [
+        "poisoning",
+        "food poisoning"
+      ]
+    },
+    {
+      "record_id": "61636",
+      "aliases_ja": [
+        "巨木",
+        "大木"
+      ],
+      "aliases_en": [
+        "large tree"
+      ],
+      "variants_ja": [
+        "きょじゅ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木",
+        "木"
+      ],
+      "hypernyms_en": [
+        "tree",
+        "plant"
+      ]
+    },
+    {
+      "record_id": "61662",
+      "aliases_ja": [
+        "広葉樹"
+      ],
+      "aliases_en": [
+        "broadleaf",
+        "broadleaf tree"
+      ],
+      "variants_ja": [
+        "かつようじゅ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木",
+        "植物"
+      ],
+      "hypernyms_en": [
+        "tree",
+        "plant"
+      ]
+    },
+    {
+      "record_id": "61944",
+      "aliases_ja": [
+        "チャ",
+        "チャノキ"
+      ],
+      "aliases_en": [
+        "camellia sinensis"
+      ],
+      "variants_ja": [
+        "ちゃのき",
+        "茶ノ木"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "植物",
+        "低木"
+      ],
+      "hypernyms_en": [
+        "plant",
+        "shrub"
+      ]
+    },
+    {
+      "record_id": "62010",
+      "aliases_ja": [
+        "キリ",
+        "パウロニア"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "きり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木",
+        "落葉樹"
+      ],
+      "hypernyms_en": [
+        "tree",
+        "deciduous tree"
+      ]
+    },
+    {
+      "record_id": "62419",
+      "aliases_ja": [
+        "カミガヤツリ"
+      ],
+      "aliases_en": [
+        "cyperus papyrus"
+      ],
+      "variants_ja": [
+        "ぱぴるす"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "カヤツリグサ",
+        "植物"
+      ],
+      "hypernyms_en": [
+        "sedge",
+        "plant"
+      ]
+    },
+    {
+      "record_id": "62505",
+      "aliases_ja": [
+        "ガーリック"
+      ],
+      "aliases_en": [
+        "allium sativum"
+      ],
+      "variants_ja": [
+        "大蒜",
+        "ニンニク"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "野菜",
+        "植物"
+      ],
+      "hypernyms_en": [
+        "vegetable",
+        "plant"
+      ]
+    },
+    {
+      "record_id": "62744",
+      "aliases_ja": [
+        "お茶っ葉"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ちゃば"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "葉"
+      ],
+      "hypernyms_en": [
+        "leaf"
+      ]
+    }
+  ]
+}

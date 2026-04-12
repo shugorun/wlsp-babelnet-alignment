@@ -1,0 +1,423 @@
+{
+  "results": [
+    {
+      "record_id": "63107",
+      "aliases_ja": [
+        "虎",
+        "トラ"
+      ],
+      "aliases_en": [
+        "tiger"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ネコ科",
+        "哺乳類"
+      ],
+      "hypernyms_en": [
+        "felid",
+        "mammal"
+      ]
+    },
+    {
+      "record_id": "63259",
+      "aliases_ja": [
+        "牡牛",
+        "雄牛"
+      ],
+      "aliases_en": [
+        "bull"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ウシ",
+        "哺乳類"
+      ],
+      "hypernyms_en": [
+        "cattle",
+        "bovid"
+      ]
+    },
+    {
+      "record_id": "63618",
+      "aliases_ja": [
+        "腔棘魚",
+        "ラティメリア"
+      ],
+      "aliases_en": [
+        "latimeria"
+      ],
+      "variants_ja": [
+        "しいらかんす"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "肉鰭類",
+        "魚類"
+      ],
+      "hypernyms_en": [
+        "fish",
+        "sarcopterygian"
+      ]
+    },
+    {
+      "record_id": "64193",
+      "aliases_ja": [
+        "死体",
+        "死骸",
+        "むくろ"
+      ],
+      "aliases_en": [
+        "cadaver"
+      ],
+      "variants_ja": [
+        "屍"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "身体",
+        "人体"
+      ],
+      "hypernyms_en": [
+        "body",
+        "remains"
+      ]
+    },
+    {
+      "record_id": "64217",
+      "aliases_ja": [
+        "マミー"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "みいら",
+        "木乃伊"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "死体",
+        "遺体"
+      ],
+      "hypernyms_en": [
+        "corpse",
+        "remains"
+      ]
+    },
+    {
+      "record_id": "64228",
+      "aliases_ja": [
+        "体格",
+        "体つき"
+      ],
+      "aliases_en": [
+        "constitution"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体型",
+        "身体"
+      ],
+      "hypernyms_en": [
+        "body",
+        "form"
+      ]
+    },
+    {
+      "record_id": "64250",
+      "aliases_ja": [
+        "ビール腹",
+        "アルコール太り"
+      ],
+      "aliases_en": [
+        "potbelly"
+      ],
+      "variants_ja": [
+        "さかぶとり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "肥満",
+        "体重増加"
+      ],
+      "hypernyms_en": [
+        "obesity",
+        "weight gain"
+      ]
+    },
+    {
+      "record_id": "64252",
+      "aliases_ja": [
+        "細身",
+        "痩躯",
+        "スリム"
+      ],
+      "aliases_en": [
+        "slimness",
+        "leanness"
+      ],
+      "variants_ja": [
+        "そうしん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体格",
+        "体型"
+      ],
+      "hypernyms_en": [
+        "physique",
+        "body type"
+      ]
+    },
+    {
+      "record_id": "64268",
+      "aliases_ja": [
+        "長脚",
+        "脚長"
+      ],
+      "aliases_en": [
+        "leg length"
+      ],
+      "variants_ja": [
+        "あしなが"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "脚",
+        "体型"
+      ],
+      "hypernyms_en": [
+        "leg",
+        "body type"
+      ]
+    },
+    {
+      "record_id": "64300",
+      "aliases_ja": [
+        "汗だく",
+        "汗みずく",
+        "汗びっしょり"
+      ],
+      "aliases_en": [
+        "diaphoresis",
+        "sweat"
+      ],
+      "variants_ja": [
+        "あせまみれ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "発汗",
+        "汗"
+      ],
+      "hypernyms_en": [
+        "perspiration",
+        "sweating"
+      ]
+    },
+    {
+      "record_id": "64376",
+      "aliases_ja": [
+        "口蓋垂",
+        "のどちんこ",
+        "のどひこ"
+      ],
+      "aliases_en": [
+        "palatine uvula"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "軟口蓋",
+        "口蓋"
+      ],
+      "hypernyms_en": [
+        "palate",
+        "organ"
+      ]
+    },
+    {
+      "record_id": "64527",
+      "aliases_ja": [
+        "伏し目",
+        "下目遣い"
+      ],
+      "aliases_en": [
+        "downward gaze",
+        "downcast glance"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "視線",
+        "目つき"
+      ],
+      "hypernyms_en": [
+        "gaze",
+        "look"
+      ]
+    },
+    {
+      "record_id": "64649",
+      "aliases_ja": [
+        "腹",
+        "腹部"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "どてっぱら",
+        "どてっ腹"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "体幹",
+        "身体"
+      ],
+      "hypernyms_en": [
+        "torso",
+        "body"
+      ]
+    },
+    {
+      "record_id": "64860",
+      "aliases_ja": [
+        "皮膜",
+        "被膜"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "まく"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "組織",
+        "層"
+      ],
+      "hypernyms_en": [
+        "tissue",
+        "layer"
+      ]
+    },
+    {
+      "record_id": "65006",
+      "aliases_ja": [],
+      "aliases_en": [
+        "stomach wall"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "胃",
+        "消化管"
+      ],
+      "hypernyms_en": [
+        "stomach",
+        "digestive tract"
+      ]
+    },
+    {
+      "record_id": "65090",
+      "aliases_ja": [
+        "フィンガープリント"
+      ],
+      "aliases_en": [
+        "dactylogram"
+      ],
+      "variants_ja": [
+        "しもん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "痕跡",
+        "印象"
+      ],
+      "hypernyms_en": [
+        "trace",
+        "impression"
+      ]
+    },
+    {
+      "record_id": "65430",
+      "aliases_ja": [
+        "血液群"
+      ],
+      "aliases_en": [
+        "abo group"
+      ],
+      "variants_ja": [
+        "けつえきがた"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "形質",
+        "血液"
+      ],
+      "hypernyms_en": [
+        "trait",
+        "blood"
+      ]
+    },
+    {
+      "record_id": "65569",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "ほるもん",
+        "荷爾蒙"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "化学物質",
+        "生理活性物質"
+      ],
+      "hypernyms_en": [
+        "chemical",
+        "biomolecule"
+      ]
+    },
+    {
+      "record_id": "65667",
+      "aliases_ja": [
+        "先天的"
+      ],
+      "aliases_en": [
+        "innateness"
+      ],
+      "variants_ja": [
+        "せんてんせい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "性質",
+        "特性"
+      ],
+      "hypernyms_en": [
+        "trait",
+        "quality"
+      ]
+    },
+    {
+      "record_id": "65701",
+      "aliases_ja": [
+        "変化生"
+      ],
+      "aliases_en": [
+        "spontaneous generation"
+      ],
+      "variants_ja": [
+        "けしょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "出生",
+        "生"
+      ],
+      "hypernyms_en": [
+        "birth",
+        "generation"
+      ]
+    }
+  ]
+}

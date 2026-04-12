@@ -1,5 +1,8 @@
-﻿from __future__ import annotations
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_a_no_training_methods.py --records data/gold/gold_A_records.pkl --gold data/gold/gold_A.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_A_no_training_methods --e5-model intfloat/multilingual-e5-large --cross-model BAAI/bge-reranker-v2-m3
+from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import sys
@@ -17,34 +20,36 @@ if str(SRC_DIR) not in sys.path:
 
 from baselines.experiment_log import append_run_log
 from baselines.run_gold_b_baseline import build_feature_rows, weighted_score
-from baselines.run_gold_b_ranking import build_rankings as build_e5_rankings
+import baselines.run_gold_b_ranking as e5_ranking
 from baselines.run_gold_b_ranking import build_passage_text, build_query_text
-from baselines.run_gold_b_ranking_mpnet import MODEL_DIR as MPNET_MODEL_DIR
+from baselines.run_gold_b_ranking_mpnet import DEFAULT_MODEL_DIR as DEFAULT_MPNET_MODEL_DIR
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RECORDS_PATH = ROOT / 'data' / 'gold' / 'gold_A_records.pkl'
-GOLD_PATH = ROOT / 'data' / 'gold' / 'gold_A.pkl'
-BABELNET_PATH = ROOT / 'data' / 'processed' / 'babelnet_.pkl'
+DEFAULT_RECORDS_PATH = ROOT / 'data' / 'gold' / 'gold_A_records.pkl'
+DEFAULT_GOLD_PATH = ROOT / 'data' / 'gold' / 'gold_A.pkl'
+DEFAULT_BABELNET_PATH = ROOT / 'data' / 'processed' / 'babelnet_.pkl'
 
-OUTPUT_DIR = ROOT / 'outputs' / 'baselines' / 'gold_A_no_training_methods'
-WEIGHTED_RANKINGS_PATH = OUTPUT_DIR / 'weighted_rankings.pkl'
-E5_RANKINGS_PATH = OUTPUT_DIR / 'e5_rankings.pkl'
-MPNET_RANKINGS_PATH = OUTPUT_DIR / 'mpnet_rankings.pkl'
-CROSS_RANKINGS_PATH = OUTPUT_DIR / 'cross_encoder_rankings.pkl'
-SUMMARY_PATH = OUTPUT_DIR / 'summary.pkl'
-SUMMARY_CSV_PATH = OUTPUT_DIR / 'summary.csv'
+DEFAULT_OUTPUT_DIR = ROOT / 'outputs' / 'baselines' / 'gold_A_no_training_methods'
 
 TOPKS = [1, 2, 3, 5]
 MPNET_TEXT_MODE = 'concise'
 CROSS_TEXT_MODE = 'concise'
-CROSS_MODEL_NAME = 'BAAI/bge-reranker-v2-m3'
+DEFAULT_CROSS_MODEL_NAME = 'BAAI/bge-reranker-v2-m3'
 CROSS_MAX_LENGTH = 512
 CROSS_BATCH_SIZE = 8
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEFAULT_E5_MODEL_NAME = e5_ranking.DEFAULT_MODEL_NAME
 
 # This script keeps all methods training-free with respect to gold_B.
 # The only tuning knob is top-k decoding over the fixed candidate set.
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 def dedupe_keep_order(items: list[str]) -> list[str]:
     return list(dict.fromkeys(items))
@@ -149,9 +154,14 @@ def build_weighted_rankings(records: pd.DataFrame, pair_df: pd.DataFrame) -> pd.
     return pd.DataFrame(rows)
 
 
-def build_mpnet_rankings(records: pd.DataFrame, gold: pd.DataFrame, babelnet: pd.DataFrame) -> pd.DataFrame:
+def build_mpnet_rankings(
+    records: pd.DataFrame,
+    gold: pd.DataFrame,
+    babelnet: pd.DataFrame,
+    model_dir: Path,
+) -> pd.DataFrame:
     """Rank with a sentence-transformer embedding model without task training."""
-    model = SentenceTransformer(str(MPNET_MODEL_DIR))
+    model = SentenceTransformer(str(model_dir.expanduser()))
 
     record_ids = records.index.astype(int).tolist()
     query_texts = [build_query_text(records.loc[rid], MPNET_TEXT_MODE) for rid in record_ids]
@@ -210,10 +220,10 @@ def build_cross_pair_table(records: pd.DataFrame, gold: pd.DataFrame, babelnet: 
     return pd.DataFrame(rows)
 
 
-def score_cross_pairs(pair_df: pd.DataFrame) -> np.ndarray:
+def score_cross_pairs(pair_df: pd.DataFrame, cross_model_name: str) -> np.ndarray:
     """Score pairs directly with a pretrained cross-encoder."""
-    tokenizer = AutoTokenizer.from_pretrained(CROSS_MODEL_NAME)
-    model = AutoModelForSequenceClassification.from_pretrained(CROSS_MODEL_NAME).to(DEVICE)
+    tokenizer = AutoTokenizer.from_pretrained(cross_model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(cross_model_name).to(DEVICE)
     model.eval()
 
     scores = []
@@ -239,9 +249,15 @@ def score_cross_pairs(pair_df: pd.DataFrame) -> np.ndarray:
     return np.concatenate(scores, axis=0) if scores else np.array([], dtype=float)
 
 
-def build_cross_rankings(records: pd.DataFrame, pair_df: pd.DataFrame, gold: pd.DataFrame, babelnet: pd.DataFrame) -> pd.DataFrame:
+def build_cross_rankings(
+    records: pd.DataFrame,
+    pair_df: pd.DataFrame,
+    gold: pd.DataFrame,
+    babelnet: pd.DataFrame,
+    cross_model_name: str,
+) -> pd.DataFrame:
     cross_pairs = build_cross_pair_table(records, gold, babelnet)
-    cross_pairs['score'] = score_cross_pairs(cross_pairs)
+    cross_pairs['score'] = score_cross_pairs(cross_pairs, cross_model_name)
     cross_pairs = cross_pairs.merge(pair_df[['record_id', 'synset_id', 'from_sids_JA', 'from_sids_JMdict']], on=['record_id', 'synset_id'], how='left')
     cross_pairs = add_candidate_membership(cross_pairs, records)
 
@@ -263,39 +279,60 @@ def build_cross_rankings(records: pd.DataFrame, pair_df: pd.DataFrame, gold: pd.
     return pd.DataFrame(rows)
 
 
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--records', type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument('--gold', type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument('--babelnet', type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument('--output-dir', type=Path, default=DEFAULT_OUTPUT_DIR)
+    ap.add_argument('--e5-model', type=str, default=DEFAULT_E5_MODEL_NAME)
+    ap.add_argument('--mpnet-model-dir', type=Path, default=DEFAULT_MPNET_MODEL_DIR)
+    ap.add_argument('--cross-model', type=str, default=DEFAULT_CROSS_MODEL_NAME)
+    return ap.parse_args()
+
+
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    output_dir = args.output_dir
+    weighted_rankings_path = output_dir / 'weighted_rankings.pkl'
+    e5_rankings_path = output_dir / 'e5_rankings.pkl'
+    mpnet_rankings_path = output_dir / 'mpnet_rankings.pkl'
+    cross_rankings_path = output_dir / 'cross_encoder_rankings.pkl'
+    summary_path = output_dir / 'summary.pkl'
+    summary_csv_path = output_dir / 'summary.csv'
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Build one shared pair table, then compare several no-training ranking
     # strategies under the same top-k evaluation protocol.
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
     pair_df = build_feature_rows(records, gold, babelnet)
 
     weighted_rankings = build_weighted_rankings(records, pair_df)
-    weighted_rankings.to_pickle(WEIGHTED_RANKINGS_PATH)
+    weighted_rankings.to_pickle(weighted_rankings_path)
     weighted_summary = evaluate_rankings(weighted_rankings, gold, ['method', 'text_mode', 'candidate_mode'])
 
-    e5_rankings = build_e5_rankings(records, gold, babelnet)
+    e5_rankings = e5_ranking.build_rankings(records, gold, babelnet, model_name=args.e5_model)
     e5_rankings['method'] = 'e5_ranking'
-    e5_rankings.to_pickle(E5_RANKINGS_PATH)
+    e5_rankings.to_pickle(e5_rankings_path)
     e5_summary = evaluate_rankings(e5_rankings, gold, ['method', 'text_mode', 'query_mode', 'passage_mode', 'candidate_mode'])
 
-    mpnet_rankings = build_mpnet_rankings(records, gold, babelnet)
-    mpnet_rankings.to_pickle(MPNET_RANKINGS_PATH)
+    mpnet_rankings = build_mpnet_rankings(records, gold, babelnet, model_dir=args.mpnet_model_dir)
+    mpnet_rankings.to_pickle(mpnet_rankings_path)
     mpnet_summary = evaluate_rankings(mpnet_rankings, gold, ['method', 'text_mode', 'candidate_mode'])
 
-    cross_rankings = build_cross_rankings(records, pair_df, gold, babelnet)
-    cross_rankings.to_pickle(CROSS_RANKINGS_PATH)
+    cross_rankings = build_cross_rankings(records, pair_df, gold, babelnet, cross_model_name=args.cross_model)
+    cross_rankings.to_pickle(cross_rankings_path)
     cross_summary = evaluate_rankings(cross_rankings, gold, ['method', 'text_mode', 'candidate_mode'])
 
     summary = pd.concat([weighted_summary, e5_summary, mpnet_summary, cross_summary], ignore_index=True, sort=False)
     summary = summary.sort_values(['f1_equal', 'precision_equal', 'recall_equal'], ascending=False)
-    summary.to_pickle(SUMMARY_PATH)
-    summary.to_csv(SUMMARY_CSV_PATH, index=False, encoding='utf-8-sig')
+    summary.to_pickle(summary_path)
+    summary.to_csv(summary_csv_path, index=False, encoding='utf-8-sig')
 
     best_row = summary.iloc[0].to_dict()
     append_run_log(
@@ -305,7 +342,9 @@ def main() -> None:
         params={
             'topks': ','.join(str(k) for k in TOPKS),
             'methods': 'weighted_lexical,e5_ranking,mpnet_ranking,cross_encoder_pretrained',
-            'cross_model_name': CROSS_MODEL_NAME,
+            'e5_model_name': args.e5_model,
+            'cross_model_name': args.cross_model,
+            'mpnet_model_dir': str(args.mpnet_model_dir),
             'mpnet_text_mode': MPNET_TEXT_MODE,
             'cross_text_mode': CROSS_TEXT_MODE,
         },
@@ -319,12 +358,12 @@ def main() -> None:
             'best_pair_recall_equal': best_row.get('recall_equal', 0.0),
         },
         outputs=[
-            str(WEIGHTED_RANKINGS_PATH.relative_to(ROOT)),
-            str(E5_RANKINGS_PATH.relative_to(ROOT)),
-            str(MPNET_RANKINGS_PATH.relative_to(ROOT)),
-            str(CROSS_RANKINGS_PATH.relative_to(ROOT)),
-            str(SUMMARY_PATH.relative_to(ROOT)),
-            str(SUMMARY_CSV_PATH.relative_to(ROOT)),
+            path_for_log(weighted_rankings_path),
+            path_for_log(e5_rankings_path),
+            path_for_log(mpnet_rankings_path),
+            path_for_log(cross_rankings_path),
+            path_for_log(summary_path),
+            path_for_log(summary_csv_path),
         ],
     )
 

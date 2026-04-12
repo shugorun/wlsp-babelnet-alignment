@@ -1,5 +1,8 @@
-﻿from __future__ import annotations
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_a_hybrid_best.py --config outputs/baselines/gold_B_hybrid_best/config.json --model-bundle outputs/baselines/gold_B_hybrid_best/logreg_model.pkl --records data/gold/gold_A_records.pkl --gold data/gold/gold_A.pkl --babelnet data/processed/babelnet_.pkl --output-dir outputs/baselines/gold_A_hybrid_best --e5-model intfloat/multilingual-e5-large
+from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import json
 import pickle
@@ -19,21 +22,23 @@ from baselines.run_gold_b_ranking import DTYPE, DEVICE, build_passage_text, buil
 
 ROOT = Path(__file__).resolve().parents[2]
 
-GOLD_BEST_DIR = ROOT / 'outputs' / 'baselines' / 'gold_B_hybrid_best'
-CONFIG_PATH = GOLD_BEST_DIR / 'config.json'
-MODEL_PATH = GOLD_BEST_DIR / 'logreg_model.pkl'
+DEFAULT_GOLD_BEST_DIR = ROOT / 'outputs' / 'baselines' / 'gold_B_hybrid_best'
+DEFAULT_CONFIG_PATH = DEFAULT_GOLD_BEST_DIR / 'config.json'
+DEFAULT_MODEL_BUNDLE_PATH = DEFAULT_GOLD_BEST_DIR / 'logreg_model.pkl'
 
-RECORDS_PATH = ROOT / 'data' / 'gold' / 'gold_A_records.pkl'
-GOLD_PATH = ROOT / 'data' / 'gold' / 'gold_A.pkl'
-BABELNET_PATH = ROOT / 'data' / 'processed' / 'babelnet_.pkl'
+DEFAULT_RECORDS_PATH = ROOT / 'data' / 'gold' / 'gold_A_records.pkl'
+DEFAULT_GOLD_PATH = ROOT / 'data' / 'gold' / 'gold_A.pkl'
+DEFAULT_BABELNET_PATH = ROOT / 'data' / 'processed' / 'babelnet_.pkl'
 
-OUTPUT_DIR = ROOT / 'outputs' / 'baselines' / 'gold_A_hybrid_best'
-PAIR_FEATURES_PATH = OUTPUT_DIR / 'pair_features.pkl'
-RANKINGS_PATH = OUTPUT_DIR / 'rankings.pkl'
-PREDICTIONS_PATH = OUTPUT_DIR / 'predictions.pkl'
-PREDICTIONS_CSV_PATH = OUTPUT_DIR / 'pair_predictions.csv'
-SUMMARY_PATH = OUTPUT_DIR / 'summary.json'
-OUT_CONFIG_PATH = OUTPUT_DIR / 'config.json'
+DEFAULT_OUTPUT_DIR = ROOT / 'outputs' / 'baselines' / 'gold_A_hybrid_best'
+DEFAULT_E5_MODEL_NAME = 'intfloat/multilingual-e5-large'
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def as_str_list(value: object) -> list[str]:
@@ -110,9 +115,16 @@ def record_level_metrics(df: pd.DataFrame, pred_col: str) -> dict[str, float]:
     }
 
 
-def build_gold_a_rankings(records: pd.DataFrame, gold: pd.DataFrame, babelnet: pd.DataFrame, query_mode: str, passage_mode: str, candidate_mode: str) -> pd.DataFrame:
+def build_gold_a_rankings(
+    records: pd.DataFrame,
+    gold: pd.DataFrame,
+    babelnet: pd.DataFrame,
+    query_mode: str,
+    passage_mode: str,
+    candidate_mode: str,
+    model_name: str,
+) -> pd.DataFrame:
     """Rebuild only the ranking features needed by the selected gold_B config."""
-    model_name = 'intfloat/multilingual-e5-large'
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
     model = AutoModel.from_pretrained(model_name, dtype=DTYPE).to(DEVICE).eval()
 
@@ -206,18 +218,39 @@ def merge_features(pair_df: pd.DataFrame, ranking_features: pd.DataFrame) -> pd.
     })
 
 
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--config', type=Path, default=DEFAULT_CONFIG_PATH)
+    ap.add_argument('--model-bundle', type=Path, default=DEFAULT_MODEL_BUNDLE_PATH)
+    ap.add_argument('--records', type=Path, default=DEFAULT_RECORDS_PATH)
+    ap.add_argument('--gold', type=Path, default=DEFAULT_GOLD_PATH)
+    ap.add_argument('--babelnet', type=Path, default=DEFAULT_BABELNET_PATH)
+    ap.add_argument('--output-dir', type=Path, default=DEFAULT_OUTPUT_DIR)
+    ap.add_argument('--e5-model', type=str, default=DEFAULT_E5_MODEL_NAME)
+    return ap.parse_args()
+
+
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    output_dir = args.output_dir
+    pair_features_path = output_dir / 'pair_features.pkl'
+    rankings_path = output_dir / 'rankings.pkl'
+    predictions_path = output_dir / 'predictions.pkl'
+    predictions_csv_path = output_dir / 'pair_predictions.csv'
+    summary_path = output_dir / 'summary.json'
+    out_config_path = output_dir / 'config.json'
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Reuse the reproducible best config learned on gold_B and apply the same
     # feature space and threshold to gold_A.
-    config = json.loads(CONFIG_PATH.read_text(encoding='utf-8'))
-    with MODEL_PATH.open('rb') as f:
+    config = json.loads(args.config.read_text(encoding='utf-8'))
+    with args.model_bundle.open('rb') as f:
         model_bundle = pickle.load(f)
 
-    records = pd.read_pickle(RECORDS_PATH)
-    gold = pd.read_pickle(GOLD_PATH)
-    babelnet = pd.read_pickle(BABELNET_PATH)
+    records = pd.read_pickle(args.records)
+    gold = pd.read_pickle(args.gold)
+    babelnet = pd.read_pickle(args.babelnet)
     babelnet.index = babelnet.index.map(str)
 
     query_mode = config.get('query_mode', config['text_mode'])
@@ -227,11 +260,11 @@ def main() -> None:
     threshold = float(model_bundle['threshold'])
 
     pair_df = build_feature_rows(records, gold, babelnet)
-    pair_df.to_pickle(PAIR_FEATURES_PATH)
+    pair_df.to_pickle(pair_features_path)
 
     # Only the ranking mode referenced by the saved gold_B config is rebuilt.
-    rankings = build_gold_a_rankings(records, gold, babelnet, query_mode, passage_mode, candidate_mode)
-    rankings.to_pickle(RANKINGS_PATH)
+    rankings = build_gold_a_rankings(records, gold, babelnet, query_mode, passage_mode, candidate_mode, args.e5_model)
+    rankings.to_pickle(rankings_path)
 
     ranking_features = build_ranking_feature_table(rankings)
     test_df = merge_features(pair_df, ranking_features)
@@ -242,15 +275,15 @@ def main() -> None:
     pred_df = test_df[['record_id', 'synset_id', 'label', 'raw_label']].copy()
     pred_df['score'] = scores
     pred_df['pred'] = (scores >= threshold).astype(int)
-    pred_df.to_pickle(PREDICTIONS_PATH)
-    pred_df.to_csv(PREDICTIONS_CSV_PATH, index=False, encoding='utf-8-sig')
+    pred_df.to_pickle(predictions_path)
+    pred_df.to_csv(predictions_csv_path, index=False, encoding='utf-8-sig')
 
     pair_metrics = binary_metrics(pred_df['label'].to_numpy(dtype=int), pred_df['pred'].to_numpy(dtype=int))
     record_metrics = record_level_metrics(pred_df, 'pred')
 
     summary = {
         'config_name': 'gold_A_hybrid_best',
-        'source_gold_B_config': str(CONFIG_PATH.relative_to(ROOT)),
+        'source_gold_B_config': path_for_log(args.config),
         'query_mode': query_mode,
         'passage_mode': passage_mode,
         'candidate_mode': candidate_mode,
@@ -272,23 +305,24 @@ def main() -> None:
         'tn': pair_metrics['tn'],
     }
 
-    OUT_CONFIG_PATH.write_text(json.dumps({
+    out_config_path.write_text(json.dumps({
         'config_name': 'gold_A_hybrid_best',
-        'source_gold_B_config': str(CONFIG_PATH.relative_to(ROOT)),
+        'source_gold_B_config': path_for_log(args.config),
         'query_mode': query_mode,
         'passage_mode': passage_mode,
         'candidate_mode': candidate_mode,
         'feature_columns': feature_columns,
         'threshold': threshold,
     }, ensure_ascii=False, indent=2), encoding='utf-8')
-    SUMMARY_PATH.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
 
     append_run_log(
         run_name='gold_A_hybrid_best_apply',
         rationale='Apply the best reproducible gold_B hybrid configuration to gold_A with the same feature columns, threshold, and ranking setup.',
         script_path='src/baselines/run_gold_a_hybrid_best.py',
         params={
-            'source_gold_B_config': str(CONFIG_PATH.relative_to(ROOT)),
+            'source_gold_B_config': path_for_log(args.config),
+            'e5_model': args.e5_model,
             'query_mode': query_mode,
             'passage_mode': passage_mode,
             'candidate_mode': candidate_mode,
@@ -303,12 +337,12 @@ def main() -> None:
             'record_exact_match_rate': summary['record_exact_match_rate'],
         },
         outputs=[
-            str(OUT_CONFIG_PATH.relative_to(ROOT)),
-            str(PAIR_FEATURES_PATH.relative_to(ROOT)),
-            str(RANKINGS_PATH.relative_to(ROOT)),
-            str(PREDICTIONS_PATH.relative_to(ROOT)),
-            str(PREDICTIONS_CSV_PATH.relative_to(ROOT)),
-            str(SUMMARY_PATH.relative_to(ROOT)),
+            path_for_log(out_config_path),
+            path_for_log(pair_features_path),
+            path_for_log(rankings_path),
+            path_for_log(predictions_path),
+            path_for_log(predictions_csv_path),
+            path_for_log(summary_path),
         ],
     )
 

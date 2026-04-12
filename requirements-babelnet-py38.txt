@@ -1,0 +1,14 @@
+# BabelNet pipeline environment.
+# Use this with Python 3.8, for example:
+#   py -3.8 -m venv .venv38
+#   .\.venv38\Scripts\Activate.ps1
+#   python -m pip install -r requirements-babelnet-py38.txt
+
+numpy==1.24.4
+pandas==2.0.3
+pyarrow==17.0.0
+tqdm==4.67.3
+zerorpc==0.6.3
+babelnet==1.2.0
+PyYAML==6.0.3
+docker==7.1.0

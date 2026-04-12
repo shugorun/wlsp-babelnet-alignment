@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_hybrid.py --pair-features outputs/baselines/gold_B/pair_features.pkl --rankings outputs/baselines/gold_B_ranking/rankings.pkl --output-dir outputs/baselines/gold_B_hybrid
 """Combine pairwise features with ranking features on gold_B.
 
 This script loads the existing gold_B pairwise feature table and the
@@ -7,6 +9,7 @@ cross-validation, and saves the hybrid evaluation artifacts.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 import sys
@@ -26,14 +29,10 @@ from baselines.experiment_log import append_run_log
 
 ROOT = Path(__file__).resolve().parents[2]
 
-PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
-RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
+DEFAULT_PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
+DEFAULT_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid"
-FEATURES_PATH = OUTPUT_DIR / "pair_features_hybrid.pkl"
-OOF_PATH = OUTPUT_DIR / "oof_predictions.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
-MODEL_PATH = OUTPUT_DIR / "logreg_model.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid"
 
 RANDOM_STATE = 0
 N_SPLITS = 5
@@ -72,6 +71,13 @@ RANKING_FEATURE_COLUMNS = [
 ]
 
 FEATURE_COLUMNS = BASE_FEATURE_COLUMNS + RANKING_FEATURE_COLUMNS
+
+
+def path_for_log(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def binary_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
@@ -314,40 +320,55 @@ def train_final_model(df: pd.DataFrame) -> dict[str, object]:
     }
 
 
-def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pair-features", type=Path, default=DEFAULT_PAIR_FEATURES_PATH)
+    ap.add_argument("--rankings", type=Path, default=DEFAULT_RANKINGS_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
 
-    pair_df = pd.read_pickle(PAIR_FEATURES_PATH)
-    ranking_df = pd.read_pickle(RANKINGS_PATH)
+
+def main() -> None:
+    args = parse_args()
+    output_dir = args.output_dir
+    features_path = output_dir / "pair_features_hybrid.pkl"
+    oof_path = output_dir / "oof_predictions.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+    model_path = output_dir / "logreg_model.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    pair_df = pd.read_pickle(args.pair_features)
+    ranking_df = pd.read_pickle(args.rankings)
 
     hybrid_df = build_hybrid_features(pair_df, ranking_df)
-    hybrid_df.to_pickle(FEATURES_PATH)
-    print(f"Saved features: {FEATURES_PATH}")
+    hybrid_df.to_pickle(features_path)
+    print(f"Saved features: {features_path}")
 
     oof_df, fold_metrics = run_grouped_cv(hybrid_df)
-    oof_df.to_pickle(OOF_PATH)
-    print(f"Saved OOF predictions: {OOF_PATH}")
+    oof_df.to_pickle(oof_path)
+    print(f"Saved OOF predictions: {oof_path}")
 
     metrics_df = summarize_results(oof_df, fold_metrics)
     metrics_obj = {
         "summary": metrics_df,
         "folds": fold_metrics,
     }
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump(metrics_obj, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     final_model = train_final_model(hybrid_df)
-    with MODEL_PATH.open("wb") as f:
+    with model_path.open("wb") as f:
         pickle.dump(final_model, f)
-    print(f"Saved final model: {MODEL_PATH}")
+    print(f"Saved final model: {model_path}")
 
     print(metrics_df.to_string(index=False))
 
     summary_row = metrics_df.iloc[0].to_dict()
     append_run_log(
         run_name="gold_B_hybrid_logreg",
-        rationale="pairwise baseline と ranking baseline を結合した hybrid を再実行",
+        rationale="Combine the pairwise baseline and ranking baseline into a hybrid logistic-regression model.",
         script_path="src/baselines/run_gold_b_hybrid.py",
         params={
             "ranking_text_mode": RANKING_TEXT_MODE,
@@ -363,10 +384,10 @@ def main() -> None:
             "record_exact_match_rate": summary_row["record_exact_match_rate"],
         },
         outputs=[
-            str(FEATURES_PATH.relative_to(ROOT)),
-            str(OOF_PATH.relative_to(ROOT)),
-            str(METRICS_PATH.relative_to(ROOT)),
-            str(MODEL_PATH.relative_to(ROOT)),
+            path_for_log(features_path),
+            path_for_log(oof_path),
+            path_for_log(metrics_path),
+            path_for_log(model_path),
         ],
     )
 

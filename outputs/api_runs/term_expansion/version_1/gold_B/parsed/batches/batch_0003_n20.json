@@ -1,0 +1,373 @@
+{
+  "results": [
+    {
+      "record_id": "61139",
+      "aliases_ja": [
+        "地頸"
+      ],
+      "aliases_en": [
+        "land bridge"
+      ],
+      "variants_ja": [
+        "地頚"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "地形"
+      ],
+      "hypernyms_en": [
+        "landform"
+      ]
+    },
+    {
+      "record_id": "61213",
+      "aliases_ja": [
+        "田園",
+        "田畑"
+      ],
+      "aliases_en": [
+        "farmland"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "農地",
+        "土地"
+      ],
+      "hypernyms_en": [
+        "land"
+      ]
+    },
+    {
+      "record_id": "61256",
+      "aliases_ja": [
+        "実習林",
+        "研究林"
+      ],
+      "aliases_en": [
+        "university forest"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "森林"
+      ],
+      "hypernyms_en": [
+        "forest"
+      ]
+    },
+    {
+      "record_id": "61412",
+      "aliases_ja": [
+        "タイトルシーケンス",
+        "オープニングクレジット"
+      ],
+      "aliases_en": [
+        "title sequence",
+        "opening credits"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "クレジット"
+      ],
+      "hypernyms_en": [
+        "credits"
+      ]
+    },
+    {
+      "record_id": "61431",
+      "aliases_ja": [
+        "同性愛者",
+        "ホモセクシュアル"
+      ],
+      "aliases_en": [
+        "gay",
+        "homophile"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "人"
+      ],
+      "hypernyms_en": [
+        "person"
+      ]
+    },
+    {
+      "record_id": "61461",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "生物",
+        "微生物"
+      ],
+      "hypernyms_en": [
+        "organism",
+        "microorganism"
+      ]
+    },
+    {
+      "record_id": "61483",
+      "aliases_ja": [
+        "純系統",
+        "純系株"
+      ],
+      "aliases_en": [
+        "inbred line",
+        "inbred strain"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "系統",
+        "株"
+      ],
+      "hypernyms_en": [
+        "line",
+        "strain"
+      ]
+    },
+    {
+      "record_id": "61486",
+      "aliases_ja": [
+        "固有生物",
+        "エンデミック"
+      ],
+      "aliases_en": [
+        "endemic"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "種"
+      ],
+      "hypernyms_en": [
+        "species"
+      ]
+    },
+    {
+      "record_id": "61491",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "分類群",
+        "種"
+      ],
+      "hypernyms_en": [
+        "taxon"
+      ]
+    },
+    {
+      "record_id": "61499",
+      "aliases_ja": [
+        "単一細胞",
+        "一細胞"
+      ],
+      "aliases_en": [],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "細胞"
+      ],
+      "hypernyms_en": [
+        "cell"
+      ]
+    },
+    {
+      "record_id": "61506",
+      "aliases_ja": [],
+      "aliases_en": [
+        "genetic complement"
+      ],
+      "variants_ja": [
+        "ゲノーム"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "遺伝物質"
+      ],
+      "hypernyms_en": [
+        "genetic material"
+      ]
+    },
+    {
+      "record_id": "61522",
+      "aliases_ja": [
+        "栄養",
+        "養分"
+      ],
+      "aliases_en": [
+        "nutriment",
+        "aliment"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "栄養素"
+      ],
+      "hypernyms_en": [
+        "nutrient"
+      ]
+    },
+    {
+      "record_id": "61529",
+      "aliases_ja": [
+        "蛋白"
+      ],
+      "aliases_en": [
+        "proteid"
+      ],
+      "variants_ja": [
+        "タンパク質",
+        "たんぱく質"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "高分子",
+        "栄養素"
+      ],
+      "hypernyms_en": [
+        "macromolecule"
+      ]
+    },
+    {
+      "record_id": "61534",
+      "aliases_ja": [
+        "アミノカルボン酸"
+      ],
+      "aliases_en": [
+        "aminocarboxylic acid"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "有機酸",
+        "有機化合物"
+      ],
+      "hypernyms_en": [
+        "organic compound",
+        "acid"
+      ]
+    },
+    {
+      "record_id": "61537",
+      "aliases_ja": [
+        "乳タンパク",
+        "乳蛋白"
+      ],
+      "aliases_en": [
+        "milk protein"
+      ],
+      "variants_ja": [
+        "カセイン"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "タンパク質"
+      ],
+      "hypernyms_en": [
+        "protein"
+      ]
+    },
+    {
+      "record_id": "61543",
+      "aliases_ja": [
+        "炭水化物",
+        "含水炭素"
+      ],
+      "aliases_en": [
+        "glucide"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "栄養素",
+        "有機化合物"
+      ],
+      "hypernyms_en": [
+        "nutrient",
+        "organic compound"
+      ]
+    },
+    {
+      "record_id": "61620",
+      "aliases_ja": [
+        "花樹",
+        "観賞樹"
+      ],
+      "aliases_en": [
+        "ornamental tree"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61629",
+      "aliases_ja": [
+        "木々",
+        "樹木"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "きぎ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "植物"
+      ],
+      "hypernyms_en": [
+        "plant"
+      ]
+    },
+    {
+      "record_id": "61635",
+      "aliases_ja": [
+        "巨木",
+        "大木"
+      ],
+      "aliases_en": [
+        "giant tree"
+      ],
+      "variants_ja": [],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "樹木"
+      ],
+      "hypernyms_en": [
+        "tree"
+      ]
+    },
+    {
+      "record_id": "61652",
+      "aliases_ja": [
+        "朽木",
+        "腐木"
+      ],
+      "aliases_en": [
+        "deadwood"
+      ],
+      "variants_ja": [
+        "くちき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "枯れ木",
+        "木材"
+      ],
+      "hypernyms_en": [
+        "wood"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+# Usage: python src/baselines/run_gold_b_hybrid_external.py --pair-features outputs/baselines/gold_B/pair_features.pkl --e5-rankings outputs/baselines/gold_B_ranking/rankings.pkl --mpnet-rankings outputs/baselines/gold_B_ranking_mpnet/rankings.pkl --output-dir outputs/baselines/gold_B_hybrid_external
 """Combine pairwise features with E5 and MPNet ranking features on gold_B."""
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import pickle
 
@@ -15,15 +18,11 @@ from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[2]
 
-PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
-E5_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
-MPNET_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking_mpnet" / "rankings.pkl"
+DEFAULT_PAIR_FEATURES_PATH = ROOT / "outputs" / "baselines" / "gold_B" / "pair_features.pkl"
+DEFAULT_E5_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking" / "rankings.pkl"
+DEFAULT_MPNET_RANKINGS_PATH = ROOT / "outputs" / "baselines" / "gold_B_ranking_mpnet" / "rankings.pkl"
 
-OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_external"
-FEATURES_PATH = OUTPUT_DIR / "pair_features_hybrid.pkl"
-OOF_PATH = OUTPUT_DIR / "oof_predictions.pkl"
-METRICS_PATH = OUTPUT_DIR / "metrics.pkl"
-MODEL_PATH = OUTPUT_DIR / "logreg_model.pkl"
+DEFAULT_OUTPUT_DIR = ROOT / "outputs" / "baselines" / "gold_B_hybrid_external"
 
 RANDOM_STATE = 0
 N_SPLITS = 5
@@ -300,30 +299,46 @@ def train_final_model(df: pd.DataFrame) -> dict[str, object]:
     }
 
 
-def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pair-features", type=Path, default=DEFAULT_PAIR_FEATURES_PATH)
+    ap.add_argument("--e5-rankings", type=Path, default=DEFAULT_E5_RANKINGS_PATH)
+    ap.add_argument("--mpnet-rankings", type=Path, default=DEFAULT_MPNET_RANKINGS_PATH)
+    ap.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    return ap.parse_args()
 
-    pair_df = pd.read_pickle(PAIR_FEATURES_PATH)
-    e5_rankings = pd.read_pickle(E5_RANKINGS_PATH)
-    mpnet_rankings = pd.read_pickle(MPNET_RANKINGS_PATH)
+
+def main() -> None:
+    args = parse_args()
+    output_dir = args.output_dir
+    features_path = output_dir / "pair_features_hybrid.pkl"
+    oof_path = output_dir / "oof_predictions.pkl"
+    metrics_path = output_dir / "metrics.pkl"
+    model_path = output_dir / "logreg_model.pkl"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    pair_df = pd.read_pickle(args.pair_features)
+    e5_rankings = pd.read_pickle(args.e5_rankings)
+    mpnet_rankings = pd.read_pickle(args.mpnet_rankings)
 
     feature_df = build_features(pair_df, e5_rankings, mpnet_rankings)
-    feature_df.to_pickle(FEATURES_PATH)
-    print(f"Saved features: {FEATURES_PATH}")
+    feature_df.to_pickle(features_path)
+    print(f"Saved features: {features_path}")
 
     oof_df, fold_metrics = run_grouped_cv(feature_df)
-    oof_df.to_pickle(OOF_PATH)
-    print(f"Saved OOF predictions: {OOF_PATH}")
+    oof_df.to_pickle(oof_path)
+    print(f"Saved OOF predictions: {oof_path}")
 
     metrics_df = summarize_results(oof_df, fold_metrics)
-    with METRICS_PATH.open("wb") as f:
+    with metrics_path.open("wb") as f:
         pickle.dump({"summary": metrics_df, "folds": fold_metrics}, f)
-    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved metrics: {metrics_path}")
 
     final_model = train_final_model(feature_df)
-    with MODEL_PATH.open("wb") as f:
+    with model_path.open("wb") as f:
         pickle.dump(final_model, f)
-    print(f"Saved final model: {MODEL_PATH}")
+    print(f"Saved final model: {model_path}")
 
     print(metrics_df.to_string(index=False))
 

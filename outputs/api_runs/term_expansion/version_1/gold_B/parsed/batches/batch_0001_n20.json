@@ -1,0 +1,375 @@
+{
+  "results": [
+    {
+      "record_id": "58598",
+      "aliases_ja": [
+        "無機物",
+        "無機質"
+      ],
+      "aliases_en": [
+        "inorganic substance",
+        "inorganics"
+      ],
+      "variants_ja": [
+        "むき"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "物質"
+      ],
+      "hypernyms_en": [
+        "substance"
+      ]
+    },
+    {
+      "record_id": "58606",
+      "aliases_ja": [
+        "内分泌攪乱物質",
+        "内分泌攪乱化学物質"
+      ],
+      "aliases_en": [
+        "endocrine disrupting chemical",
+        "edc"
+      ],
+      "variants_ja": [
+        "かんきょうほるもん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "化学物質"
+      ],
+      "hypernyms_en": [
+        "chemical"
+      ]
+    },
+    {
+      "record_id": "58633",
+      "aliases_ja": [],
+      "aliases_en": [
+        "dioxygen"
+      ],
+      "variants_ja": [
+        "さんそ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "元素"
+      ],
+      "hypernyms_en": [
+        "element"
+      ]
+    },
+    {
+      "record_id": "58639",
+      "aliases_ja": [
+        "ヨウ素",
+        "沃素"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "よおど"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "ハロゲン",
+        "元素"
+      ],
+      "hypernyms_en": [
+        "halogen",
+        "element"
+      ]
+    },
+    {
+      "record_id": "58672",
+      "aliases_ja": [
+        "白金"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "ぷらちな"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "金属"
+      ],
+      "hypernyms_en": [
+        "metal"
+      ]
+    },
+    {
+      "record_id": "58707",
+      "aliases_ja": [
+        "ニクロム合金"
+      ],
+      "aliases_en": [
+        "nickel chromium alloy"
+      ],
+      "variants_ja": [
+        "にくろむ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "合金"
+      ],
+      "hypernyms_en": [
+        "alloy"
+      ]
+    },
+    {
+      "record_id": "58739",
+      "aliases_ja": [
+        "白燐"
+      ],
+      "aliases_en": [
+        "white phosphorus"
+      ],
+      "variants_ja": [
+        "黄リン",
+        "おうりん"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "リン"
+      ],
+      "hypernyms_en": [
+        "phosphorus"
+      ]
+    },
+    {
+      "record_id": "58806",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "がらくとおす"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "単糖"
+      ],
+      "hypernyms_en": [
+        "monosaccharide"
+      ]
+    },
+    {
+      "record_id": "58835",
+      "aliases_ja": [
+        "消石灰",
+        "熟石灰"
+      ],
+      "aliases_en": [
+        "slaked lime",
+        "hydrated lime"
+      ],
+      "variants_ja": [
+        "すいさんかかるしうむ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "水酸化物"
+      ],
+      "hypernyms_en": [
+        "hydroxide"
+      ]
+    },
+    {
+      "record_id": "58838",
+      "aliases_ja": [
+        "ジエチルエーテル",
+        "エチルエーテル"
+      ],
+      "aliases_en": [
+        "diethyl ether",
+        "ethyl ether"
+      ],
+      "variants_ja": [
+        "ええてる"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "溶媒"
+      ],
+      "hypernyms_en": [
+        "solvent"
+      ]
+    },
+    {
+      "record_id": "58898",
+      "aliases_ja": [
+        "雪花石膏"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "あらばすたあ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "石膏"
+      ],
+      "hypernyms_en": [
+        "gypsum"
+      ]
+    },
+    {
+      "record_id": "59010",
+      "aliases_ja": [
+        "アスベスト"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "いしわた"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "鉱物",
+        "繊維"
+      ],
+      "hypernyms_en": [
+        "mineral",
+        "fiber"
+      ]
+    },
+    {
+      "record_id": "59106",
+      "aliases_ja": [
+        "けぶり",
+        "スモーク"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "けむり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "エアロゾル"
+      ],
+      "hypernyms_en": [
+        "aerosol"
+      ]
+    },
+    {
+      "record_id": "59110",
+      "aliases_ja": [
+        "煤煙",
+        "すす煙"
+      ],
+      "aliases_en": [],
+      "variants_ja": [
+        "くろけむり"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "エアロゾル"
+      ],
+      "hypernyms_en": [
+        "aerosol"
+      ]
+    },
+    {
+      "record_id": "59162",
+      "aliases_ja": [
+        "澱",
+        "滓",
+        "残渣"
+      ],
+      "aliases_en": [
+        "dregs",
+        "lees"
+      ],
+      "variants_ja": [
+        "オリ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "沈殿物"
+      ],
+      "hypernyms_en": [
+        "sediment"
+      ]
+    },
+    {
+      "record_id": "59312",
+      "aliases_ja": [
+        "浮氷"
+      ],
+      "aliases_en": [
+        "pack ice"
+      ],
+      "variants_ja": [
+        "りゅうひょう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "海氷"
+      ],
+      "hypernyms_en": [
+        "sea ice"
+      ]
+    },
+    {
+      "record_id": "59383",
+      "aliases_ja": [],
+      "aliases_en": [],
+      "variants_ja": [
+        "しおけ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "空気"
+      ],
+      "hypernyms_en": [
+        "air"
+      ]
+    },
+    {
+      "record_id": "59395",
+      "aliases_ja": [
+        "乾燥",
+        "乾き"
+      ],
+      "aliases_en": [
+        "dryness"
+      ],
+      "variants_ja": [
+        "どらい"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "59508",
+      "aliases_ja": [
+        "気候"
+      ],
+      "aliases_en": [
+        "clime"
+      ],
+      "variants_ja": [
+        "きこう"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [],
+      "hypernyms_en": []
+    },
+    {
+      "record_id": "59635",
+      "aliases_ja": [
+        "嵐",
+        "暴風雨"
+      ],
+      "aliases_en": [
+        "tempest"
+      ],
+      "variants_ja": [
+        "すとおむ"
+      ],
+      "variants_en": [],
+      "hypernyms_ja": [
+        "気象"
+      ],
+      "hypernyms_en": [
+        "weather"
+      ]
+    }
+  ]
+}
