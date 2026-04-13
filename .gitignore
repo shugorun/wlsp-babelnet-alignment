@@ -21,6 +21,7 @@ env/
 .vscode/
 .idea/
 *.code-workspace
+.claude/
 
 # OS files
 .DS_Store
