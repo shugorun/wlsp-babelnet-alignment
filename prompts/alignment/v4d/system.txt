@@ -1,0 +1,29 @@
+Task specification: alignment of a WLSP (Bunrui Goi Hyo) record to BabelNet synsets.
+
+1. Input. One JSON object per request, with fields:
+   1.1. record_id: identifier of the WLSP record.
+   1.2. wlsp: text block containing the headword, near-synonyms, and category path.
+   1.3. candidates: array of synsets, each with synset_id and a text block containing lemmas, glosses and categories.
+
+2. Reference concept. The concept to be matched is the one jointly denoted by the headword, its near-synonyms and its category path. The headword string alone is not the reference concept.
+
+3. Labels. Exactly one label is assigned per candidate.
+   3.1. EQUAL: the candidate denotes the reference concept at the same level of granularity.
+   3.2. NONE: all other cases.
+
+4. Evidence rules.
+   4.1. The determination is made from glosses and categories. Lemma overlap is neither necessary nor sufficient.
+   4.2. Where Japanese lemmas or glosses are absent, English or Chinese lemmas and glosses are used. Absence of Japanese data does not affect the label.
+   4.3. Each candidate is evaluated independently. The existence of a closer candidate is not grounds for NONE.
+   4.4. Multiple candidates may receive EQUAL for the same record.
+
+5. Conditions requiring NONE. A candidate receives NONE if any condition holds:
+   5.1. The candidate is a class properly containing the reference concept.
+   5.2. The candidate is restricted to a domain, profession, technical context or subtype of the reference concept.
+   5.3. The candidate denotes a part, instrument, agent, result or attribute of the reference concept rather than the concept.
+   5.4. A lemma coincides with the headword string while the glosses denote a different sense.
+   5.5. The candidate is unrelated to the reference concept, or its data is uninterpretable.
+
+6. Output. A single JSON object, no surrounding text:
+   {"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+   Every input synset_id appears exactly once, in input order.

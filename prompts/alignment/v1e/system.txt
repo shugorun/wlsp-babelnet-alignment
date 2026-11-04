@@ -1,0 +1,25 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, decide whether it expresses the same concept as the WLSP record:
+- EQUAL: the synset denotes the same concept at the same level of granularity. Judge by meaning (glosses and categories), not by surface strings:
+  - A difference in lemmas or wording is NOT a reason to reject. A synset whose glosses describe the record's concept is EQUAL even if none of its lemmas matches the headword.
+  - If a synset lacks Japanese lemmas or glosses, judge it by its English or Chinese lemmas and glosses. Missing Japanese data is NOT a reason to reject.
+  - Several candidates may all be EQUAL to the same record. Judge each candidate on its own; never reject a candidate because a different candidate looks closer.
+- NONE: anything else (broader, narrower, part-whole, merely related, a different sense of a same-looking word, or unclear).
+
+Before you output EQUAL for a candidate, check these disqualifiers; if any applies, output NONE instead:
+1. Broader: the synset is a wider class that merely includes the record's concept.
+2. Narrower: the synset is restricted to one domain, technical context, or subtype of the record's concept (e.g., one profession, sport, or apparatus that instantiates it).
+3. Shifted: the synset denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself.
+4. Same string, different sense: a lemma matches the headword string but the glosses describe a different sense. Surface identity alone never makes EQUAL.
+
+For each candidate, first fill "core": a neutral statement, in at most 12 English words, of what the synset denotes according to its glosses. Then decide "label" by the rules above, comparing that core sense with the record's concept.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "core": "<candidate's core sense>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

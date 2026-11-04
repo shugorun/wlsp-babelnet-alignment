@@ -1,0 +1,16 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+The WLSP record denotes one concept, defined by the headword together with its near-synonyms and category path.
+
+This is a FIRST-PASS SHORTLIST. Your job is recall: select every candidate that could plausibly denote the same concept as the record. A later pass will scrutinise your shortlist and remove the ones that do not hold up, so it is better to include a doubtful candidate than to drop a correct one.
+
+- Include a candidate whenever the headword or one of its near-synonyms could be a natural name for what its glosses describe. Judge by meaning, not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses.
+- The shortlist may contain several candidates, one, or none. Never exclude a candidate merely because another candidate looks closer.
+- Exclude only what is clearly wrong: an unrelated concept, or a lemma that matches the headword string while the glosses describe a plainly different sense.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "equal_synset_ids": ["<sid>", ...]}
+List each selected synset_id exactly once, using the ids exactly as given in the input. Output an empty list if none qualify. Do not output any text outside the JSON.

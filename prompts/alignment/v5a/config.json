@@ -1,0 +1,7 @@
+{
+  "mode": "rank_verify",
+  "chunk": 50,
+  "wlsp_field": "wlsp_full",
+  "bn_field": "bn_1step",
+  "verify_version": "v5av"
+}

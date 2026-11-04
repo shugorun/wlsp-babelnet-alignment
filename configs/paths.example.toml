@@ -1,0 +1,10 @@
+# Copy this file to configs/paths.toml and write where each resource is on
+# your machine. paths.toml is not committed. A relative path is taken
+# relative to the repository root. How to obtain each resource is described
+# in docs/data_sources.md.
+
+[paths]
+# WLSP database, revised and enlarged edition (bunruidb-fam.csv).
+wlsp_csv = "data/raw/bunruidb-fam.csv"
+# JMdict, English edition (JMdict_e.xml).
+jmdict_xml = "data/raw/JMdict_e.xml"

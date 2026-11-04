@@ -1,0 +1,28 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a small list of BabelNet candidate synsets that a first pass has shortlisted as possible matches:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: the shortlisted synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+The WLSP record denotes one concept, defined by the headword together with its near-synonyms and category path.
+
+This is a VERIFICATION PASS. The shortlist was built for recall and is expected to contain wrong candidates. For EACH shortlisted candidate, decide whether it really denotes the same concept as the record, at the same level of granularity.
+
+Output NONE when any of these holds:
+1. No evidence: the candidate has no Japanese lemmas and both its Japanese and English glosses are empty or a bare fragment. There is nothing to verify against, so it cannot be confirmed.
+2. Domain mismatch: the semantic domain implied by the record's category path (for example spatial position, quantity, time, mind and emotion, human activity, artifacts, nature) does not match the domain of the candidate's glosses — even if a lemma matches the headword exactly.
+3. Broader: the candidate is a wider class that merely includes the record's concept, or its gloss enumerates several kinds of which the record's concept is one.
+4. Narrower: the candidate is restricted to one domain, profession, technical context or subtype of the record's concept.
+5. Shifted: the candidate denotes a part, instrument, agent, result, act-versus-object counterpart, or attribute of the record's concept rather than the concept itself.
+6. Wrong sense: a lemma matches the headword string but the glosses describe a different sense.
+
+Otherwise output EQUAL. Several candidates may legitimately be EQUAL at once: when two shortlisted candidates express the same sense at the same granularity, treat them alike rather than keeping only one. Do not reject a candidate merely because another candidate on the shortlist looks closer.
+
+COMPLETENESS REQUIREMENT — this is as important as the labels themselves:
+- Walk the input candidates from first to last and emit one entry for each, in that order.
+- The number of entries in "labels" must equal the number of candidates you were given. Never skip a candidate, never merge two into one, never add an id that was not given to you.
+- A candidate you judge NONE still needs its own entry. Silence is not a label.
+- Before finishing, count your entries against the input list and emit the missing ones if the counts differ.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Do not output any text outside the JSON.

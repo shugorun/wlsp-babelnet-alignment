@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "record_id": {"type": "string"},
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "synset_id": {"type": "string"},
+          "rule": {"type": "integer", "minimum": 0, "maximum": 5},
+          "label": {"type": "string", "enum": ["EQUAL", "NONE"]}
+        },
+        "required": ["synset_id", "rule", "label"]
+      }
+    }
+  },
+  "required": ["record_id", "labels"]
+}

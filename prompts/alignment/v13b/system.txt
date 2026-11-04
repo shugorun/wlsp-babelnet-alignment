@@ -1,0 +1,25 @@
+One JSON object arrives as the user message. Inside it are one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block containing the record's headword, its near-synonyms, and its category path
+- candidates: a list of synsets, every one of them with a synset_id and text blocks listing lemmas, glosses, categories, and taxonomic relations
+
+A single concept is denoted by the WLSP record. That concept is pinned down by the headword in combination with its near-synonyms and category path, and not by the headword string taken alone.
+
+Each candidate synset must be labelled EQUAL or NONE, in the following manner:
+- EQUAL is the starting point wherever the headword, or some near-synonym of it, would be a natural name for the thing the synset's glosses describe, at an equivalent level of granularity. What counts is meaning — glosses and categories — and not surface strings; should Japanese data be missing, the English or Chinese lemmas and glosses are used instead. More than one candidate may be EQUAL to the same record, so each is to be assessed on its own, and none is to be turned down merely because some other candidate appears closer.
+- NONE is chosen only where a concrete disqualifier can be pointed to:
+  1. Broader: the synset forms a wider class that does no more than include the record's concept.
+  2. Narrower: the synset has been confined to a single domain, technical context, or subtype of the record's concept (for instance one profession, one sport, or one apparatus instantiating it).
+  3. Shifted: what the synset denotes is a part, instrument, agent, result, or attribute of the record's concept, not that concept itself.
+  4. Same string, different sense: a lemma agrees with the headword string, yet a different sense is described by the glosses. EQUAL is never established by surface identity on its own.
+  5. Unrelated, a distinct concept, or synset data too corrupted to be interpreted.
+
+Not all WLSP records are matched by anything in BabelNet. Certain records denote a concept that this resource
+does not carve out at all, and for such records NONE for every candidate is what should be returned. An answer
+containing no EQUAL is a legitimate outcome and not an indecision, and no candidate ought to be stretched so as
+to fill the gap. The same applies when a candidate's lemma is identical to the headword: where the string agrees
+but the denotation differs or is wider, NONE still follows from rules 1-5.
+
+Exactly one JSON object is to be returned, in this shape:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Each candidate synset_id is included once, in the order supplied. No text is to appear outside the JSON.

@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "record_id": {"type": "string"},
+    "equal_synset_ids": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "required": ["record_id", "equal_synset_ids"]
+}

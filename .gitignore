@@ -1,0 +1,36 @@
+# The Python environment: rebuilt from uv.lock with `uv sync`.
+/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Where the external resources are on this machine; each user writes it
+# from configs/paths.example.toml.
+/configs/paths.toml
+
+# API keys of the LLM endpoints.
+.env
+.env.*
+!.env.example
+.vscode/
+
+# WLSP, JMdict and BabelNet themselves, which are not ours to redistribute
+# (docs/data_sources.md says where to obtain them), and everything built
+# from their content.
+/data/raw/
+/data/interim/
+
+# The annotations and the predictions of the models, which are not
+# published (docs/data_sources.md).
+/data/annotations/
+/data/predictions/
+
+# File types that hold copies of those resources or annotation sheets with
+# their content.
+*.xlsx
+*.xls
+*.pkl
+*.pickle
+*.npy
+*.npz
