@@ -1,0 +1,4 @@
+# Where the BabelNet Python API finds the RPC server that serves the local
+# BabelNet 5.0 index (docs/dataset_construction.md says how to start it).
+# The scripts that query BabelNet point BABELNET_CONF at this file.
+RPC_URL: "tcp://127.0.0.1:7790"

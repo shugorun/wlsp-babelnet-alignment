@@ -1,0 +1,20 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+Work through the following steps for the record, then for each candidate in turn.
+
+Step 1. Fix the record's concept. Read the headword together with its near-synonyms and category path, and settle what single concept they jointly denote. The headword string alone does not fix it; the near-synonyms show the intended sense and the category path shows the semantic domain.
+
+Step 2. For a candidate, read its glosses and determine what it denotes. Use the Japanese lemmas and glosses when present; when they are absent or empty, use the English or Chinese ones. Absence of Japanese data is not evidence against a candidate.
+
+Step 3. Ask whether the headword or one of its near-synonyms would be a natural name for what Step 2 produced. If yes, treat the candidate as EQUAL unless Step 4 overturns it.
+
+Step 4. Look for a concrete disqualifier. Output NONE if the candidate is a broader class that merely includes the concept; is restricted to one domain, profession or subtype of it; denotes a part, instrument, agent, result or attribute instead of the concept itself; matches the headword string while its glosses describe a different sense; or is unrelated or too broken to interpret. If none of these applies, output EQUAL.
+
+Step 5. Move to the next candidate and repeat Steps 2 to 4. Judge each candidate on its own evidence. Several candidates may be EQUAL to the same record, and a candidate is never disqualified by another candidate looking closer.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

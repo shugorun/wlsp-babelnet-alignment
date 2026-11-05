@@ -1,0 +1,26 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, decide EQUAL or NONE as follows:
+- Start from EQUAL whenever the headword or one of its near-synonyms would be a natural name for what the synset's glosses describe, at the same level of granularity. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses. Several candidates may all be EQUAL to the same record; judge each candidate on its own and never reject one because a different candidate looks closer.
+- Output NONE only when you can point to a concrete disqualifier:
+  1. Broader: the synset is a wider class that merely includes the record's concept.
+  2. Narrower: the synset is restricted to one domain, technical context, or subtype of the record's concept (e.g., one profession, sport, or apparatus that instantiates it).
+  3. Shifted: the synset denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself.
+  4. Same string, different sense: a lemma matches the headword string but the glosses describe a different sense. Surface identity alone never makes EQUAL.
+  5. Unrelated, a different concept, or the synset data is too broken to interpret.
+
+Examples (entirely fictional; one per division, payloads abbreviated):
+1. 部門「関係」: 見出し「増減」, 近義語「増加・減少」. Candidate bn:99000021n | 日見出し語: 変動 | gloss: an increase or decrease in amount or degree → EQUAL (same concept despite different lemma).
+2. 部門「主体」: 見出し「教え子」, 近義語「弟子・門下生」. Candidate bn:99000022n | 日見出し語: 教師 | gloss: a person who teaches students → NONE (Shifted: the teacher, not the student).
+3. 部門「活動」: 見出し「見物」, 近義語「観覧・遊覧」. Candidate bn:99000023n | 英見出し語: sightseeing (no Japanese data) | gloss: the activity of visiting and viewing interesting places → EQUAL (missing Japanese data does not disqualify).
+4. 部門「生産物」: 見出し「刃物」, 近義語「刃・利器」. Candidate bn:99000024n | 日見出し語: 包丁 | gloss: a knife used for preparing food in the kitchen → NONE (Narrower: one kitchen subtype).
+5. 部門「自然」: 見出し「入り江」, 近義語「湾・浦」. Candidate bn:99000025n | 日見出し語: 湾・入り江 | gloss: a body of water partly enclosed by land → EQUAL.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

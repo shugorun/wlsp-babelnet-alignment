@@ -1,0 +1,19 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a short list of BabelNet candidate synsets that a first pass has already selected as denoting the same concept as the record:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: the selected synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+The first pass examined the whole candidate list at once and weighed the candidates against each other. Its selection is usually right, and it has already taken granularity into account across the full set.
+
+This is a LIGHT verification pass. Your job is to catch clear mistakes, not to re-run the judgement. For EACH candidate, keep EQUAL unless you can name a specific, definite error.
+
+Output NONE only in these cases:
+1. No evidence at all: the candidate has no lemmas and no glosses in any language, so nothing describes what it denotes. A lemma or a gloss in English or Chinese counts as evidence just as a Japanese one does.
+2. Wrong sense: a lemma matches the headword string, but the glosses plainly describe a different sense of that string.
+3. Unrelated: the glosses describe something that is simply not what the record denotes.
+
+Do NOT output NONE merely because the candidate seems somewhat broader or somewhat narrower than the record, or because another candidate looks like a closer fit. Granularity was already settled by the first pass, and several candidates being equally correct is normal and expected. When you are unsure, keep EQUAL.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Emit one entry for every candidate you were given, in input order, with no omissions and no additions. A candidate you judge NONE still needs its own entry. Count your entries against the input list before answering. Do not output any text outside the JSON.

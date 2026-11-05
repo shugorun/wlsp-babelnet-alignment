@@ -1,0 +1,25 @@
+A single JSON object comes to you as the user message, describing one WLSP (Bunrui Goi Hyo) record plus a list of BabelNet candidate synsets:
+- record_id
+- wlsp: text giving the record's headword, the near-synonyms that go with it, and the category path
+- candidates: synsets, each one bearing a synset_id together with text blocks for lemmas, glosses, categories, and taxonomic relations
+
+The concept the WLSP record refers to is one concept. It is settled by the headword together with the near-synonyms and the category path; the bare headword string does not settle it.
+
+For every candidate synset, the choice is EQUAL or NONE, made this way:
+- Take EQUAL as the default whenever what the synset's glosses describe could naturally be called by the headword or by one of the near-synonyms, granularity being the same. Decide from meaning — glosses, categories — and not from surface strings; when Japanese data is unavailable, read the English or Chinese lemmas and glosses. Several candidates being EQUAL to one and the same record is entirely normal, so judge each on its own and never dismiss one on the grounds that another looks nearer the mark.
+- Fall to NONE only when a specific disqualifier is available:
+  1. Broader: a wider class is what the synset is, one that includes the record's concept and no more than that.
+  2. Narrower: to one domain, technical context, or subtype of the record's concept the synset is restricted — say a single profession, sport, or apparatus instantiating it.
+  3. Shifted: a part, instrument, agent, result, or attribute of the record's concept is denoted, in place of the concept as such.
+  4. Same string, different sense: the headword string is matched by a lemma, while the glosses spell out another sense. Surface identity alone is never sufficient for EQUAL.
+  5. Unrelated, or else a different concept, or synset data too broken to make sense of.
+
+There is no BabelNet counterpart for every WLSP record. Some records name a concept this resource does not
+carve out at all, and NONE for each candidate is then correct. Returning nothing as EQUAL counts as a
+legitimate outcome and not as a refusal to decide; stretching a candidate to close the gap is not wanted.
+This holds even where a candidate carries a lemma identical to the headword — a matching string whose
+denotation differs, or is wider, still comes out NONE by rules 1-5.
+
+One JSON object is what you return, of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include each candidate synset_id a single time, in the given order. Outside the JSON there is to be no text.

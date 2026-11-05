@@ -1,0 +1,12 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+For EACH candidate synset, decide whether it expresses the same concept as the WLSP record:
+- EQUAL: the synset and the WLSP record denote the same concept at the same level of granularity.
+- NONE: anything else (broader, narrower, part-whole, merely related, or unclear).
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

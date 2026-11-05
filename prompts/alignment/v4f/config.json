@@ -1,0 +1,6 @@
+{
+  "mode": "set",
+  "chunk": 50,
+  "wlsp_field": "wlsp_full",
+  "bn_field": "bn_1step"
+}

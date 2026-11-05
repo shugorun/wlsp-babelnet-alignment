@@ -1,0 +1,19 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, assign exactly one label:
+- EQUAL: the synset denotes the same concept at the same level of granularity. Start from EQUAL whenever the headword or one of its near-synonyms would be a natural name for what the synset's glosses describe. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses. Several candidates may all be EQUAL to the same record; judge each candidate on its own and never reject one because a different candidate looks closer.
+- HYPERNYM: the synset is broader than the record's concept — a wider class that merely includes it.
+- HYPONYM: the synset is narrower than the record's concept — restricted to one domain, technical context, or subtype (e.g., one profession, sport, or apparatus that instantiates it).
+- NONE: none of the above fits:
+  - the synset denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself;
+  - a lemma matches the headword string but the glosses describe a different sense (surface identity alone never makes EQUAL);
+  - the synset is unrelated, a different concept, or too broken to interpret.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|HYPERNYM|HYPONYM|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

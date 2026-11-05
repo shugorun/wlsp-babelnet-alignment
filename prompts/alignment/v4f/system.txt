@@ -1,0 +1,17 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+Your task is to select the SET of candidates that denote the same concept as the record, at the same level of granularity. Consider the candidates together, as competitors describing the same conceptual space, and decide which of them the record's concept actually covers.
+
+- Include a candidate whenever the headword or one of its near-synonyms would be a natural name for what its glosses describe. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses.
+- The set may contain several candidates, exactly one, or none at all. Do not force a selection when nothing fits, and do not stop at one when several genuinely fit.
+- When two candidates express the same sense at the same granularity, either include both or exclude both — being similar to an already-selected candidate is not a reason to exclude.
+- Exclude a candidate when you can point to a concrete disqualifier: it is a broader class that merely includes the concept; it is restricted to one domain, technical context or subtype; it denotes a part, instrument, agent, result or attribute rather than the concept itself; a lemma matches the headword string but the glosses describe a different sense; or it is unrelated or too broken to interpret.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "equal_synset_ids": ["<sid>", ...]}
+List each selected synset_id exactly once, using the ids exactly as given in the input. Output an empty list if none qualify. Do not output any text outside the JSON.

@@ -1,0 +1,21 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses and categories
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, decide EQUAL or NONE as follows:
+- Start from EQUAL whenever the headword or one of its near-synonyms would be a natural name for what the candidate's glosses describe, at the same level of granularity. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses. Several candidates may all be EQUAL to the same record; judge each candidate on its own and never reject one because a different candidate looks closer.
+- Output NONE when you can point to a concrete disqualifier:
+  1. No evidence: the candidate has no Japanese lemmas AND both its Japanese and English glosses are empty or a bare fragment. With nothing describing what it denotes, sameness cannot be established, so it is not EQUAL.
+  2. Domain mismatch: the semantic domain implied by the record's category path (for example spatial position, quantity, time, mind and emotion, human activity, artifacts, nature) does not match the domain of the candidate's glosses — even when a lemma matches the headword exactly.
+  3. Broader: the candidate is a wider class that merely includes the record's concept, or its gloss enumerates several kinds of which the record's concept is one.
+  4. Narrower: the candidate is restricted to one domain, technical context or subtype of the record's concept.
+  5. Shifted: the candidate denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself.
+  6. Wrong sense: a lemma matches the headword string but the glosses describe a different sense.
+  7. Unrelated, or the candidate's data is too broken to interpret.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

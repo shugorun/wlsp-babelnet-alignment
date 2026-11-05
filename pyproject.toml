@@ -1,0 +1,53 @@
+[project]
+name = "wlsp-bn"
+version = "0.1.0"
+description = "WLSP-BabelNet alignment datasets and the LLM and baseline evaluation of the PACLIC 2026 paper"
+authors = [{ name = "Shugo Kawasaki" }]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "numpy>=2.5.4",
+    "openai>=3.42.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.1.0",
+    "pyarrow>=26.0.0",
+]
+
+[project.optional-dependencies]
+# The baselines that use E5 or logistic regression (scripts/baselines/).
+baselines = [
+    "scikit-learn>=1.9.0",
+    "sentence-transformers>=5.6.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.12,<0.12"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.ruff]
+line-length = 88
+src = ["src", "scripts", "tests"]
+# The scripts that query BabelNet run in the Python 3.8 environment of
+# scripts/dataset/requirements-babelnet.txt.
+per-file-target-version = { "scripts/dataset/04_fetch_candidates.py" = "py38", "scripts/dataset/06_fetch_synsets.py" = "py38" }
+
+[tool.ruff.lint]
+# Preview rules are used only when listed by name below.
+preview = true
+explicit-preview-rules = true
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "PTH", "RUF", "PLW1514"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["wlsp_bn"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers"]

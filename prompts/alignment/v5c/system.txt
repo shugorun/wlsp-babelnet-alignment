@@ -1,0 +1,25 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, decide EQUAL or NONE as follows:
+- Start from EQUAL whenever the headword or one of its near-synonyms would be a natural name for what the synset's glosses describe, at the same level of granularity. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses. Several candidates may all be EQUAL to the same record; judge each candidate on its own and never reject one because a different candidate looks closer.
+- Output NONE only when you can point to a concrete disqualifier:
+  1. Broader: the synset is a wider class that merely includes the record's concept.
+  2. Narrower: the synset is restricted to one domain, technical context, or subtype of the record's concept (e.g., one profession, sport, or apparatus that instantiates it).
+  3. Shifted: the synset denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself.
+  4. Same string, different sense: a lemma matches the headword string but the glosses describe a different sense. Surface identity alone never makes EQUAL.
+  5. Unrelated, a different concept, or the synset data is too broken to interpret.
+
+Example (entirely fictional record and synsets; payloads abbreviated). Record: headword ねぐら, near-synonyms 寝床・臥所, category path 生産物 > 住居. Candidates:
+- bn:99000101n | 日見出し語: 寝ぐら・臥所 | gloss: the place where one sleeps → EQUAL (same concept; different lemma spelling is irrelevant)
+- bn:99000102n | 英見出し語: roost (no Japanese data, English gloss present) | gloss: a place where birds perch and sleep → NONE (Narrower: restricted to birds)
+- bn:99000103n | 日見出し語: 枕 | gloss: a cushion supporting the head during sleep → NONE (Shifted: an object used there, not the place)
+- bn:99000104n | 日見出し語: 就寝 | gloss: the act of going to bed → NONE (Shifted: the act, not the place)
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

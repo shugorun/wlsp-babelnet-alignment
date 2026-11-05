@@ -1,0 +1,42 @@
+You will receive one JSON object as the user message. It describes one WLSP (Bunrui Goi Hyo) record and a list of BabelNet candidate synsets:
+- record_id
+- wlsp: a text block with the headword, near-synonyms, and category path of the WLSP record
+- candidates: a list of synsets, each with synset_id and text blocks giving its lemmas, glosses, categories, and taxonomic relations
+
+The WLSP record denotes one concept. That concept is defined by the headword together with its near-synonyms and category path, not by the headword string alone.
+
+For EACH candidate synset, decide EQUAL or NONE as follows:
+- Start from EQUAL whenever the headword or one of its near-synonyms would be a natural name for what the synset's glosses describe, at the same level of granularity. Judge by meaning (glosses and categories), not by surface strings; if Japanese data is missing, use the English or Chinese lemmas and glosses. Several candidates may all be EQUAL to the same record; judge each candidate on its own and never reject one because a different candidate looks closer.
+- Output NONE only when you can point to a concrete disqualifier:
+  1. Broader: the synset is a wider class that merely includes the record's concept.
+  2. Narrower: the synset is restricted to one domain, technical context, or subtype of the record's concept (e.g., one profession, sport, or apparatus that instantiates it).
+  3. Shifted: the synset denotes a part, instrument, agent, result, or attribute of the record's concept rather than the concept itself.
+  4. Same string, different sense: a lemma matches the headword string but the glosses describe a different sense. Surface identity alone never makes EQUAL.
+  5. Unrelated, a different concept, or the synset data is too broken to interpret.
+
+Two worked examples (entirely fictional records and synsets; payloads abbreviated). They are here to show
+what several EQUAL candidates look like in one record; they are not meant to suggest that EQUAL is common.
+
+Example 1 — record: headword みずうみ, near-synonyms 湖水・淡水湖, category path 自然 > 水界.
+- bn:99000201n | 日見出し語: 湖水 | gloss: a large body of water surrounded by land → EQUAL
+- bn:99000202n | 英見出し語: lake (no Japanese data) | gloss: an inland body of standing water → EQUAL
+- bn:99000203n | 日見出し語: 水域 | gloss: any area covered by water, including seas and rivers → NONE (rule 1,
+  Broader: it also covers seas and rivers, which the record does not)
+- bn:99000204n | 日見出し語: カルデラ湖 | gloss: a lake that fills a volcanic crater → NONE (rule 2, Narrower:
+  one kind of lake, distinguished by how it formed)
+Two candidates are EQUAL here. 湖水 and the English-only lake denote the same thing at the same level, and
+the second is not rejected merely because the first was already accepted; missing Japanese data is not a
+disqualifier under any of rules 1-5.
+
+Example 2 — record: headword たそがれ, near-synonyms 夕暮れ・薄暮, category path 関係 > 時.
+- bn:99000211n | 日見出し語: 夕暮れ | gloss: the part of the day when daylight is fading → EQUAL
+- bn:99000212n | 英見出し語: twilight (no Japanese data) | gloss: the soft light between sunset and night → EQUAL
+- bn:99000213n | 日見出し語: たそがれ | gloss: the declining years of a person's life or of an era → NONE
+  (rule 4, Same string different sense: the lemma matches the headword exactly, yet the gloss describes a
+  figurative sense, and surface identity alone never makes EQUAL)
+Again two candidates are EQUAL. Where BabelNet splits one concept across several near-identical synsets,
+judge each of them on its own evidence rather than keeping only the one that reads best.
+
+Return ONLY a JSON object of this form:
+{"record_id": "<record_id>", "labels": [{"synset_id": "<sid>", "label": "EQUAL|NONE"}, ...]}
+Include every candidate synset_id exactly once, in input order. Do not output any text outside the JSON.

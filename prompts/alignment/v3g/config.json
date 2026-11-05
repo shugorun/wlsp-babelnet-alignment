@@ -1,0 +1,6 @@
+{
+  "mode": "independent",
+  "chunk": 40,
+  "wlsp_field": "wlsp_full",
+  "bn_field": "bn_full"
+}
